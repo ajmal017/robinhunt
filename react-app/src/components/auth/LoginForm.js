@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { login } from "../../services/auth";
+import { useDispatch, useSelector } from 'react-redux'
+;import { Redirect } from "react-router-dom";
+import { login } from "../../store/session";
 
-const LoginForm = ({ authenticated, setAuthenticated }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
+
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onLogin = async (e) => {
     e.preventDefault();
-    const user = await login(email, password);
-    if (!user.errors) {
-      setAuthenticated(true);
-    } else {
-      setErrors(user.errors);
-    }
+    const data = await dispatch(login(email, password));
+    if (data.errors) setErrors(user.errors);
   };
+
+  const demoLogin = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login('demo@aa.io', 'password'));
+    if (data.errors) setErrors(data.errors);
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -25,7 +31,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
     setPassword(e.target.value);
   };
 
-  if (authenticated) {
+  if (user) {
     return <Redirect to="/" />;
   }
 
@@ -41,7 +47,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
         <input
           name="email"
           type="text"
-          placeholder="Email"
+          // placeholder="Email"
           value={email}
           onChange={updateEmail}
         />
@@ -51,11 +57,12 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
         <input
           name="password"
           type="password"
-          placeholder="Password"
+          // placeholder="Password"
           value={password}
           onChange={updatePassword}
         />
         <button type="submit">Login</button>
+        <button type="submit" onClick={demoLogin} >Demo Username</button>
       </div>
     </form>
   );
