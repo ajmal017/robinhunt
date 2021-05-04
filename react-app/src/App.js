@@ -8,10 +8,12 @@ import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
-import User from "./components/User";
+// import User from "./components/User";
+
+import PortfolioPage from './components/PortfolioPage/PortfolioPage'
+import StockPage from './components/StockPage/StockPage'
 
 function App() {
-  // const [authenticated, setAuthenticated] = useState(false);
   const dispatch = useDispatch()
   const [loaded, setLoaded] = useState(false);
 
@@ -28,24 +30,43 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
-      <Switch>
-        <Route path="/login" exact={true}>
-          <LoginForm/>
-        </Route>
-        <Route path="/signup" exact={true}>
-          <SignUpForm />
-        </Route>
-        <ProtectedRoute path="/users" exact={true}>
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
-        </ProtectedRoute>
-        <ProtectedRoute path="/" exact={true}>
-          <h1>My Home Page</h1>
-        </ProtectedRoute>
-      </Switch>
+      <div className='app-container'>
+        <div className="app-header flex-container">
+          <NavBar />
+        </div>
+        <Switch>
+          <ProtectedRoute path="/" exact={true}>
+            <div className="app-main flex-container">
+              <PortfolioPage />
+            </div>
+          </ProtectedRoute>
+          <Route path="/login" exact={true}>
+            <div className="app-main flex-container">
+              <LoginForm/>
+            </div>
+          </Route>
+          <Route path="/signup" exact={true}>
+            <div className="app-main flex-container">
+              <SignUpForm />
+            </div>
+          </Route>
+          <Route path="/stocks/:ticker" exact={true}>
+            <div className="app-main flex-container">
+              <StockPage />
+            </div>
+          </Route>
+          <ProtectedRoute path="/users" exact={true}>
+            <div className="app-main flex-container">
+              <UsersList/>
+            </div>
+          </ProtectedRoute>
+          {/* <ProtectedRoute path="/users/:userId" exact={true}>
+            <div className="app-main flex-container">
+              <User />
+            </div>
+          </ProtectedRoute> */}
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }

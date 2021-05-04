@@ -7,36 +7,35 @@ const NavBar = ({ setAuthenticated }) => {
   const user = useSelector( state => state.session.user )
 
   const authLinks = (
-    <>
-      <NavLink to="/" exact={true} activeClassName="active">
+    <div className='flex-container'>
+      <NavLink className='flex-container' to="/" exact={true} activeClassName="active">
         Home
       </NavLink>
-      <NavLink to="/users" exact={true} activeClassName="active">
+      <NavLink className='flex-container' to="/users" exact={true} activeClassName="active">
         Users
       </NavLink>
       <LogoutButton />
-    </>
+    </div>
   )
 
   const unauthLinks = (
-    <>
-      <NavLink to="/login" exact={true} activeClassName="active">
+    <div className='flex-container'>
+      <NavLink className='flex-container' to="/login" exact={true} activeClassName="active">
         Login
       </NavLink>
-      <NavLink to="/sign-up" exact={true} activeClassName="active">
+      <NavLink className='flex-container' to="/sign-up" exact={true} activeClassName="active">
         Sign Up
       </NavLink>
-    </>
+    </div>
   )
 
   let linkDisplay;
   user ? linkDisplay = authLinks : linkDisplay = unauthLinks
 
-
   return (
-    <nav>
-      { user && linkDisplay }
-    </nav>
+    <div>
+      {linkDisplay}
+    </div>
   );
 }
 

@@ -36,7 +36,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
+    <form className='splash-form' onSubmit={onLogin}>
       <div>
         {errors.map((error) => (
           <div>{error}</div>
