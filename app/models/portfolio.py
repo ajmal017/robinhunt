@@ -5,7 +5,7 @@ class Portfolio(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False, unique=True)
-    cash_balance = db.Column(db.Numeric, default=0.00)
+    cash_balance = db.Column(db.Numeric(10,2), default=0.00)
 
     user = db.relationship("User", back_populates="portfolio")
     trades = db.relationship("Trade", back_populates="portfolio")

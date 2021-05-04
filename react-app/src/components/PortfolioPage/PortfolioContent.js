@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addPortfolio } from '../../store/portfolio'
 
-const PortfolioContent = () => {
+const PortfolioContent = ({ user }) => {
+    // const dispatch = useDispatch();
+    // const portfolio = useSelector(state => state.portfolio.portfolio)
+    
+    let userId;
+    user ? userId = user.id : userId = ""
+
+    // useEffect(() => {
+    //     dispatch(addPortfolio(userId))
+    // }, [dispatch])
+
     return (
         <div className='portfolio-content-container'>
             <div className="chart-container">
