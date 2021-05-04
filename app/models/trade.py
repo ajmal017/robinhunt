@@ -1,4 +1,5 @@
 from .db import db
+from datetime import date
 
 class Trade(db.Model):
     __tablename__ = 'trades'
