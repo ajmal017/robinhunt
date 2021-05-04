@@ -1,8 +1,8 @@
 // USER PORTFOLIO STATE
 
 // Constants --------------------
-const SET_PORTFOLIO = 'session/SET_PORTFOLIO';
-const REMOVE_PORTFOLIO = 'session/REMOVE_PORTFOLIO';
+const SET_PORTFOLIO = 'portfolio/SET_PORTFOLIO';
+const REMOVE_PORTFOLIO = 'portfolio/REMOVE_PORTFOLIO';
 
 
 
@@ -42,9 +42,9 @@ const initialState = { portfolio: null };
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_PORTFOLIO:
-            return { portfolio: action.payload };
+            return { ...state, portfolio: action.payload };
         case REMOVE_PORTFOLIO:
-            return { portfolio: null };
+            return { ...state, portfolio: null };
         default:
             return state;
     }

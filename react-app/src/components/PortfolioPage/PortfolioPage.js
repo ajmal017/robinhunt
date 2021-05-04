@@ -6,12 +6,14 @@ import { addPortfolio } from '../../store/portfolio'
 const PortfolioPage = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
-    const user_portfolio = useSelector(state => state.portfolio)
-    console.log(user_portfolio)
+    const user_portfolio = useSelector(state => state.portfolio.portfolio)
 
     let userId;
     user ? userId = user.id : userId = ""
 
+    let cashBalance;
+    user_portfolio ? cashBalance=user_portfolio.cash_balance : cashBalance=0
+    
     useEffect(() => {
         dispatch(addPortfolio(userId))
     }, [dispatch])
@@ -19,7 +21,7 @@ const PortfolioPage = () => {
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user}/>
+                <PortfolioContent user={user} cashBalance={cashBalance}/>
             </div>
             <div className="portfolio-watchlist flex-container">
                 <h2>Watchlist</h2>
