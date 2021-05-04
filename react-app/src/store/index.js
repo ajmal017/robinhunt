@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from 'redux-thunk';
 import session from './session';
 import portfolio from './portfolio';
-// import team from './team';
+import trade from './trade';
 // import task from './task';
 // import comment from './comment';
 // import user from './user';
@@ -11,7 +11,7 @@ import portfolio from './portfolio';
 const rootReducer = combineReducers({
     session,
     portfolio,
-    // team,
+    trade,
     // task,
     // comment,
     // user

@@ -2,19 +2,19 @@
 
 // Constants --------------------
 const SET_PORTFOLIO = 'portfolio/SET_PORTFOLIO';
-const REMOVE_PORTFOLIO = 'portfolio/REMOVE_PORTFOLIO';
+// const REMOVE_PORTFOLIO = 'portfolio/REMOVE_PORTFOLIO';
 
 
 
 // Action Creators --------------------
 const setPortfolio = portfolio => ({ type: SET_PORTFOLIO, payload: portfolio })
-const removePortfolio = () => ({ type: REMOVE_PORTFOLIO })
+// const removePortfolio = () => ({ type: REMOVE_PORTFOLIO })
 
 
 
 // Thunks --------------------
 // Add user portfolio object to state
-export const addPortfolio = (userId) => async (dispatch) => {
+export const loadPortfolio = (userId) => async (dispatch) => {
     const response = await fetch(`/api/portfolios/${userId}`, {
         headers: { 'Content-Type': 'application/json' }
     })
@@ -25,14 +25,14 @@ export const addPortfolio = (userId) => async (dispatch) => {
 
 
 // Remove user portfolio object from state
-export const deletePortfolio = () => async (dispatch) => {
-    const response = await fetch('/api/auth/logout', {
-        headers: { 'Content-Type': 'application/json' },
-    })
+// export const deletePortfolio = () => async (dispatch) => {
+//     const response = await fetch('/api/portfolio/', {
+//         headers: { 'Content-Type': 'application/json' },
+//     })
 
-    const data = await response.json(); // wait until finished removing on backend 
-    dispatch(removePortfolio()) // then remove from state
-}
+//     const data = await response.json(); // wait until finished removing on backend 
+//     dispatch(removePortfolio()) // then remove from state
+// }
 
 
 
@@ -43,8 +43,8 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_PORTFOLIO:
             return { ...state, portfolio: action.payload };
-        case REMOVE_PORTFOLIO:
-            return { ...state, portfolio: null };
+        // case REMOVE_PORTFOLIO:
+        //     return { ...state, portfolio: null };
         default:
             return state;
     }

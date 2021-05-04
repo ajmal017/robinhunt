@@ -8,8 +8,8 @@ class Trade(db.Model):
     portfolio_id = db.Column(db.Integer, db.ForeignKey("portfolios.id"), nullable=False)
     order_type = db.Column(db.String(255), nullable=False)
     ticker = db.Column(db.String(255), nullable=False)
-    order_price = db.Column(db.Numeric, nullable=False)
-    order_volume = db.Column(db.Numeric, nullable=False)
+    order_price = db.Column(db.Numeric(asdecimal=False), nullable=False)
+    order_volume = db.Column(db.Numeric(asdecimal=False), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
 
     portfolio = db.relationship("Portfolio", back_populates="trades")

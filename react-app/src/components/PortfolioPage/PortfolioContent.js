@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPortfolio } from '../../store/portfolio'
+import { loadTrades } from '../../store/trade'
 
-const PortfolioContent = ({ user, cashBalance }) => {
-    // const dispatch = useDispatch();
-    // const portfolio = useSelector(state => state.portfolio.portfolio)
-    
-    let userId;
-    user ? userId = user.id : userId = ""
+const PortfolioContent = ({ user, cashBalance, trades }) => {    
 
     return (
         <div className='portfolio-content-container'>
@@ -16,6 +11,9 @@ const PortfolioContent = ({ user, cashBalance }) => {
             </div>
             <div className="holdings-container">
                 <h2>Portfolio Holdings</h2>
+                { trades && trades.map(trade => (
+                    <div key={`trade_id_${trade.id}`}>Ticker: {trade.ticker} | Price: {trade.order_price} | Qty: {trade.order_volume}</div>
+                ))}
             </div>
             <div className="news-container">
                 <h2>Market News</h2>
