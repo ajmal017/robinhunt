@@ -18,19 +18,8 @@ const NavBar = ({ setAuthenticated }) => {
     </div>
   )
 
-  const unauthLinks = (
-    <div className='flex-container'>
-      <NavLink className='flex-container' to="/login" exact={true} activeClassName="active">
-        Login
-      </NavLink>
-      <NavLink className='flex-container' to="/sign-up" exact={true} activeClassName="active">
-        Sign Up
-      </NavLink>
-    </div>
-  )
-
   let linkDisplay;
-  user ? linkDisplay = authLinks : linkDisplay = unauthLinks
+  user ? linkDisplay = authLinks : linkDisplay = ""
 
   return (
     <div>

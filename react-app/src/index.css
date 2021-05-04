@@ -147,6 +147,34 @@ a {
 
 
 
+
+/* SPLASH PAGE LAYOUT  */
+
+.splash-container {
+    display: grid;
+    grid-template-areas:
+        'splash-image splash-fields';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.splash-image{ 
+    grid-area: splash-image;
+    background-color: var(--GREEN_HIGHLIGHT);
+}
+
+.splash-fields{ 
+    grid-area: splash-fields;
+    background-color: var(--WHITE);
+}
+
+
+
+
+
 /* FORMS  */
 
 .splash-form {
@@ -200,4 +228,17 @@ a {
     align-items: center;
     justify-content: space-around;
     padding: 5px;
+}
+
+.flex-container-stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.redirect-text {
+    margin-top:20px;
+    text-align: center;
 }
