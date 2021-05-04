@@ -35,36 +35,48 @@ const LoginForm = () => {
     return <Redirect to="/" />;
   }
 
+  const redirect_message= `  Sign up`
+
   return (
-    <form className='splash-form' onSubmit={onLogin}>
-      <div>
-        {errors.map((error) => (
-          <div>{error}</div>
-        ))}
+    <div className='splash-container'>
+      <div className='splash-image flex-container'>
+        IMAGE HERE
       </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          type="text"
-          // placeholder="Email"
-          value={email}
-          onChange={updateEmail}
-        />
+      <div className='splash-fields flex-container-stack'>
+        <h2>Welcome to Robinhunt</h2>
+        <br></br>
+        <form className='splash-form' onSubmit={onLogin}>
+          <div>
+            {errors.map((error) => (
+              <div>{error}</div>
+            ))}
+          </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              name="email"
+              type="text"
+              // placeholder="Email"
+              value={email}
+              onChange={updateEmail}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              name="password"
+              type="password"
+              // placeholder="Password"
+              value={password}
+              onChange={updatePassword}
+            />
+            <button type="submit">Login</button>
+            <button type="submit" onClick={demoLogin} >Demo User</button>
+            <div className="redirect-text"> Don't have an account?<a href="/signup">{redirect_message}</a></div>
+          </div>
+        </form>
       </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          // placeholder="Password"
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type="submit">Login</button>
-        <button type="submit" onClick={demoLogin} >Demo Username</button>
-      </div>
-    </form>
+    </div>
   );
 };
 
