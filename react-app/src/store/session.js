@@ -17,7 +17,7 @@ const removeUser = () => ({ type: REMOVE_USER })
 // Thunks --------------------
 // authenticate user
 export const authenticate = () => async (dispatch) => {
-    const response = await fetch('/api/auth', { 
+    const response = await fetch('/api/auth/', { 
         headers: { 'Content-Type':'application/json' }
     })
     const data = await response.json();

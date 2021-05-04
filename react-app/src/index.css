@@ -1,1 +1,111 @@
-/* TODO Add site wide styles */
+/* UNIVERSAL */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --CHARCOAL: #222b37;
+    --SIDEBAR_CHARCOAL: #151b26;
+    --SIDEBAR_CHARCOAL_HIGHLIGHT: #3a4049;
+    --GREY_TEXT: #cbd4db;
+    --GREY_TEXT_LABELS: #6e7782;
+    --WHITE: #ffffff;
+    --ORANGE_FADE: #fe9c2a;
+    --RED_FADE: #fa5356;
+    --GOLD: #fbbc00;
+    --SKY_BLUE: #19aaf5;
+    --VIOLET: #786dff;
+    --AQUA_GREEN: #25e9c8;
+    --DUE_DATE_GREEN: #3cbf9c;
+    --GREY_GRID: #cbd4db;
+    --GREY_HIGHLIGHT: #f5f8f9;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--WHITE);
+    color: var(--CHARCOAL);
+    margin: 0;
+}
+
+a {
+    color: var(--VIOLET);
+    text-decoration: none;
+}
+
+/* ROOT LAYOUT  */
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+.app-container {
+    display: grid;
+    grid-template-areas:
+        'app-header',
+        'app-main';
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr;
+    height: 100vh;
+}
+
+.app-header{ 
+    grid-area: 'app-header'; 
+   background-color: var(--CHARCOAL);
+}
+
+.app-main{ 
+    grid-area: 'app-main';
+    background-color: var(--GREY_GRID);
+}
+
+
+/* FORMS  */
+
+.splash-form form {
+    width: 300px;
+    background-color: var(--WHITE);
+    color: var(--GREY_TEXT_LABELS);
+    text-align: left;
+    font-size: 12px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px 1px black;
+}
+
+.splash-form button {
+    background-color: var(--VIOLET);
+    border: 1px solid var(--VIOLET);
+    border-radius: 5px;
+    color: var(--WHITE);
+    width: 100%;
+    padding: .75em 1em;
+    margin-top: 20px;
+    transition: background-color 400ms, border 400ms, color 400ms;
+}
+
+.splash-form button:hover {
+    background-color: var(--RED_FADE);
+    border: 1px solid var(--RED_FADE);
+    color: white;
+}
+
+.splash-form input {
+  border-radius: 5px;
+  border: 2px solid var(--GREY_GRID);
+
+  display: block;
+  box-sizing: border-box;
+  background-color: var(--WHITE);
+
+  width: 100%;
+  margin: 10px 0px 30px 0px;
+  padding: 10px;
+  outline: 0;
+}
+
+.splash-form input:focus {
+  border: 2px solid var(--VIOLET);
+}

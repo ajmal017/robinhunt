@@ -4,6 +4,14 @@
 2. Go through steps in README
 
 
+<!-- 
+VIDEO WALKTHROUGH LINK: 
+Link:https://us02web.zoom.us/rec/share/lF1rHdpbU2qj3QfZFuQmqqt5jVCTd_QP2Qt54qb0Rvp-q0qPM9o7EoFDJJJKWqoH.fBCY-jvvS2wYqAi4 
+Passcode: GL0@&!tw 
+
+DEPLOYMENT WALKTHROUGH VIDEO: 
+https://drive.google.com/file/d/1DtnZGussBlUlUawdRl-CJQVwQ3Eng5U1/view 
+-->
 
 
 ## Redux Refactor
