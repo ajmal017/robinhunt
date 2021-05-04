@@ -1,50 +1,37 @@
 /* UNIVERSAL */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap');
+
 
 :root {
     --CHARCOAL: #222b37;
-    --SIDEBAR_CHARCOAL: #151b26;
-    --SIDEBAR_CHARCOAL_HIGHLIGHT: #3a4049;
-    --GREY_TEXT: #cbd4db;
-    --GREY_TEXT_LABELS: #6e7782;
     --WHITE: #ffffff;
-    --ORANGE_FADE: #fe9c2a;
-    --RED_FADE: #fa5356;
-    --GOLD: #fbbc00;
-    --SKY_BLUE: #19aaf5;
-    --VIOLET: #786dff;
-    --AQUA_GREEN: #25e9c8;
-    --DUE_DATE_GREEN: #3cbf9c;
-    --GREY_GRID: #cbd4db;
-    --GREY_HIGHLIGHT: #f5f8f9;
+    --GREEN_HIGHLIGHT: #e5f9e6;
+    --GREEN_TEXT: #40c802;
+    --RED_TEXT: #f65004;
+    --GREY_SHADOW: #f5f8fa;
+    --GREY_TEXT: #a2a2a2;
+    --BOX_SHADOW: #e8e8eb;
 }
 
 body {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     background-color: var(--WHITE);
     color: var(--CHARCOAL);
     margin: 0;
 }
 
 a {
-    color: var(--VIOLET);
+    color: var(--GREEN_TEXT);
     text-decoration: none;
 }
 
 /* ROOT LAYOUT  */
 
-.flex-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 5px;
-}
-
 .app-container {
     display: grid;
     grid-template-areas:
-        'app-header',
+        'app-header'
         'app-main';
     grid-template-columns: 1fr;
     grid-template-rows: 50px 1fr;
@@ -58,54 +45,159 @@ a {
 
 .app-main{ 
     grid-area: 'app-main';
-    background-color: var(--GREY_GRID);
+    background-color: var(--WHITE);
 }
+
+
+/* PORTFOLIO PAGE LAYOUT  */
+
+.portfolio-page-container {
+    display: grid;
+    grid-template-areas:
+        'content watchlist';
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    overflow-y: scroll;
+}
+
+.portfolio-content{ 
+    grid-area: content;
+    margin-left: 50px;
+    background-color: skyblue;
+}
+
+.portfolio-watchlist{ 
+    grid-area: watchlist; 
+    margin-right: 50px;
+    background-color: skyblue;
+}
+
+
+
+/* PORTFOLIO CONTENT LAYOUT  */
+
+.portfolio-content-container {
+    display: grid;
+    grid-template-areas:
+        'chart'
+        'holdings'
+        'news';
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px 1fr 1fr;
+    grid-gap: 10px;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.chart-container{ 
+    grid-area: chart;
+    background-color: var(--GREEN_HIGHLIGHT);
+}
+
+.holdings-container{ 
+    grid-area: holdings;
+    background-color: var(--GREEN_HIGHLIGHT);
+}
+
+.news-container{ 
+    grid-area: news;
+    background-color: var(--GREEN_HIGHLIGHT);
+}
+
+
+
+/* STOCK PAGE LAYOUT  */
+
+.stock-page-container {
+    display: grid;
+    grid-template-areas:
+        'stock-chart order'
+        'stock-info .';
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 400px 1fr;
+    grid-gap: 10px;
+    height: 90%;
+    width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+    overflow-y: scroll;
+}
+
+.stock-chart{ 
+    grid-area: stock-chart;
+    background-color: skyblue;
+}
+
+.stock-info{ 
+    grid-area: stock-info;
+    background-color: skyblue;
+}
+
+.stock-order{ 
+    grid-area: order; 
+    background-color: skyblue;
+}
+
 
 
 /* FORMS  */
 
-.splash-form form {
+.splash-form {
     width: 300px;
-    background-color: var(--WHITE);
-    color: var(--GREY_TEXT_LABELS);
+    background-color: var(--GREY_SHADOW);
     text-align: left;
     font-size: 12px;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 1px 1px 20px 1px black;
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
 }
 
 .splash-form button {
-    background-color: var(--VIOLET);
-    border: 1px solid var(--VIOLET);
+    background-color: var(--GREY_SHADOW);
+    border: 1px solid var(--GREY_SHADOW);
     border-radius: 5px;
-    color: var(--WHITE);
     width: 100%;
     padding: .75em 1em;
     margin-top: 20px;
-    transition: background-color 400ms, border 400ms, color 400ms;
+    transition: background-color 400ms, border 400ms, color 200ms;
 }
 
 .splash-form button:hover {
-    background-color: var(--RED_FADE);
-    border: 1px solid var(--RED_FADE);
+    background-color: var(--GREEN_TEXT);
+    border: 1px solid var(--GREEN_TEXT);
     color: white;
 }
 
 .splash-form input {
-  border-radius: 5px;
-  border: 2px solid var(--GREY_GRID);
+    display: block;
+    box-sizing: border-box;
+    background-color: var(--WHITE);
+    border: 2px solid var(--GREY_SHADOW);
+    border-radius: 5px;
 
-  display: block;
-  box-sizing: border-box;
-  background-color: var(--WHITE);
-
-  width: 100%;
-  margin: 10px 0px 30px 0px;
-  padding: 10px;
-  outline: 0;
+    width: 100%;
+    margin: 5px 0px 30px 0px;
+    padding: 10px;
+    outline: 0;
 }
 
 .splash-form input:focus {
-  border: 2px solid var(--VIOLET);
+  border: 2px solid var(--GREEN_TEXT);
+}
+
+
+/* MISC  */
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px;
 }
