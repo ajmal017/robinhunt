@@ -5,7 +5,7 @@ class Trade(db.Model):
     __tablename__ = 'trades'
 
     id = db.Column(db.Integer, primary_key = True)
-    portfolio_id = db.Column(db.Integer, db.ForeignKey("portfolio.id"), nullable=False)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey("portfolios.id"), nullable=False)
     order_type = db.Column(db.String(255), nullable=False)
     ticker = db.Column(db.String(255), nullable=False)
     order_price = db.Column(db.Numeric, nullable=False)
