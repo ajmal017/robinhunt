@@ -55,7 +55,7 @@ a {
     display: grid;
     grid-template-areas:
         'content watchlist';
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 400px;
     grid-template-rows: 1fr;
     grid-gap: 10px;
     height: 100%;
@@ -88,7 +88,7 @@ a {
         'news';
 
     grid-template-columns: 1fr;
-    grid-template-rows: 300px 1fr 1fr;
+    grid-template-rows: 400px 1fr 1fr;
     grid-gap: 10px;
     height: 100%;
     width: 100%;
