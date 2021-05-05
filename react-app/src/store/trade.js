@@ -15,14 +15,15 @@ const setTrades = trades => ({ type: SET_TRADES, payload: trades })
 // Thunks --------------------
 // Add user trades in user portfolio to redux state
 export const loadTrades = (portfolioId) => async (dispatch) => {
-    console.log('WE IN THA THUNK', portfolioId)
+    // console.log('WE IN THA THUNK', portfolioId)
     const response = await fetch(`/api/trades/${portfolioId}`, {
         headers: { 'Content-Type': 'application/json' }
     })
     const data = await response.json();
     // console.log(data)
     if (data.errors) return;
-    dispatch(setTrades(data.trades))
+    let trades = data.trades
+    dispatch(setTrades(trades))
 }
 
 
