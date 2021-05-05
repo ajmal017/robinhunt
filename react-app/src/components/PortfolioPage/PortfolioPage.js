@@ -41,8 +41,10 @@ const PortfolioPage = () => {
             <div className="portfolio-content flex-container">
                 <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} news={news}/>
             </div>
-            <div className="portfolio-watchlist flex-container">
+            <div className="portfolio-watchlist flex-container-stack">
                 <h2>Watchlist</h2>
+                <a style={{'color':'var(--CHARCOAL)'}} href='/stocks/FB'>Facebook</a>
+                <a style={{ 'color': 'var(--CHARCOAL)' }} href='/stocks/TSLA'>Tesla</a>
             </div>
         </div>
     )
