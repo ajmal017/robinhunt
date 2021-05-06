@@ -57,16 +57,6 @@ function App() {
               </div>
             </div>
           </Route>
-          <ProtectedRoute path="/users" exact={true}>
-            <div className="app-main flex-container">
-              <UsersList/>
-            </div>
-          </ProtectedRoute>
-          {/* <ProtectedRoute path="/users/:userId" exact={true}>
-            <div className="app-main flex-container">
-              <User />
-            </div>
-          </ProtectedRoute> */}
         </Switch>
     </BrowserRouter>
   );

@@ -2,25 +2,21 @@ import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { loadTrades } from '../../store/trade'
 
-const AssetHolding = ({ symbol, shares, purchasePrice, equityObj, currencyFormatter }) => {
-    
+const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, currencyFormatter }) => {
+
     //raw data
-    let current_price =300; // replace with API call
-    let formattedPurchasePrice =purchasePrice
+    let current_price =currentPrice; // replace with API call
     let total_cost =shares * purchasePrice;
     let equity_value =shares * current_price
-    let total_return =equity_value - total_cost
 
     // formatted 
-    let fPrice = currencyFormatter(300); // replace with API call
+    let fPrice = currencyFormatter(current_price); // replace with API call
     let fPurchasePrice = currencyFormatter(purchasePrice)
-    let fTotalCost = currencyFormatter(shares * purchasePrice);
     let fEquityValue = currencyFormatter(shares * current_price)
     let fTotalReturn = currencyFormatter(equity_value - total_cost)
     
     equityObj[`${symbol}`] = equity_value
-    // console.log(equityObj)
-
+   
     return (
             <tr className='holding-row'>
                 <td className="">{symbol}</td>

@@ -8,7 +8,7 @@
     --GREEN_HIGHLIGHT: #e5f9e6;
     --GREEN_TEXT: #40c802;
     --RED_TEXT: #f65004;
-    --GREY_SHADOW: #f5f8fa;
+    --GREY_SHADOW: #f9f7f7;
     --GREY_TEXT: #a2a2a2;
     --BOX_SHADOW: #e8e8eb;
 }
@@ -28,6 +28,11 @@ a {
 
 p {
     margin: 0px;
+}
+
+#pie {
+    height: 150px;
+    width: 300px;
 }
 
 /* ROOT LAYOUT  */
@@ -137,7 +142,7 @@ a.nav-link:hover {
         'news';
 
     grid-template-columns: 1fr;
-    grid-template-rows: 300px 1fr 1fr;
+    grid-template-rows: 250px 1fr 1fr;
     grid-gap: 10px;
     height: 100vh;
     width: 100%;
@@ -149,6 +154,27 @@ a.nav-link:hover {
     grid-area: chart;
     background-color: var(--GREEN_HIGHLIGHT);
     border-radius: 5px;
+
+    display: grid;
+    grid-template-areas:
+        'summary chart';
+    grid-template-columns: 1fr 400px;
+    grid-template-rows: 1fr;
+}
+
+.portfolio-summary{ 
+    background-color: var(--GREY_SHADOW);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.portfolio-summary-item {
+    margin: 0px;
+    padding: 0px 10px 5px 10px;
+    font-size: 12px;
+    line-height: 12px;
 }
 
 .holdings-container{ 
@@ -247,7 +273,7 @@ a.nav-link:hover {
 
 .splash-image {
     width: 110%;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 .splash-fields{ 

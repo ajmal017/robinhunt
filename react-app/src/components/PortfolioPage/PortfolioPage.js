@@ -7,39 +7,56 @@ import { loadTrades } from '../../store/trade'
 const PortfolioPage = () => {
     const dispatch = useDispatch()
     const [news, setNews] = useState([])
+
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
 
-    let userId;
-    let cashBalance;
-    let portfolioId;
+    const [prices, setPrices] = useState(null)
+
+    let userId, cashBalance, portfolioId;
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
 
+    const getNews = async() => {
+        const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
+        if(response.ok) {
+            let data = await response.json()
+            let lastNews = data.slice(0, 5) // get first 5 results back only
+            setNews(lastNews)
+        }
+    }
+
+    const getPrice = async(ticker) => {
+        let res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=c27ut2aad3ic393ffql0`, { json: true })
+        return res.json()
+    }    
+
+    const loadPrices = async() => {
+        if(trades) {
+            let allPrices = trades.map(trade => getPrice(trade.ticker)) // returns array of promises
+            console.log(allPrices)
+            let priceData = await Promise.all(allPrices) // returns array of objects
+            setPrices(priceData)
+            console.log(priceData)
+        }
+    }
+
+    useEffect(() => {
+        if (portfolioId) dispatch(loadTrades(portfolioId))
+    }, [portfolioId])
     
     useEffect(() => {
         if(userId) dispatch(loadPortfolio(userId))
-        if(portfolioId) dispatch(loadTrades(portfolioId))
-
-        fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true }, (err, res, body) => {
-                if (err) { return console.log(err); }
-                console.log(body.url);
-                console.log(body.explanation);
-            })
-            .then(res => res.json())
-            .then(data => {
-                let lastNews = data.slice(0, 5) // get first 5 results back only
-                setNews(lastNews)
-            });
-            
-    }, [dispatch, userId, portfolioId])
+        getNews()
+        loadPrices()
+    }, [dispatch, trades, userId, portfolioId])
 
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} news={news}/>
+                <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} news={news} prices={prices}/>
             </div>
             <div className="portfolio-watchlist">
                 <div className='watchlist-container'>
