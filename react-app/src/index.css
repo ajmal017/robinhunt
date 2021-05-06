@@ -38,19 +38,55 @@ p {
         'app-header'
         'app-main';
     grid-template-columns: 1fr;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 60px 1fr;
     height: 100vh;
 }
+.app-header{ grid-area: 'app-header'; }
+.app-main{ grid-area: 'app-main'; }
 
-.app-header{ 
-    grid-area: 'app-header'; 
-   background-color: var(--CHARCOAL);
+/* NAV BAR */
+
+.nav-container {
+    display: grid;
+    grid-template-areas:
+        'logo search . links';
+    grid-template-columns: 200px 2fr 1fr 400px;
+    grid-template-rows: 1fr;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
 }
 
-.app-main{ 
-    grid-area: 'app-main';
-    background-color: var(--WHITE);
+.nav-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
 }
+
+.nav-logo{
+    width: 130px;
+}
+
+.search-bar{
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 400px;
+    padding: 8px;
+
+}
+
+a.nav-link {
+    padding: 20px;
+    font-weight: bold;
+    color: var(--CHARCOAL)
+}
+
+a.nav-link:hover {
+    color: var(--GREEN_TEXT)
+}
+
+
 
 
 /* PORTFOLIO PAGE LAYOUT  */
@@ -200,18 +236,27 @@ p {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     grid-gap: 10px;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
 }
 
-.splash-image{ 
+.splash-image-container{ 
     grid-area: splash-image;
     background-color: var(--GREEN_HIGHLIGHT);
+    height: 100vh;
+}
+
+.splash-image {
+    width: 110%;
+    object-fit: cover;
 }
 
 .splash-fields{ 
     grid-area: splash-fields;
     background-color: var(--WHITE);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -342,13 +387,12 @@ p {
 
 
 
-
 /* MISC  */
 
 .flex-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     /* padding: 5px; */
     /* width: 90% */
 }

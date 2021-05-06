@@ -30,29 +30,31 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='app-container'>
-        <div className="app-header flex-container">
-          <NavBar />
-        </div>
         <Switch>
           <ProtectedRoute path="/" exact={true}>
-            <div className="app-main flex-container">
-              <PortfolioPage />
+            <div className='app-container'>
+              <div className="app-header">
+                <NavBar />
+              </div>
+              <div className="app-main flex-container">
+                <PortfolioPage />
+              </div>
             </div>
           </ProtectedRoute>
           <Route path="/login" exact={true}>
-            <div className="app-main flex-container">
               <LoginForm/>
-            </div>
           </Route>
           <Route path="/signup" exact={true}>
-            <div className="app-main flex-container">
               <SignUpForm />
-            </div>
           </Route>
           <Route path="/stocks/:ticker" exact={true}>
-            <div className="app-main flex-container">
-              <StockPage />
+            <div className='app-container'>
+              <div className="app-header">
+                <NavBar />
+              </div>
+              <div className="app-main flex-container">
+                <StockPage />
+              </div>
             </div>
           </Route>
           <ProtectedRoute path="/users" exact={true}>
@@ -66,7 +68,6 @@ function App() {
             </div>
           </ProtectedRoute> */}
         </Switch>
-      </div>
     </BrowserRouter>
   );
 }
