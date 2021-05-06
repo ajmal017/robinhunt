@@ -9,23 +9,19 @@ import { createChart } from 'lightweight-charts';
 
 const StockPage = () => {
     const { ticker } = useParams()
-
     const chartContainer = useRef(null)
     const priceContainer = useRef(null)
-
     const [profile, setProfile] = useState({})
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
     // const [socket, setSocket] = useState(null);
 
     let lineSeries, priceSocket, pastData, prevClose;
-
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
     const initialize = async () => {
-        // identify placement containers in DOM
+        // identify placement of chart in DOM
         let container = chartContainer.current
-        // let priceDiv = priceContainer.current
 
         // create chart 
         let chart = createChart(container, {
@@ -85,8 +81,7 @@ const StockPage = () => {
             },
         });
 
-        // add line-series or area type to initial chart
-        // https://www.cssscript.com/financial-chart/
+        // add line-series or area type to initial chart || https://www.cssscript.com/financial-chart/
         lineSeries = chart.addAreaSeries({
             topColor: '#e5f9e6',
             bottomColor: '#f5f8fa',
@@ -94,21 +89,13 @@ const StockPage = () => {
             lineStyle: 0,
             lineWidth: 2,
             crosshairMarkerVisible: true,
-            // crosshairMarkerRadius: 5,
+            crosshairMarkerRadius: 3,
         });
-        // await setSeries(lineSeries)
-        console.log('init set series')
-
-        // create websocket connection to finnhub using my API key
-        priceSocket = new WebSocket('wss://ws.finnhub.io?token=c27ut2aad3ic393ffql0');
-        // await setSocket(priceSocket)
-        console.log('init set socket')
     }
     
 
-    // grab historical chart data (1min)
+    // grab historical chart data (1min) || API: https://www.alphavantage.co/documentation/
     const fetchHistoricalData = async (series) => {
-        // https://www.alphavantage.co/documentation/
         // Alpha Vantage API KEY: 09CXQ7G0M8U90O13
         let key = '09CXQ7G0M8U90O13'
         let response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&outputsize=full&apikey=${key}`)
@@ -124,11 +111,8 @@ const StockPage = () => {
             }
             let last360 = historical.slice(0, 360)
             prevClose = last360[0]['value']
-            console.log(prevClose)
             pastData = last360.reverse(); // historical data is sent most recent first... so need to reverse the order
-            console.log(pastData)
             series.setData(pastData)
-            return console.log('setHistorical')
         }
     }
 
@@ -181,30 +165,28 @@ const StockPage = () => {
         });
     }
 
-    // Unsubscribe from price websocket
+    // Unsubscribe from price websocket and close
     const unmountSocket = (socket) => {
         if(socket){
             socket.send(JSON.stringify({ 'type': 'unsubscribe', 'symbol': ticker }))
             socket.close()
-            console.log(`websocket for ${ticker} is closed`)
         }
     }
 
+    // load pre-req async functions in order first
     const loadSeries = async() => {
         await initialize()
-        console.log('load series:',  lineSeries)
-        console.log('load socket:', priceSocket)
         await fetchHistoricalData(lineSeries)
-        console.log('load pastData:', pastData)
         await fetchCompanyProfile()
     }
 
+    // then create final load function to load initial series data, then establish the websocket connection
     const load = async() => {
         await loadSeries()
         mountSocket(lineSeries)
     }
 
-    // fetch company profile data on load
+    // run all functions on load in correct order via useEffect
     useEffect(() => {
         load()
         return () => unmountSocket(priceSocket)

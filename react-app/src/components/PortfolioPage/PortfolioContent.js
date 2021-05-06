@@ -1,40 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadTrades } from '../../store/trade'
 import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
+import PortfolioChart from './PortfolioChart'
 
 const PortfolioContent = ({ user, cashBalance, trades, news }) => {    
+    const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
+    const [capInvested, setCapInvested] = useState(0)
+    const [totalReturn, setTotalReturn] = useState(0)
+    const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
-    let equityObj = {}
-    const getPortfolioValue = () => {
-        let total = 0;
-        for (let key in equityObj) {
-            let value = equityObj[key]
+    let equityObj = {};
+    const getHoldingValue = () => {
+        let total = 0
+        for (let key in equityObj){
+            let value = equityObj[key];
             total += value;
         }
         return total
     }
-
+    let capitalInvested;
+    let fCapInvested;
+    let myReturn;
+    if(trades) capitalInvested = trades.reduce((sum, trade) => sum += (trade.order_price*trade.order_volume), 0)
+    if(capitalInvested) fCapInvested = currencyFormatter(capitalInvested)
+    if(fCapInvested && capInvested === 0) setCapInvested(fCapInvested)
+    
     useEffect(() => {
-        let newValue = getPortfolioValue()
-        let fNewValue = currencyFormatter(newValue)
-        setPortValue(fNewValue)
-    }, [equityObj])
+        let holdValue = getHoldingValue()
+        let fHoldValue = currencyFormatter(holdValue)
+        setHoldingValue(fHoldValue)
 
+        let portfolioValue = getPortfolioValue(holdValue)
+        let fPortValue = currencyFormatter(portfolioValue)
+        setPortValue(fPortValue)
+
+        if (portValue > 0 && capInvested > 0) {
+            myReturn = currencyFormatter(portValue - capInvested)
+            setTotalReturn(myReturn)
+        }
+    }, [equityObj, myReturn])
+
+    const chartDisplay = (
+        <div className='flex-container'>
+            <PortfolioChart trades={trades} />
+        </div>
+    )
+    
     return (
         <div className='portfolio-content-container'>
             <div className="chart-container">
-                <div className='flex-container'>
-                    <h3 className="indent-heading min-margin">Porfolio: ${portValue}</h3>
-                    <h3 className="indent-heading min-margin">Cash: ${cashBalance}</h3>
+                <div className='portfolio-summary'>
+                    <h3 style={{ 'paddingBottom': '10px' }} className="indent-heading min-margin">Portfolio Value: ${portValue}</h3>
+                    <p className="portfolio-summary-item">Cash Balance: ${cashBalance}</p>
+                    <p className="portfolio-summary-item">Est. Holdings Value: ${holdingValue}</p>
+                    <div style={{'paddingBottom':'10px'}} className="portfolio-summary-item">_______________________________</div>
+                    <p className="portfolio-summary-item">Current Value: ${portValue}</p>
+                    <p className="portfolio-summary-item">Capital Invested: ${capInvested}</p>
+                    <div style={{ 'paddingBottom': '10px' }} className="portfolio-summary-item">_______________________________</div>
+                    <h4 className="portfolio-summary-item">Total Return: ${totalReturn}</h4>
                 </div>
-                <div className="flex-container"> DISPLAY CHART HERE</div>
+                {chartDisplay}
             </div>
             <div className="holdings-container">
-                <h2 className="indent-heading">Portfolio Holdings</h2>
+                <h2 className="indent-heading">Holdings</h2>
                 <table className="holding-table">
                     <thead>
                         <tr className="holding-row holding-table-labels">

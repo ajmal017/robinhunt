@@ -10,6 +10,7 @@ const PortfolioPage = () => {
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
+    // console.log('trades', trades)
 
     let userId;
     let cashBalance;
