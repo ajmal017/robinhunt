@@ -19,7 +19,7 @@ const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, 
    
     return (
             <tr className='holding-row'>
-                <td className="">{symbol}</td>
+                <td className=""><a href={`/stocks/${symbol}`}>{symbol}</a></td>
                 <td className="">{shares}</td>
                 <td className="">{fPrice}</td>
                 <td className="">{fPurchasePrice}</td>
