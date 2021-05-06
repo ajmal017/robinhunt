@@ -69,7 +69,7 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
                 <h2 className="indent-heading">Holdings</h2>
                 <table className="holding-table">
                     <thead>
-                        <tr className="holding-row holding-table-labels">
+                        <tr className="holding-table-labels">
                             <td>Symbol</td>
                             <td>Shares</td>
                             <td>Price</td>

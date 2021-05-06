@@ -7,12 +7,11 @@ import { loadTrades } from '../../store/trade'
 const PortfolioPage = () => {
     const dispatch = useDispatch()
     const [news, setNews] = useState([])
+    const [prices, setPrices] = useState(null)
 
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
-
-    const [prices, setPrices] = useState(null)
 
     let userId, cashBalance, portfolioId;
     user ? userId = user.id : userId = ""
@@ -30,16 +29,14 @@ const PortfolioPage = () => {
 
     const getPrice = async(ticker) => {
         let res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=c27ut2aad3ic393ffql0`, { json: true })
-        return res.json()
+        return res.json() // returns promise for loadPrices function
     }    
 
     const loadPrices = async() => {
         if(trades) {
             let allPrices = trades.map(trade => getPrice(trade.ticker)) // returns array of promises
-            console.log(allPrices)
             let priceData = await Promise.all(allPrices) // returns array of objects
             setPrices(priceData)
-            console.log(priceData)
         }
     }
 
