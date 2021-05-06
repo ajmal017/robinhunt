@@ -29,7 +29,7 @@ const StockPage = () => {
 
         // create chart 
         let chart = createChart(container, {
-            width: 600,
+            width: 700,
             height: 300,
             layout: {
                 backgroundColor: '#ffffff',
@@ -39,10 +39,9 @@ const StockPage = () => {
                 vertLines: { visible: false },
                 horzLines: { visible: false },
             },
-            timeScale: {
-                timeVisible: true,
-                secondsVisible: true,
-                borderColor: 'rgba(197, 203, 206, 0.8)'
+            localization: {
+                dateFormat: 'MM/dd/yy',
+                locale: 'en-US',
             },
             priceScale: {
                 position: 'right',
@@ -56,6 +55,34 @@ const StockPage = () => {
                     bottom: 0.4,
                 },
             },
+            timeScale: {
+                rightOffset: 3,
+                barSpacing: 3,
+                fixLeftEdge: true,
+                lockVisibleTimeRangeOnResize: true,
+                rightBarStaysOnScroll: true,
+                borderVisible: false,
+                borderColor: '#fff000',
+                visible: false,
+                timeVisible: true,
+            },
+            crosshair: {
+                vertLine: {
+                    color: '#222b37',
+                    width: 0.5,
+                    style: 0,
+                    visible: true,
+                    labelVisible: true,
+                },
+                horzLine: {
+                    color: '#6A5ACD',
+                    width: 0.5,
+                    style: 0,
+                    visible: false,
+                    labelVisible: true,
+                },
+                mode: 1,
+            },
         });
 
         // add line-series or area type to initial chart
@@ -66,25 +93,8 @@ const StockPage = () => {
             lineColor: '#40c802',
             lineStyle: 0,
             lineWidth: 2,
-            crosshair: {
-                vertLine: {
-                    color: '#6A5ACD',
-                    width: 0.5,
-                    style: 1,
-                    visible: true,
-                    labelVisible: false,
-                },
-                horzLine: {
-                    color: '#6A5ACD',
-                    width: 0.5,
-                    style: 0,
-                    visible: true,
-                    labelVisible: true,
-                },
-                mode: 1,
-            },
-            // crosshairMarkerVisible: true,
-            // crosshairMarkerRadius: 3,
+            crosshairMarkerVisible: true,
+            // crosshairMarkerRadius: 5,
         });
         // await setSeries(lineSeries)
         console.log('init set series')
@@ -207,12 +217,52 @@ const StockPage = () => {
                 <h3 className='min-margin' ref={priceContainer}>...loading</h3>
                 <div ref={chartContainer}></div>
             </div>
-            <div className="stock-info">
-                <h3>Name: {profile.name}</h3>
-                <h3>Market Cap ($M): {profile.marketCapitalization}</h3>
-                <h3>URL: {profile.weburl}</h3>
-                <h3>Industry: {profile.finnhubIndustry}</h3>
-                <img src={profile.logo}></img>
+            <div className="profile-info-container">
+                <div style={{ 'width': '95%' }}>
+                    <div className='grey-underline'>
+                        <h2 className=''> About</h2>
+                    </div>
+                    <div className='info-container'>
+                        <div className='flex-container-stack'>
+                            <img alt='profile-logo' className='profile-logo' src={profile.logo}></img>
+                        </div>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>Mkt Cap</h4>
+                            <p>{Number(profile.marketCapitalization / 1000).toFixed(2)}B</p>
+                        </div>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>Website</h4>
+                            <a href={profile.weburl}>Website Link</a>
+                        </div>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>Industry</h4>
+                            <p>{profile.finnhubIndustry}</p>
+                        </div>
+                    </div>
+                </div>
+                <div style={{'width':'95%'}}>
+                    <div style={{'paddingTop':'50px'}} className='grey-underline'>
+                        <h2 className=''> Key Statistics (TBD)</h2>
+                    </div>
+                    <div className='info-container'>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>stat</h4>
+                            <p>--</p>
+                        </div>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>stat</h4>
+                            <p>--</p>
+                        </div>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>stat</h4>
+                            <p>--</p>
+                        </div>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>stat</h4>
+                            <p>--</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="stock-order flex-container">
                 <h3>Order Form</h3>
