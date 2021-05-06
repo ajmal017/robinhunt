@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
 
+// https://finnhub.io/docs/api/websocket-trades
+// https://finnhub.io/docs/api/quote
+// https://www.unixtimestamp.com/
+
 const StockPage = () => {
     const { ticker } = useParams()
     const chartContainer = useRef(null)

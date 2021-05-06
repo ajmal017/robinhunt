@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadTrades } from '../../store/trade'
 import AssetHolding from './AssetHolding'
+import NewsCard from '../NewsCard'
 
 const PortfolioContent = ({ user, cashBalance, trades, news }) => {    
     const [portValue, setPortValue] = useState(0)
@@ -53,8 +54,9 @@ const PortfolioContent = ({ user, cashBalance, trades, news }) => {
                 </table>
             </div>
             <div className="news-container">
+                <h2 className="indent-heading">News</h2>
                 {news && news.map(article => (
-                    <div key={article.id}><a href={article.url} target="_blank">{article.headline}</a></div>
+                    <NewsCard key={article.id} article={article} />
                 ))}
             </div>
         </div>
