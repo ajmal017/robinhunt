@@ -143,7 +143,7 @@ a {
 
 .stock-chart{ 
     grid-area: stock-chart;
-    background-color: skyblue;
+    /* background-color: skyblue; */
 }
 
 .stock-info{ 
