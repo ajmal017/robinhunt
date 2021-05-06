@@ -6,6 +6,7 @@ import { login } from "../../store/session";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
+  const splashImg = require('../../front-assets/robinhood_splash_img.jpeg')
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -39,10 +40,10 @@ const LoginForm = () => {
 
   return (
     <div className='splash-container'>
-      <div className='splash-image flex-container'>
-        IMAGE HERE
+      <div className='splash-image-container flex-container'>
+        <img className='splash-image' src={splashImg}></img>
       </div>
-      <div className='splash-fields flex-container-stack'>
+      <div className='splash-fields'>
         <h2>Welcome to Robinhunt</h2>
         <br></br>
         <form className='splash-form' onSubmit={onLogin}>

@@ -8,12 +8,9 @@ const NavBar = ({ setAuthenticated }) => {
 
   const authLinks = (
     <div className='flex-container'>
-      <NavLink className='flex-container' to="/" exact={true} activeClassName="active">
-        Home
-      </NavLink>
-      <NavLink className='flex-container' to="/users" exact={true} activeClassName="active">
-        Users
-      </NavLink>
+      <a className='nav-link' to="/" exact={true}>
+        Portfolio
+      </a>
       <LogoutButton />
     </div>
   )
@@ -22,8 +19,20 @@ const NavBar = ({ setAuthenticated }) => {
   user ? linkDisplay = authLinks : linkDisplay = ""
 
   return (
-    <div>
-      {linkDisplay}
+    <div className='nav-container'>
+      <div style={{ 'justifyContent': 'flex-end', 'paddingRight':'15px' }}className="nav-item">
+        <a href='/'><img className='nav-logo' src="https://github.com/eramsay20/robinhunt/blob/main/assets/banner.png?raw=true"></img></a>
+      </div>
+      <div style={{ 'justifyContent': 'flex-start' }} className="nav-item">
+          <form>
+            <input className='search-bar' placeholder='    Search'></input>
+          </form>
+      </div>
+      <div className="nav-item">
+      </div>
+      <div className="nav-item">
+          {linkDisplay}
+      </div>
     </div>
   );
 }
