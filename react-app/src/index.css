@@ -67,13 +67,22 @@ a {
 .portfolio-content{ 
     grid-area: content;
     margin-left: 50px;
-    background-color: skyblue;
 }
 
 .portfolio-watchlist{ 
     grid-area: watchlist; 
     margin-right: 50px;
-    background-color: skyblue;
+}
+
+.watchlist-container{ 
+    margin: 20px;
+    height: 100%;
+    background-color: var(--GREEN_HIGHLIGHT);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 
@@ -88,9 +97,9 @@ a {
         'news';
 
     grid-template-columns: 1fr;
-    grid-template-rows: 400px 1fr 1fr;
+    grid-template-rows: 300px 1fr 1fr;
     grid-gap: 10px;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     margin: 0px;
     padding: 0px;
@@ -99,16 +108,18 @@ a {
 .chart-container{ 
     grid-area: chart;
     background-color: var(--GREEN_HIGHLIGHT);
+    border-radius: 5px;
 }
 
 .holdings-container{ 
     grid-area: holdings;
-    background-color: var(--GREEN_HIGHLIGHT);
+    /* background-color: var(--GREEN_HIGHLIGHT); */
 }
 
 .news-container{ 
     grid-area: news;
-    background-color: var(--GREEN_HIGHLIGHT);
+    height: 100%;
+    /* background-color: var(--GREEN_HIGHLIGHT); */
 }
 
 
@@ -249,16 +260,53 @@ a {
 .holding-row:hover {
     background-color: var(--GREEN_TEXT);
 }
-/* 
-td {
-    border-top: 1px solid var(--GREY_GRID);
-    border-right: 1px solid var(--GREY_GRID);
-    padding: 10px;
-} */
 
 
 
+/* NEWS CARD */
 
+.news-card-container {
+    display: grid;
+    grid-template-areas:
+        'info image';
+    grid-template-columns: 1fr 150px;
+    grid-template-rows: 1fr;
+    height: 120px;
+    width: 100%;
+    border-top: 2px solid lightgrey;
+}
+
+.news-image-container {
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.news-info-container {
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.news-image {
+  border-radius: 5px;
+  object-fit: cover;
+  width: 80%;
+  height: 60%;
+}
+
+.news-title  {
+    font-size: 14px;
+    width: 90%;
+    margin-top:10px;
+}
+
+.news-title > a {
+    color: var(--CHARCOAL);
+}
 
 
 
@@ -287,9 +335,14 @@ td {
 
 .indent-heading {
     margin-left: 20px;
+    margin-top: 20px;
 }
 
 .min-margin {
-    margin: 5px 0px 5px 20px;
+    margin: 5px 0px 5px 0px;
     padding: 0px;
+}
+
+.bold {
+    font-weight: bold;
 }
