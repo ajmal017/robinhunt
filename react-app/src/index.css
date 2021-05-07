@@ -100,7 +100,7 @@ a.nav-link:hover {
     display: grid;
     grid-template-areas:
         'content watchlist';
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 300px;
     grid-template-rows: 1fr;
     grid-gap: 10px;
     height: 100%;
@@ -120,14 +120,32 @@ a.nav-link:hover {
 }
 
 .watchlist-container{ 
-    margin: 20px;
-    height: 100%;
-    background-color: var(--GREEN_HIGHLIGHT);
+    margin:15px 20px 0px 20px;
+    max-height: 80%;
     border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding-bottom: 1px;
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    overflow-y: scroll;
+}
 
+.watchlist-header{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 15px 20px 15px 20px;
+    margin: 0px;
+    border-bottom: 1px solid lightgrey;
+    
+}
+
+.watchlist-item{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin:30px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 
@@ -357,19 +375,6 @@ a.nav-link:hover {
     padding: 5px;
 }
 
-/* .holding-row-headers {
-    display: grid;
-    grid-template-areas:
-      "symbol shares cPrice pPrice return equity";
-    grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    height: 100%;
-    width: 90%;
-    font-size: 14px;
-    border-top: 1px solid black;
-    padding: 5px;
-} */
-
 .holding-row {
     display: grid;
     grid-template-areas:
@@ -396,6 +401,7 @@ a.nav-link:hover {
 .holding-row a:hover {
     color: black;
 }
+
 
 
 

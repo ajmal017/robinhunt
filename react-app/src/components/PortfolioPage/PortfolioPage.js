@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
+import Watchlist from './Watchlist';
 
 const PortfolioPage = () => {
     const dispatch = useDispatch()
@@ -57,13 +58,7 @@ const PortfolioPage = () => {
             </div>
             <div className="portfolio-watchlist">
                 <div className='watchlist-container'>
-                    <h2>Watchlist</h2>
-                    <div>
-                        <a style={{'color':'var(--CHARCOAL)'}} href='/stocks/FB'>Facebook</a>
-                    </div>
-                    <div>
-                        <a style={{ 'color': 'var(--CHARCOAL)' }} href='/stocks/TSLA'>Tesla</a>
-                    </div>
+                    <Watchlist />
                 </div>
             </div>
         </div>
