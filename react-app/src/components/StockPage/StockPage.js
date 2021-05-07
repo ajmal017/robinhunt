@@ -20,11 +20,10 @@ const StockPage = () => {
 
     let lineSeries, priceSocket, pastData, prevClose;
     const currencyFormatter = (num) => Number(num).toFixed(2)
-
+    
     const initialize = async () => {
         // identify placement of chart in DOM
         let container = chartContainer.current
-
         // create chart 
         let chart = createChart(container, {
             width: 700,
@@ -94,7 +93,6 @@ const StockPage = () => {
             crosshairMarkerRadius: 3,
         });
     }
-    
 
     // grab historical chart data (1min) || API: https://www.alphavantage.co/documentation/
     const fetchHistoricalData = async (series) => {
@@ -177,8 +175,15 @@ const StockPage = () => {
         }
     }
 
+    // remove container content on ticker change 
+    const removeChart = () => {
+        chartContainer.current.innerHTML = ''
+        priceContainer.current.innerHTML = '...loading'
+    }
+
     // load pre-req async functions in order first
     const loadSeries = async() => {
+        await removeChart()
         await initialize()
         await fetchHistoricalData(lineSeries)
         await fetchCompanyProfile()
@@ -192,9 +197,10 @@ const StockPage = () => {
 
     // run all functions on load in correct order via useEffect
     useEffect(() => {
+        unmountSocket(priceSocket) // if ticker changes from search, unmount existing socket then reload
         load()
         return () => unmountSocket(priceSocket)
-    }, [])
+    }, [ticker])
     
     return (
         <div className='stock-page-container'>

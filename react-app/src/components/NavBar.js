@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
+import AsyncSearch from './AsyncSearch'
 
 const NavBar = ({ setAuthenticated }) => {
   const user = useSelector( state => state.session.user )
@@ -24,9 +25,7 @@ const NavBar = ({ setAuthenticated }) => {
         <a href='/'><img className='nav-logo' src="https://github.com/eramsay20/robinhunt/blob/main/assets/banner.png?raw=true"></img></a>
       </div>
       <div style={{ 'justifyContent': 'flex-start' }} className="nav-item">
-          <form>
-            <input className='search-bar' placeholder='    Search'></input>
-          </form>
+          <AsyncSearch />
       </div>
       <div className="nav-item">
       </div>
