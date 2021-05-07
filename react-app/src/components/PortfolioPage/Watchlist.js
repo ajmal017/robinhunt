@@ -15,12 +15,11 @@ const Watchlist = ({watchlist}) => {
                 <h4 className='watchlist-header'>Watchlist</h4>
             </div>
             <div>
-                <WatchlistItem stock={stock} price={price}/>
-                <WatchlistItem stock={stock} price={price} />
-                <WatchlistItem stock={stock} price={price} />
-                <WatchlistItem stock={stock} price={price}/>
-                <WatchlistItem stock={stock} price={price} />
-                <WatchlistItem stock={stock} price={price} />
+                <WatchlistItem stock={'AAPL'} price={125.37}/>
+                <WatchlistItem stock={'TSLA'} price={653.23} />
+                <WatchlistItem stock={'FB'} price={321.58} />
+                <WatchlistItem stock={'NFLX'} price={554.39}/>
+                <WatchlistItem stock={'AMZN'} price={3312.89} />
             </div>
         </div>
     )

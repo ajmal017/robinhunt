@@ -106,6 +106,8 @@ a.nav-link:hover {
     height: 100%;
     width: 100%;
     margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
     overflow-y: scroll;
 }
 
@@ -160,7 +162,7 @@ a.nav-link:hover {
         'news';
 
     grid-template-columns: 1fr;
-    grid-template-rows: 250px 1fr 1fr;
+    grid-template-rows: 225px 1fr 1fr;
     grid-gap: 10px;
     height: 100vh;
     width: 100%;
@@ -176,7 +178,7 @@ a.nav-link:hover {
     display: grid;
     grid-template-areas:
         'summary chart';
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 300px 400px;
     grid-template-rows: 1fr;
 }
 
@@ -184,13 +186,22 @@ a.nav-link:hover {
     background-color: var(--GREY_SHADOW);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    padding-left: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
     padding-top: 20px;
+    /* margin-left: 20px; */
+
+}
+
+.portfolio-item-div {
+    padding-right: 30px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .portfolio-summary-item {
     margin: 0px;
-    padding: 0px 10px 5px 10px;
+    padding: 0px 0px 10px 0px;
     font-size: 12px;
     line-height: 12px;
 }
@@ -416,7 +427,7 @@ a.nav-link:hover {
 /* AssetHolding  */
 .holding-table {
     width: 100%;
-    margin: 0px 20px 0px 20px;
+    margin: 0px 0px 0px 0px;
 }
 
 .holding-table-labels {
@@ -428,7 +439,7 @@ a.nav-link:hover {
     grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     height: 100%;
-    width: 90%;
+    width: 98%;
     font-size: 14px;
     border-top: 1px solid black;
     padding: 5px;
@@ -441,7 +452,7 @@ a.nav-link:hover {
     grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     height: 100%;
-    width: 90%;
+    width: 98%;
     font-size: 14px;
     border-top: 1px solid black;
     padding: 5px;
@@ -550,4 +561,5 @@ a.nav-link:hover {
 
 .grey-underline {
     border-bottom: 2px solid var(--BOX_SHADOW);
+    margin-bottom: 20px;
 }

@@ -10,6 +10,7 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
+    const [returnPercent, setReturnPercent] = useState(0)
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
@@ -38,9 +39,11 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
         let fPortValue = currencyFormatter(portfolioValue)
         setPortValue(fPortValue)
 
-        if (portValue > 0 && capInvested > 0) {
-            myReturn = currencyFormatter(portValue - capInvested)
+        if (holdingValue > 0 && capInvested > 0) {
+            let myReturn = currencyFormatter(holdingValue - capInvested)
             setTotalReturn(myReturn)
+            let percentage = Number((myReturn / capInvested)*100).toFixed(2);
+            setReturnPercent(percentage)
         }
     }, [equityObj, myReturn])
 
@@ -54,19 +57,31 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
         <div className='portfolio-content-container'>
             <div className="chart-container">
                 <div className='portfolio-summary'>
-                    <h3 style={{ 'paddingBottom': '10px' }} className="indent-heading min-margin">Portfolio Value: ${portValue}</h3>
-                    <p className="portfolio-summary-item">Cash Balance: ${cashBalance}</p>
-                    <p className="portfolio-summary-item">Est. Holdings Value: ${holdingValue}</p>
-                    <div style={{'paddingBottom':'10px'}} className="portfolio-summary-item">_______________________________</div>
-                    <p className="portfolio-summary-item">Current Value: ${portValue}</p>
-                    <p className="portfolio-summary-item">Capital Invested: ${capInvested}</p>
-                    <div style={{ 'paddingBottom': '10px' }} className="portfolio-summary-item">_______________________________</div>
-                    <h4 className="portfolio-summary-item">Total Return: ${totalReturn}</h4>
+                    <h3 style={{ 'paddingBottom': '20px', 'fontSize':'18px' }} className="indent-heading min-margin">Portfolio Value: ${portValue}</h3>
+                    
+                    <div className='portfolio-item-div'>
+                        <p className="portfolio-summary-item">Cash Balance:</p>
+                        <p className="portfolio-summary-item">${cashBalance}</p>
+                    </div>
+                    <div className='portfolio-item-div grey-underline'>
+                        <p className="portfolio-summary-item">Est. Holdings Value: </p>
+                        <p className="portfolio-summary-item">${holdingValue}</p>
+                    </div>
+                    
+                    <div className='portfolio-item-div grey-underline'>
+                        <p className="portfolio-summary-item">Capital Invested: </p>
+                        <p className="portfolio-summary-item">${capInvested}</p>
+                    </div>
+    
+                    <div className='portfolio-item-div'>
+                        <h4 style={{'fontSize': '15px'}} className="portfolio-summary-item">Total Return: </h4>
+                        <h4 style={{ 'fontSize': '15px' }} className="portfolio-summary-item">${totalReturn}</h4>
+                    </div>
                 </div>
                 {chartDisplay}
             </div>
             <div className="holdings-container">
-                <h2 className="indent-heading">Holdings</h2>
+                <h2 className="">Holdings</h2>
                 <table className="holding-table">
                     <thead>
                         <tr className="holding-table-labels">
@@ -88,7 +103,7 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
                 </table>
             </div>
             <div className="news-container">
-                <h2 className="indent-heading">News</h2>
+                <h2 className="">News</h2>
                 {news && news.map(article => (
                     <NewsCard key={article.id} article={article} />
                 ))}
