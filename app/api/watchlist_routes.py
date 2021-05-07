@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required
-from app.models import Watchlist, WatchlistItem
+from app.models import Watchlist, Watchlist_Item
 
 
 watchlist_routes = Blueprint('watchlists', __name__)
