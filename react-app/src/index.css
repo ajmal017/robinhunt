@@ -322,6 +322,11 @@ a.nav-link:hover {
   height: 50px;
 }
 
+.company-summary {
+    padding-top: 10px;
+    max-height: 110px;
+    overflow-y: scroll;
+}
 
 
 

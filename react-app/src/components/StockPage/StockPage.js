@@ -13,6 +13,8 @@ const StockPage = () => {
     const chartContainer = useRef(null)
     const priceContainer = useRef(null)
     const [profile, setProfile] = useState({})
+    const [summary, setSummary] = useState({})
+    const [financials, setFinancials] = useState({})
     const [lastPrice, setLastPrice] = useState(0)
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
@@ -116,12 +118,34 @@ const StockPage = () => {
         }
     }
 
+    //!! NOTE: API LIMITED TO 5 CALLS PER MINUTE  !!// 
+    const fetchCompanyOverview = async (series) => {             
+        // Alpha Vantage API KEY: 09CXQ7G0M8U90O13
+        let key = '09CXQ7G0M8U90O13'
+        let response = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${key}`)
+        if (response.ok) {
+            let data = await response.json()
+            setSummary(data)
+        }
+    }
+
     // async function to fetch company profile info from Finnhub
     const fetchCompanyProfile = async() => {
         let response = await fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${ticker}&token=c27ut2aad3ic393ffql0`, { json: true })
         if(response.ok){
             let profileData = await response.json()
             setProfile(profileData)
+        }
+    }
+
+    // async function to fetch company financial data from Finnhub
+    const fetchCompanyFinancials = async () => {
+        let response = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all&token=c27ut2aad3ic393ffql0`, { json: true })
+        if (response.ok) {
+            let financialData = await response.json()
+            let financialMetrics = financialData.metric
+            // console.log(financialMetrics)
+            setFinancials(financialMetrics)
         }
     }
 
@@ -186,7 +210,9 @@ const StockPage = () => {
         await removeChart()
         await initialize()
         await fetchHistoricalData(lineSeries)
+        await fetchCompanyOverview()
         await fetchCompanyProfile()
+        await fetchCompanyFinancials()
     }
 
     // then create final load function to load initial series data, then establish the websocket connection
@@ -214,44 +240,63 @@ const StockPage = () => {
                     <div className='grey-underline'>
                         <h2 className=''> About</h2>
                     </div>
+                    <div className='company-summary'>{summary.Description}</div>
                     <div className='info-container'>
                         <div className='flex-container-stack'>
                             <img alt='profile-logo' className='profile-logo' src={profile.logo}></img>
                         </div>
-                        <div className='flex-container-stack'>
-                            <h4 className='min-margin'>Mkt Cap</h4>
-                            <p>{Number(profile.marketCapitalization / 1000).toFixed(2)}B</p>
-                        </div>
                         <div className='flex-container-stack min-margin'>
-                            <h4 className='min-margin'>Website</h4>
-                            <a href={profile.weburl}>Website Link</a>
+                            <h4 className='min-margin'>About</h4>
+                            <a href={profile.weburl}>{profile.name}</a>
                         </div>
                         <div className='flex-container-stack min-margin'>
                             <h4 className='min-margin'>Industry</h4>
                             <p>{profile.finnhubIndustry}</p>
                         </div>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>Mkt Cap</h4>
+                            <p>{Number(profile.marketCapitalization / 1000).toFixed(2)}B</p>
+                        </div>
                     </div>
                 </div>
                 <div style={{'width':'95%'}}>
-                    <div style={{'paddingTop':'50px'}} className='grey-underline'>
-                        <h2 className=''> Key Statistics (TBD)</h2>
+                    <div className='grey-underline'>
+                        <h2 className=''> Key Statistics</h2>
                     </div>
                     <div className='info-container'>
                         <div className='flex-container-stack'>
-                            <h4 className='min-margin'>stat</h4>
-                            <p>--</p>
+                            <h4 className='min-margin'>Beta</h4>
+                            <p>{Number(financials.beta).toFixed(2)}</p>
                         </div>
                         <div className='flex-container-stack'>
-                            <h4 className='min-margin'>stat</h4>
-                            <p>--</p>
+                            <h4 className='min-margin'>EPS</h4>
+                            <p>{Number(financials.epsNormalizedAnnual).toFixed(2)}</p>
                         </div>
                         <div className='flex-container-stack min-margin'>
-                            <h4 className='min-margin'>stat</h4>
-                            <p>--</p>
+                            <h4 className='min-margin'>P/E Ratio (TTM)</h4>
+                            <p>{Number(financials.peBasicExclExtraTTM).toFixed(2)}</p>
                         </div>
                         <div className='flex-container-stack min-margin'>
-                            <h4 className='min-margin'>stat</h4>
-                            <p>--</p>
+                            <h4 className='min-margin'>52 Week Range</h4>
+                            <p>{Number(financials['52WeekLow']).toFixed(2)} - {Number(financials['52WeekHigh']).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div className='info-container'>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>Quick (Y)</h4>
+                            <p>{Number(financials.quickRatioAnnual).toFixed(2)}</p>
+                        </div>
+                        <div className='flex-container-stack min-margin'>
+                            <h4 className='min-margin'>ROI (Y)</h4>
+                            <p>{Number(financials.roiAnnual).toFixed(2)}</p>
+                        </div>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>Div Yield (5Y)</h4>
+                            <p>{Number(financials.dividendYield5Y).toFixed(2)}</p>
+                        </div>
+                        <div className='flex-container-stack'>
+                            <h4 className='min-margin'>Div Growth (5Y)</h4>
+                            <p>{Number(financials.dividendGrowthRate5Y).toFixed(2)}%</p>
                         </div>
                     </div>
                 </div>
@@ -299,3 +344,136 @@ export default StockPage;
 //     { time: 1557136800, value: 228.89 },
 //     { time: 1557140400, value: 229.05 },
 // ]
+
+// FINANCIALS OUTPUTS
+// "metric": {
+// "10DayAverageTradingVolume": 96.16453,
+// "13WeekPriceReturnDaily": -4.36016,
+// "26WeekPriceReturnDaily": 11.43976,
+// "3MonthAverageTradingVolume": 2130.6997,
+// "52WeekHigh": 145.09,
+// "52WeekHighDate": "2021-01-25",
+// "52WeekLow": 74.7175,
+// "52WeekLowDate": "2020-05-06",
+// "52WeekPriceReturnDaily": 72.20056,
+// "5DayPriceReturnDaily": -4.10241,
+// "assetTurnoverAnnual": 0.82884,
+// "assetTurnoverTTM": 0.98974,
+// "beta": 1.20907,
+// "bookValuePerShareAnnual": 3.84873,
+// "bookValuePerShareQuarterly": 4.1458,
+// "bookValueShareGrowth5Y": -6.37004,
+// "capitalSpendingGrowth5Y": -8.64702,
+// "cashFlowPerShareAnnual": 3.9061,
+// "cashFlowPerShareTTM": 5.07741,
+// "cashPerSharePerShareAnnual": 5.35691,
+// "cashPerSharePerShareQuarterly": 4.18511,
+// "currentDividendYieldTTM": 0.64012,
+// "currentEv/freeCashFlowAnnual": 45.87887,
+// "currentEv/freeCashFlowTTM": 34.27354,
+// "currentRatioAnnual": 1.3636,
+// "currentRatioQuarterly": 1.14175,
+// "dividendGrowthRate5Y": 9.83445,
+// "dividendPerShare5Y": 0.674,
+// "dividendPerShareAnnual": 0.795,
+// "dividendYield5Y": 1.16156,
+// "dividendYieldIndicatedAnnual": 0.68696,
+// "dividendsPerShareTTM": 0.82,
+// "ebitdPerShareTTM": 5.81037,
+// "ebitdaCagr5Y": -1.0971,
+// "ebitdaInterimCagr5Y": 4.92326,
+// "epsBasicExclExtraItemsAnnual": 3.30859,
+// "epsBasicExclExtraItemsTTM": 4.50369,
+// "epsExclExtraItemsAnnual": 3.27535,
+// "epsExclExtraItemsTTM": 4.45645,
+// "epsGrowth3Y": 12.47869,
+// "epsGrowth5Y": 7.28691,
+// "epsGrowthQuarterlyYoy": 118.6195,
+// "epsGrowthTTMYoy": 39.744,
+// "epsInclExtraItemsAnnual": 3.27535,
+// "epsInclExtraItemsTTM": 4.45645,
+// "epsNormalizedAnnual": 3.27535,
+// "focfCagr5Y": 0.3639,
+// "freeCashFlowAnnual": 59284,
+// "freeCashFlowPerShareTTM": 4.43816,
+// "freeCashFlowTTM": 76246,
+// "freeOperatingCashFlow/revenue5Y": 18.85883,
+// "freeOperatingCashFlow/revenueTTM": 23.43104,
+// "grossMargin5Y": 38.3595,
+// "grossMarginAnnual": 38.23325,
+// "grossMarginTTM": 39.88126,
+// "inventoryTurnoverAnnual": 41.52296,
+// "inventoryTurnoverTTM": 45.74535,
+// "longTermDebt/equityAnnual": 151.9827,
+// "longTermDebt/equityQuarterly": 157.047,
+// "marketCapitalization": 2137686,
+// "monthToDatePriceReturnDaily": -2.55591,
+// "netDebtAnnual": 22154,
+// "netDebtInterim": 51811,
+// "netIncomeEmployeeAnnual": 404302.8,
+// "netIncomeEmployeeTTM": 519122.4,
+// "netInterestCoverageAnnual": null,
+// "netInterestCoverageTTM": null,
+// "netMarginGrowth5Y": -1.75179,
+// "netProfitMargin5Y": 21.50219,
+// "netProfitMarginAnnual": 20.91361,
+// "netProfitMarginTTM": 23.45101,
+// "operatingMargin5Y": 25.89906,
+// "operatingMarginAnnual": 24.14731,
+// "operatingMarginTTM": 27.32064,
+// "payoutRatioAnnual": 24.53711,
+// "payoutRatioTTM": 18.62379,
+// "pbAnnual": 33.28369,
+// "pbQuarterly": 30.89878,
+// "pcfShareTTM": 24.50687,
+// "peBasicExclExtraTTM": 26.91349,
+// "peExclExtraAnnual": 39.11032,
+// "peExclExtraHighTTM": 35.67625,
+// "peExclExtraTTM": 28.74485,
+// "peExclLowTTM": 10.90841,
+// "peInclExtraTTM": 28.74485,
+// "peNormalizedAnnual": 39.11032,
+// "pfcfShareAnnual": 36.05839,
+// "pfcfShareTTM": 28.03669,
+// "pretaxMargin5Y": 26.59841,
+// "pretaxMarginAnnual": 24.43983,
+// "pretaxMarginTTM": 27.54344,
+// "priceRelativeToS&P50013Week": -12.10344,
+// "priceRelativeToS&P50026Week": -7.92374,
+// "priceRelativeToS&P5004Week": -1.94981,
+// "priceRelativeToS&P50052Week": 18.52101,
+// "priceRelativeToS&P500Ytd": -12.99191,
+// "psAnnual": 7.78714,
+// "psTTM": 6.56929,
+// "ptbvAnnual": 32.71684,
+// "ptbvQuarterly": 30.90123,
+// "quickRatioAnnual": 1.32507,
+// "quickRatioQuarterly": 1.09269,
+// "receivablesTurnoverAnnual": 14.06111,
+// "receivablesTurnoverTTM": 19.01569,
+// "revenueEmployeeAnnual": 1933204,
+// "revenueEmployeeTTM": 2213646,
+// "revenueGrowth3Y": 6.19294,
+// "revenueGrowth5Y": 3.27041,
+// "revenueGrowthQuarterlyYoy": 53.62612,
+// "revenueGrowthTTMYoy": 21.42876,
+// "revenuePerShareAnnual": 15.66132,
+// "revenuePerShareTTM": 18.94139,
+// "revenueShareGrowth5Y": 9.19987,
+// "roaRfy": 17.33413,
+// "roaa5Y": 15.67208,
+// "roae5Y": 48.47848,
+// "roaeTTM": 103.4003,
+// "roeRfy": 73.68556,
+// "roeTTM": 23.21042,
+// "roi5Y": 22.05595,
+// "roiAnnual": 25.44284,
+// "roiTTM": 33.53747,
+// "tangibleBookValuePerShareAnnual": 3.84873,
+// "tangibleBookValuePerShareQuarterly": 4.1458,
+// "tbvCagr5Y": -9.95011,
+// "totalDebt/totalEquityAnnual": 173.0926,
+// "totalDebt/totalEquityQuarterly": 175.8435,
+// "totalDebtCagr5Y": 11.94642,
+// "yearToDatePriceReturnDaily": -3.45919
+// },
