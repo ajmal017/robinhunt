@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 
-const AssetHolding = ({ stock, price }) => {
+const WatchlistItem = ({ stock, price }) => {
 
     // get watchlist items on page load, pass here
 
@@ -17,4 +17,4 @@ const AssetHolding = ({ stock, price }) => {
     )
 }
 
-export default AssetHolding;
+export default WatchlistItem;
