@@ -235,9 +235,63 @@ a.nav-link:hover {
     background-color: skyblue;
 }
 
-.stock-order{ 
+.stock-order-container{ 
     grid-area: order; 
-    background-color: skyblue;
+    /* background-color: skyblue; */
+    margin:15px 15px 10px 10px;
+    max-height: 70%;
+    border-radius: 5px;
+    padding:0px;
+    box-shadow: 1px 1px 15px 2px lightgrey;
+    overflow-y: scroll;
+}
+
+
+
+/* STOCK ORDER FORM */
+
+.order-header{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 15px 20px 15px 20px;
+    margin: 0px;
+    border-bottom: 1px solid lightgrey;
+    
+}
+
+.order-input{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 20px 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.order-input input{ 
+    text-align: right;
+    padding: 8px 2px 8px 2px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+
+.order-input input:focus{ 
+    border: 1px solid var(--GREEN_TEXT);
+    background-color: var(--WHITE);
+}
+
+.order-button button{
+    border: 1px solid var(--GREEN_TEXT);
+    background-color: var(--GREEN_TEXT);
+    border-radius: 5px;
+    color: var(--WHITE);
+    font-weight: bold;
+    padding: 15px 70px 15px 70px;
+    margin-top: 20px;
 }
 
 

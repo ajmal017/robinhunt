@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
+import OrderForm from './OrderForm';
 
 // https://finnhub.io/docs/api/websocket-trades
 // https://finnhub.io/docs/api/quote
@@ -12,6 +13,7 @@ const StockPage = () => {
     const chartContainer = useRef(null)
     const priceContainer = useRef(null)
     const [profile, setProfile] = useState({})
+    const [lastPrice, setLastPrice] = useState(0)
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
     // const [socket, setSocket] = useState(null);
@@ -102,7 +104,7 @@ const StockPage = () => {
         if (response.ok) {
             let data = await response.json()
             let seriesData = data['Time Series (1min)'] 
-            console.log(seriesData)
+            // console.log(seriesData)
             let historical = []
             for (let key in seriesData){
                 let datetime = new Date(key).getTime()/1000; // convert to unix timestamp for lwChart
@@ -131,7 +133,7 @@ const StockPage = () => {
         // create websocket connection to finnhub using my API key
         priceSocket = new WebSocket('wss://ws.finnhub.io?token=c27ut2aad3ic393ffql0');
         // await setSocket(priceSocket)
-        console.log('init set socket')
+        // console.log('init set socket')
 
         // Connection opened -> Subscribe
         priceSocket.addEventListener('open', function (event) {
@@ -152,14 +154,16 @@ const StockPage = () => {
                     let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
                     priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
-                    console.log('FIRST', time)
+                    // setLastPrice(newPricePoint['value'].toFixed(2))
+                    // console.log('FIRST', time)
                 } else if (lastTime < time){ // otherwise, check that new time is greater than last time to avoid errors
                     lastTime = time
                     let newPricePoint = {'time':time, 'value':price}      
                     let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
                     priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
-                    console.log('UPDATED', time)
+                    setLastPrice(newPricePoint['value'])
+                    // console.log('UPDATED', time)
                 } 
             }
         });
@@ -246,8 +250,8 @@ const StockPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="stock-order flex-container">
-                <h3>Order Form</h3>
+            <div className="stock-order-container">
+                <OrderForm stock={ticker} price={lastPrice}/>
             </div>
         </div>
     )
