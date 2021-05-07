@@ -9,7 +9,7 @@ const NavBar = ({ setAuthenticated }) => {
 
   const authLinks = (
     <div className='flex-container'>
-      <a className='nav-link' to="/" exact={true}>
+      <a className='nav-link' href="/" exact={true}>
         Portfolio
       </a>
       <LogoutButton />

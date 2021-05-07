@@ -11,7 +11,7 @@ const WatchlistItem = ({ stock, price }) => {
                 <p><a href={`/stocks/${stock}`}>{stock}</a></p>
             </div>
             <div>
-                <p>{price}</p>
+                <p>${Number(price).toFixed(2)}</p>
             </div>
         </div>
     )
