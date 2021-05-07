@@ -29,36 +29,36 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-        <Switch>
-          <ProtectedRoute path="/" exact={true}>
-            <div className='app-container'>
-              <div className="app-header">
-                <NavBar />
+      <BrowserRouter>
+          <Switch>
+            <ProtectedRoute path="/" exact={true}>
+              <div className='app-container'>
+                <div className="app-header">
+                  <NavBar />
+                </div>
+                <div className="app-main flex-container">
+                  <PortfolioPage />
+                </div>
               </div>
-              <div className="app-main flex-container">
-                <PortfolioPage />
+            </ProtectedRoute>
+            <Route path="/login" exact={true}>
+                <LoginForm/>
+            </Route>
+            <Route path="/signup" exact={true}>
+                <SignUpForm />
+            </Route>
+            <Route path="/stocks/:ticker" exact={true}>
+              <div className='app-container'>
+                <div className="app-header">
+                  <NavBar />
+                </div>
+                <div className="app-main flex-container">
+                  <StockPage />
+                </div>
               </div>
-            </div>
-          </ProtectedRoute>
-          <Route path="/login" exact={true}>
-              <LoginForm/>
-          </Route>
-          <Route path="/signup" exact={true}>
-              <SignUpForm />
-          </Route>
-          <Route path="/stocks/:ticker" exact={true}>
-            <div className='app-container'>
-              <div className="app-header">
-                <NavBar />
-              </div>
-              <div className="app-main flex-container">
-                <StockPage />
-              </div>
-            </div>
-          </Route>
-        </Switch>
-    </BrowserRouter>
+            </Route>
+          </Switch>
+      </BrowserRouter>
   );
 }
 
