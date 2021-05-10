@@ -262,7 +262,7 @@ const StockPage = () => {
 
     const cancel = (e) => {
         e.preventDefault()
-        setWatchlistId(1)
+        // setWatchlistId(1)
         setListFormVisible(false)
     }
 

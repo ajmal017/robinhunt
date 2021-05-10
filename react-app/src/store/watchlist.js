@@ -6,8 +6,7 @@ const SET_WATCHLIST_ITEMS = 'watchlist/SET_WATCHLIST_ITEMS';
 const ADD_NEW_WATCHLIST = 'watchlist/ADD_NEW_WATCHLIST';
 const ADD_NEW_WATCHLIST_ITEM = 'watchlist/ADD_NEW_WATCHLIST_ITEM';
 const REMOVE_WATCHLIST_ITEM = 'watchlist/REMOVE_WATCHLIST_ITEM';
-// const REMOVE_TRADES = 'trade/REMOVE_TRADES';
-
+const REMOVE_WATCHLIST = 'watchlist/REMOVE_WATCHLIST';
 
 
 // Action Creators --------------------
@@ -17,9 +16,7 @@ const setWatchlistItems = watchlist_items => ({ type: SET_WATCHLIST_ITEMS, paylo
 const addNewWatchlist = watchlist => ({ type: ADD_NEW_WATCHLIST, payload: watchlist})
 const addNewWatchlistItem = watchlist_item => ({ type: ADD_NEW_WATCHLIST_ITEM, payload: watchlist_item })
 const removeWatchlistItem = watchlist_item => ({ type: REMOVE_WATCHLIST_ITEM, payload: watchlist_item })
-
-// const removeTrades = () => ({ type: REMOVE_TRADES })
-
+const removeWatchlist = watchlist => ({ type: REMOVE_WATCHLIST, payload: watchlist })
 
 
 // Thunks --------------------
@@ -64,7 +61,7 @@ export const addWatchlist = (name, user_id) => async (dispatch) => {
 
 export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
     // console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
-    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
+    const response = await fetch(`/api/watchlists/${watchlist_id}/items/${ticker}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ticker })
@@ -77,8 +74,8 @@ export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
 // DELETE 
 
 export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
-    console.log('WE IN THA THUNK: RM WL', watchlist_id, ticker)
-    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
+    // console.log('WE IN THA THUNK: RM WL', watchlist_id, ticker)
+    const response = await fetch(`/api/watchlists/${watchlist_id}/items/${ticker}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ticker })
@@ -87,6 +84,18 @@ export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) =>
     console.log(watchlist_item)
     if (watchlist_item.errors) return;
     dispatch(removeWatchlistItem(watchlist_item))
+}
+
+export const deleteWatchlist = (watchlist_id) => async (dispatch) => {
+    console.log('WE IN THA THUNK: DEL WL', watchlist_id)
+    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    const deleted_watchlist = await response.json();
+    console.log(deleted_watchlist)
+    if (deleted_watchlist.errors) return;
+    dispatch(removeWatchlist(deleted_watchlist))
 }
 
 
@@ -109,6 +118,7 @@ export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) =>
 const initialState = { watchlists: null, watchlist_items: null };
 
 export default function reducer(state = initialState, action) {
+    let allWatchlists, allWatchlistItems;
     switch (action.type) {
         case SET_WATCHLISTS:
             return { ...state, watchlists: action.payload };
@@ -117,19 +127,30 @@ export default function reducer(state = initialState, action) {
             return { ...state, watchlist_items: action.payload };
 
         case ADD_NEW_WATCHLIST:
-            const allWatchlists = [...state.watchlists]; // save new copy of existing WLs
+            allWatchlists = [...state.watchlists]; // save new copy of existing WLs
             allWatchlists.push(action.payload) // add newly created to copied array
             return { ...state, watchlists: allWatchlists}; // replace existing list with new list
         
         case ADD_NEW_WATCHLIST_ITEM:
-            let allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
+            allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
             allWatchlistItems.push(action.payload) // add newly created to copied array
             return { ...state, watchlist_items: allWatchlistItems }; // replace existing list with new list
         
         // case REMOVE_WATCHLIST_ITEM:
-        //     let allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
-        //     allWatchlistItems[action.payload] // add newly created to copied array
-        //     return { ...state, trades: null };
+        //     allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
+        //     let removedItem = action.payload
+        //     console.log(removedItem)
+        //     allWatchlistItems.filter(item => item.ticker !== action.payload.ticker) // remove recently deleted watchlist from state
+        //     return { ...state, watchlist_items: allWatchlistItems };
+
+        case REMOVE_WATCHLIST:
+            allWatchlists = [...state.watchlists]; // save new copy of existing WLs
+            allWatchlistItems = [...state.watchlist_items]
+            let removedWatchlist = action.payload
+            console.log(removedWatchlist)
+            allWatchlists.filter(list => list.id !== removedWatchlist.id) // remove recently deleted watchlist from state
+            allWatchlistItems.filter(item => item.watchlist_id !== removedWatchlist.id) // remove recently deleted watchlist from state
+            return { ...state, watchlist_items: allWatchlistItems, watchlists: allWatchlists};
         
         default:
             return state;
