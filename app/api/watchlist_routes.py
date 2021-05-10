@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required
 from app.forms import NewWatchlistForm
+from app.forms import NewWatchlistItemForm
 from app.models import db, Watchlist, Watchlist_Item
 
 
@@ -42,7 +43,7 @@ def get_watchlist_items(watchlist_id):
 
 # POST ROUTES 
 
-# /api/watchlists/:user_id/
+# /api/watchlists/
 @watchlist_routes.route('/', methods=['POST'])
 @login_required
 def add_watchlist():
@@ -57,3 +58,50 @@ def add_watchlist():
         db.session.commit()
         return watchlist.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+# /api/watchlists/:watchlist_id
+@watchlist_routes.route('/<int:watchlist_id>', methods=['POST'])
+@login_required
+def add_watchlist_item(watchlist_id):
+    form = NewWatchlistItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        watchlist_item = Watchlist_Item(
+            watchlist_id=watchlist_id,
+            ticker=form.data['ticker'],
+        )
+        db.session.add(watchlist_item)
+        db.session.commit()
+        return watchlist_item.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+# DELETE routes
+
+# /api/watchlists/:watchlist_id
+@watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
+@login_required
+def remove_watchlist_item(watchlist_id):
+    form = NewWatchlistItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        ticker=form.data['ticker']
+        watchlist_item = Watchlist_Item.query.filter(Watchlist_Item.ticker == ticker).first()
+        db.session.delete(watchlist_item)
+        db.session.commit()
+        return watchlist_item.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+# TBD
+# # /api/watchlists/
+# @watchlist_routes.route('/', methods=['DELETE'])
+# @login_required
+# def remove_watchlist():
+#     if form.validate_on_submit():
+#         name=form.data['name']
+#         watchlist = Watchlist.query.filter(Watchlist.name == name).first()
+#         db.session.delete(watchlist)
+#         db.session.commit()
+#         return watchlist.to_dict()
+#     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

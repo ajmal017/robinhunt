@@ -304,6 +304,57 @@ a.nav-link:hover {
     overflow-y: scroll;
 }
 
+.add-to-watchlist{ 
+    box-shadow: 1px 1px 15px 1px lightgrey;
+    border: 1px solid var(--GREEN_TEXT);
+    border-radius: 5px;
+    position: relative;
+    bottom: 100px;
+    left: 50px;
+    max-height: 30px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--GREEN_TEXT);
+    padding-top:10px;
+    /* padding-bottom: 0px; */
+    transition: background-color 400ms;
+}
+
+.add-to-watchlist:hover{ 
+    background-color: var(--GREEN_HIGHLIGHT)
+}
+
+.add-to-watchlist-select{ 
+    box-shadow: 1px 1px 15px 1px lightgrey;
+    border: 1px solid var(--GREEN_TEXT);
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    top: 30px;
+    right: 0px;
+    padding: 10px 10px 40px 10px;
+    color: var(--GREEN_TEXT);
+}
+
+.add-to-list-form > button{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-to-list-form > button{ 
+    margin-top: 5px;
+}
+
 
 
 /* STOCK ORDER FORM */

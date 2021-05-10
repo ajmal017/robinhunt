@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
+import { loadWatchlists, loadWatchlistItems, addWatchlistItem, deleteWatchlistItem } from '../../store/watchlist';
 import OrderForm from './OrderForm';
 
 // https://finnhub.io/docs/api/websocket-trades
@@ -10,12 +11,21 @@ import OrderForm from './OrderForm';
 
 const StockPage = () => {
     const { ticker } = useParams()
+    const dispatch = useDispatch()
     const chartContainer = useRef(null)
     const priceContainer = useRef(null)
     const [profile, setProfile] = useState({})
     const [summary, setSummary] = useState({})
     const [financials, setFinancials] = useState({})
     const [lastPrice, setLastPrice] = useState(0)
+
+    
+    const user = useSelector(state => state.session.user)
+    const watchlists = useSelector(state => state.watchlist.watchlists)
+
+    const [watchlistId, setWatchlistId] = useState(1)
+    const [listFormVisible, setListFormVisible] = useState(false)
+    
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
     // const [socket, setSocket] = useState(null);
@@ -227,7 +237,41 @@ const StockPage = () => {
         load()
         return () => unmountSocket(priceSocket)
     }, [ticker])
-    
+
+    useEffect(() => {
+        if(user) dispatch(loadWatchlists(user.id))
+        dispatch(loadWatchlistItems(watchlistId))
+    }, [user, watchlistId])
+
+
+
+    // WATCHLIST 
+
+    let display;
+    listFormVisible ? display = '' : display = 'none'
+
+    const showListForm = () => setListFormVisible(true)
+
+    const AddToListOnSubmit = (e) => {
+        e.preventDefault()
+        console.log(Number(watchlistId))
+        
+        dispatch(addWatchlistItem(Number(watchlistId), ticker))
+        setListFormVisible(false)
+    }
+
+    const cancel = (e) => {
+        e.preventDefault()
+        setWatchlistId(1)
+        setListFormVisible(false)
+    }
+
+    const remove = (e) => {
+        e.preventDefault()
+        dispatch(deleteWatchlistItem(Number(watchlistId), ticker))
+        setListFormVisible(false)
+    }
+
     return (
         <div className='stock-page-container'>
             <div className="stock-chart">
@@ -303,6 +347,21 @@ const StockPage = () => {
             </div>
             <div className="stock-order-container">
                 <OrderForm stock={ticker} price={lastPrice}/>
+            </div>
+            <div className="add-to-watchlist">
+                <p onClick={showListForm}>Update Watchlist</p>
+                <div style={{'display':`${display}`}} className="add-to-watchlist-select">
+                    <form className='add-to-list-form' onSubmit={AddToListOnSubmit}>
+                        <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
+                            {watchlists && watchlists.map(list => {
+                                return <option value={list.id}>{list.name}</option>
+                            })}
+                        </select>
+                        <button onClick={cancel}>Cancel</button>
+                        <button type='submit'>Add to List</button>
+                        <button onClick={remove}>Remove from List</button>
+                    </form>
+                </div>
             </div>
         </div>
     )

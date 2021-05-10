@@ -51,6 +51,14 @@ const PortfolioPage = () => {
         }
     }
 
+    const loadWatchlistPrices = async () => {
+        if (watchlist) {
+            let allPrices = trades.map(trade => getPrice(trade.ticker)) // returns array of promises
+            let priceData = await Promise.all(allPrices) // returns array of objects
+            setPrices(priceData)
+        }
+    }
+
     useEffect(() => {
         if (portfolioId) dispatch(loadTrades(portfolioId))
     }, [portfolioId])
@@ -87,6 +95,8 @@ const PortfolioPage = () => {
         setNewListName('')
         setNewListVisible(false)
     }
+
+    // RETURN RENDER
 
     return (
         <div className='portfolio-page-container'>

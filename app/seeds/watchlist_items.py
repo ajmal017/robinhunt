@@ -3,35 +3,25 @@ from app.models import db, Watchlist_Item
 def seed_watchlist_items():
     demo_watchlist_item_1 = Watchlist_Item(
         watchlist_id = 1,
-        ticker = 'AAPL',
+        ticker = 'ZEN',
     )
 
     demo_watchlist_item_2 = Watchlist_Item(
         watchlist_id = 1,
-        ticker = 'TSLA',
+        ticker = 'PYPL',
     )
 
     demo_watchlist_item_3 = Watchlist_Item(
         watchlist_id = 1,
-        ticker = 'FB',
+        ticker = 'NET',
     )
 
     demo_watchlist_item_4 = Watchlist_Item(
-        watchlist_id = 1,
-        ticker = 'NFLX',
-    )
-
-    demo_watchlist_item_5 = Watchlist_Item(
-        watchlist_id = 1,
-        ticker = 'AMZN',
-    )
-
-    demo_watchlist_item_6 = Watchlist_Item(
         watchlist_id = 2,
         ticker = 'CLOV',
     )
 
-    demo_watchlist_item_7 = Watchlist_Item(
+    demo_watchlist_item_5 = Watchlist_Item(
         watchlist_id = 2,
         ticker = 'CSTL',
     )
@@ -41,8 +31,6 @@ def seed_watchlist_items():
     db.session.add(demo_watchlist_item_3)
     db.session.add(demo_watchlist_item_4)
     db.session.add(demo_watchlist_item_5)
-    db.session.add(demo_watchlist_item_6)
-    db.session.add(demo_watchlist_item_7)
     db.session.commit()
 
 
