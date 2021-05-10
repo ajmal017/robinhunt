@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
-import { loadWatchlists, loadWatchlistItems } from '../../store/watchlist';
+import { loadWatchlists, loadWatchlistItems, addWatchlist } from '../../store/watchlist';
 import Watchlist from './Watchlist';
 
 const PortfolioPage = () => {
@@ -78,7 +78,8 @@ const PortfolioPage = () => {
     const newListOnSubmit = (e) => {
         e.preventDefault()
         console.log(newListName)
-        // dispatch()
+        // let payload = { 'name': newListName, 'user_id': userId }
+        dispatch(addWatchlist(newListName, userId))
     }
 
     const newListOnCancel = (e) => {
