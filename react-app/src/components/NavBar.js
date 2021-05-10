@@ -6,6 +6,7 @@ import AsyncSearch from './AsyncSearch'
 
 const NavBar = ({ setAuthenticated }) => {
   const user = useSelector( state => state.session.user )
+  const feather = require('../front-assets/feather_icon.png')
 
   const authLinks = (
     <div className='flex-container'>
@@ -22,7 +23,7 @@ const NavBar = ({ setAuthenticated }) => {
   return (
     <div className='nav-container'>
       <div style={{ 'justifyContent': 'flex-end', 'paddingRight':'15px' }}className="nav-item">
-        <a href='/'><img className='nav-logo' src="https://github.com/eramsay20/robinhunt/blob/main/assets/banner.png?raw=true"></img></a>
+        <a href='/'><img className='nav-logo' src={feather}></img></a>
       </div>
       <div style={{ 'justifyContent': 'flex-start' }} className="nav-item">
           <AsyncSearch />

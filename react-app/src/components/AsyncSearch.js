@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import AsyncSelect from 'react-select/async'
-// import history from '../history';
 
 const AsyncSearch = () => {
     const history = useHistory()
@@ -14,7 +13,6 @@ const AsyncSearch = () => {
 
     const handleChange = value => {
         let symbol = value['displaySymbol']
-        // setSelectedValue(symbol)
         history.push(`/stocks/${symbol}`)
     };
 
@@ -27,7 +25,7 @@ const AsyncSearch = () => {
 
     return (
        
-        <div style={{'width':'400px'}}>
+        <div className="search-bar">
             {/* <pre>Input Value: "{inputValue}"</pre> */}
             <AsyncSelect
                 cacheOptions
