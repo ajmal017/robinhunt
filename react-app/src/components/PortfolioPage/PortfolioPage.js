@@ -12,6 +12,8 @@ const PortfolioPage = () => {
     const [news, setNews] = useState([])
     const [prices, setPrices] = useState(null)
     const [watchlistId, setWatchlistId] = useState(1)
+    const [newListName, setNewListName] = useState("")
+    const [newListVisible, setNewListVisible] = useState(false)
 
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
@@ -52,10 +54,6 @@ const PortfolioPage = () => {
     useEffect(() => {
         if (portfolioId) dispatch(loadTrades(portfolioId))
     }, [portfolioId])
-
-    useEffect(() => {
-       dispatch(loadWatchlistItems(watchlistId))
-    }, [watchlistId])
     
     useEffect(() => {
         if(userId) dispatch(loadPortfolio(userId))
@@ -64,6 +62,30 @@ const PortfolioPage = () => {
         getNews()
         loadPrices()
     }, [dispatch, trades, userId])
+
+
+    // WATCHLIST RELATED
+
+    useEffect(() => {
+        dispatch(loadWatchlistItems(watchlistId))
+    }, [watchlistId])
+
+    let display;
+    newListVisible ? display = '' : display = 'none'
+    
+    const showNewListForm = () => setNewListVisible(true)
+
+    const newListOnSubmit = (e) => {
+        e.preventDefault()
+        console.log(newListName)
+        // dispatch()
+    }
+
+    const newListOnCancel = (e) => {
+        e.preventDefault()
+        setNewListName('')
+        setNewListVisible(false)
+    }
 
     return (
         <div className='portfolio-page-container'>
@@ -75,8 +97,17 @@ const PortfolioPage = () => {
                     <div>
                         <div className='flex-container-between watchlist-header'>
                             <div>Lists</div>
-                            <img style={{'width':'13px'}} src={plus_icon}></img>
+                            <img style={{'width':'12px'}} src={plus_icon} onClick={showNewListForm}></img>
                         </div>
+                        <form style={{'display':`${display}`}} className='new-watchlist' onSubmit={newListOnSubmit}>
+                            <div className='flex-container new-watchlist-section'>
+                                <input style={{'marginLeft': '5px'}} className='' value={newListName} type='text' placeholder='List name...' onChange={(e) => setNewListName(e.target.value)}></input>
+                            </div>
+                            <div className='flex-container-around new-watchlist-section'>
+                                <button onClick={newListOnCancel}>Cancel</button>
+                                <button type="submit">Create List</button>
+                            </div>
+                        </form>
                         <form className='watchlist-selection'>
                             <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
                                 { watchlists && watchlists.map(list => {
