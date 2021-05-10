@@ -4,6 +4,7 @@
 const SET_WATCHLISTS = 'watchlist/SET_WATCHLISTS';
 const SET_WATCHLIST_ITEMS = 'watchlist/SET_WATCHLIST_ITEMS';
 const ADD_NEW_WATCHLIST = 'watchlist/ADD_NEW_WATCHLIST';
+const ADD_NEW_WATCHLIST_ITEM = 'watchlist/ADD_NEW_WATCHLIST_ITEM';
 // const REMOVE_TRADES = 'trade/REMOVE_TRADES';
 
 
@@ -11,7 +12,9 @@ const ADD_NEW_WATCHLIST = 'watchlist/ADD_NEW_WATCHLIST';
 // Action Creators --------------------
 const setWatchlists = watchlists => ({ type: SET_WATCHLISTS, payload: watchlists })
 const setWatchlistItems = watchlist_items => ({ type: SET_WATCHLIST_ITEMS, payload: watchlist_items })
+
 const addNewWatchlist = watchlist => ({ type: ADD_NEW_WATCHLIST, payload: watchlist})
+const addNewWatchlistItem = watchlist_item => ({ type: ADD_NEW_WATCHLIST_ITEM, payload: watchlist_item })
 
 // const removeTrades = () => ({ type: REMOVE_TRADES })
 
@@ -57,6 +60,18 @@ export const addWatchlist = (name, user_id) => async (dispatch) => {
     dispatch(addNewWatchlist(watchlist))
 }
 
+export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
+    console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
+    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticker })
+    })
+    const watchlist_item = await response.json();
+    if (watchlist_item.errors) return;
+    dispatch(addNewWatchlistItem(watchlist_item))
+}
+
 
 
 
@@ -80,14 +95,23 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_WATCHLISTS:
             return { ...state, watchlists: action.payload };
+
         case SET_WATCHLIST_ITEMS:
             return { ...state, watchlist_items: action.payload };
+
         case ADD_NEW_WATCHLIST:
             const allWatchlists = [...state.watchlists]; // save new copy of existing WLs
             allWatchlists.push(action.payload) // add newly created to copied array
             return { ...state, watchlists: allWatchlists}; // replace existing list with new list
-        // case REMOVE_WATCHLIST:
+        
+        case ADD_NEW_WATCHLIST_ITEM:
+            const allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
+            allWatchlistItems.push(action.payload) // add newly created to copied array
+            return { ...state, watchlist_items: allWatchlistItems }; // replace existing list with new list
+        
+            // case REMOVE_WATCHLIST:
         //     return { ...state, trades: null };
+        
         default:
             return state;
     }
