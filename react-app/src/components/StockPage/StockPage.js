@@ -357,9 +357,9 @@ const StockPage = () => {
                                 return <option value={list.id}>{list.name}</option>
                             })}
                         </select>
-                        <button onClick={cancel}>Cancel</button>
                         <button type='submit'>Add to List</button>
                         <button onClick={remove}>Remove from List</button>
+                        <button onClick={cancel}>Cancel</button>
                     </form>
                 </div>
             </div>

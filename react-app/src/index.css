@@ -8,6 +8,7 @@
     --GREEN_HIGHLIGHT: #e5f9e6;
     --GREEN_TEXT: #40c802;
     --RED_TEXT: #f65004;
+    --DARK_RED: #b53a14;
     --GREY_SHADOW: #f9f7f7;
     --GREY_TEXT: #a2a2a2;
     --BOX_SHADOW: #e8e8eb;
@@ -153,8 +154,9 @@ a.nav-link:hover {
     font-size: 15px;
     border-radius: 5px;
     border: none;
-    padding: 10px 7px 10px 5px;
+    padding: 10px 5px 10px 5px;
     margin: 0px;
+    width: 80%;
 }
 
 
@@ -167,6 +169,27 @@ a.nav-link:hover {
     font-size: 14px;
     font-weight: bold;
 }
+
+.watchlist-button > button{
+    border: 1px solid var(--RED_TEXT);
+    background-color: var(--RED_TEXT);
+    border-radius: 5px;
+    color: var(--WHITE);
+    font-weight: bold;
+    padding: 5px 20px 5px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: background-color 400ms;
+}
+
+.watchlist-button > button:hover{
+    border: 1px solid var(--RED_TEXT);
+    background-color: var(--DARK_RED);
+}
+
+
+
+
 
 .new-watchlist{ 
     justify-content: space-between;
@@ -187,6 +210,7 @@ a.nav-link:hover {
     height: 10px;
     padding: 10px;
     border: 1px solid lightgrey;
+    
 }
 
 .new-watchlist-section > button{
@@ -341,18 +365,41 @@ a.nav-link:hover {
     position: relative;
     top: 30px;
     right: 0px;
-    padding: 10px 10px 40px 10px;
+    padding: 10px 10px 10px 10px;
     color: var(--GREEN_TEXT);
 }
 
-.add-to-list-form > button{ 
+.add-to-list-form { 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.add-to-list-form > button{ 
-    margin-top: 5px;
+.add-to-list-form > button { 
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+    transition: background-color 400ms, color 200ms;
+}
+
+.add-to-list-form > button:hover{ 
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    color: white;
+    background-color: var(--GREEN_TEXT)
+}
+
+.add-to-list-form > select{ 
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+    transition: background-color 400ms, color 200ms;
 }
 
 

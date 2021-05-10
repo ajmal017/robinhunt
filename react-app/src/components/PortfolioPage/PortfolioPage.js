@@ -133,8 +133,8 @@ const PortfolioPage = () => {
                         </form>
                     </div>
                     <Watchlist/>
-                    <div>
-                        <button onClick={deleteList}>Delete List</button>
+                    <div className='watchlist-button flex-container'>
+                        <button className='' onClick={deleteList}>Delete List</button>
                     </div>
                 </div>
             </div>
