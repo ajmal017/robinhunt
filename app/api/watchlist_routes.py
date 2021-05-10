@@ -75,3 +75,20 @@ def add_watchlist_item(watchlist_id):
         db.session.commit()
         return watchlist_item.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+# DELETE routes
+
+# /api/watchlists/:watchlist_id
+@watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
+@login_required
+def remove_watchlist_item(watchlist_id):
+    form = NewWatchlistItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        ticker=form.data['ticker']
+        watchlist_item = Watchlist_Item.query.filter(Watchlist_Item.ticker == ticker).first()
+        db.session.delete(watchlist_item)
+        db.session.commit()
+        return watchlist_item.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401

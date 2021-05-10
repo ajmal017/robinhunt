@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
-import { loadWatchlists, loadWatchlistItems, addWatchlistItem } from '../../store/watchlist';
+import { loadWatchlists, loadWatchlistItems, addWatchlistItem, deleteWatchlistItem } from '../../store/watchlist';
 import OrderForm from './OrderForm';
 
 // https://finnhub.io/docs/api/websocket-trades
@@ -266,6 +266,12 @@ const StockPage = () => {
         setListFormVisible(false)
     }
 
+    const remove = (e) => {
+        e.preventDefault()
+        dispatch(deleteWatchlistItem(Number(watchlistId), ticker))
+        setListFormVisible(false)
+    }
+
     return (
         <div className='stock-page-container'>
             <div className="stock-chart">
@@ -343,7 +349,7 @@ const StockPage = () => {
                 <OrderForm stock={ticker} price={lastPrice}/>
             </div>
             <div className="add-to-watchlist">
-                <p onClick={showListForm}>Add to Watchlist</p>
+                <p onClick={showListForm}>Update Watchlist</p>
                 <div style={{'display':`${display}`}} className="add-to-watchlist-select">
                     <form className='add-to-list-form' onSubmit={AddToListOnSubmit}>
                         <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
@@ -353,6 +359,7 @@ const StockPage = () => {
                         </select>
                         <button onClick={cancel}>Cancel</button>
                         <button type='submit'>Add to List</button>
+                        <button onClick={remove}>Remove from List</button>
                     </form>
                 </div>
             </div>
