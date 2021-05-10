@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
-import { loadWatchlists, loadWatchlistItems, addWatchlist } from '../../store/watchlist';
+import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
 import Watchlist from './Watchlist';
 
 const PortfolioPage = () => {
@@ -66,7 +66,7 @@ const PortfolioPage = () => {
     useEffect(() => {
         if(userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
-        dispatch(loadWatchlistItems(watchlistId))
+        // dispatch(loadWatchlistItems(watchlistId))
         getNews()
         loadPrices()
     }, [dispatch, trades, userId])
@@ -75,6 +75,7 @@ const PortfolioPage = () => {
     // WATCHLIST RELATED
 
     useEffect(() => {
+        if (userId) dispatch(loadWatchlists(userId))
         dispatch(loadWatchlistItems(watchlistId))
     }, [watchlistId])
 
@@ -85,15 +86,19 @@ const PortfolioPage = () => {
 
     const newListOnSubmit = (e) => {
         e.preventDefault()
-        console.log(newListName)
-        // let payload = { 'name': newListName, 'user_id': userId }
         dispatch(addWatchlist(newListName, userId))
+        setNewListVisible(false)
     }
 
     const newListOnCancel = (e) => {
         e.preventDefault()
         setNewListName('')
         setNewListVisible(false)
+    }
+
+    const deleteList = () => {
+        dispatch(deleteWatchlist(watchlistId))
+        setWatchlistId(1)
     }
 
     // RETURN RENDER
@@ -128,6 +133,9 @@ const PortfolioPage = () => {
                         </form>
                     </div>
                     <Watchlist/>
+                    <div>
+                        <button onClick={deleteList}>Delete List</button>
+                    </div>
                 </div>
             </div>
         </div>

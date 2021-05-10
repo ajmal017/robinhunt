@@ -61,47 +61,58 @@ def add_watchlist():
 
 
 # /api/watchlists/:watchlist_id
-@watchlist_routes.route('/<int:watchlist_id>', methods=['POST'])
+@watchlist_routes.route('/<int:watchlist_id>/items/<ticker>', methods=['POST'])
 @login_required
-def add_watchlist_item(watchlist_id):
-    form = NewWatchlistItemForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        watchlist_item = Watchlist_Item(
-            watchlist_id=watchlist_id,
-            ticker=form.data['ticker'],
-        )
-        db.session.add(watchlist_item)
-        db.session.commit()
-        return watchlist_item.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+def add_watchlist_item(watchlist_id, ticker):
+    # form = NewWatchlistItemForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+    # if form.validate_on_submit():
+    watchlist_item = Watchlist_Item(
+        watchlist_id=watchlist_id,
+        ticker=ticker,
+    )
+    db.session.add(watchlist_item)
+    db.session.commit()
+    return watchlist_item.to_dict()
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 # DELETE routes
 
+
 # /api/watchlists/:watchlist_id
 @watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])
 @login_required
-def remove_watchlist_item(watchlist_id):
-    form = NewWatchlistItemForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        ticker=form.data['ticker']
-        watchlist_item = Watchlist_Item.query.filter(Watchlist_Item.ticker == ticker).first()
-        db.session.delete(watchlist_item)
-        db.session.commit()
-        return watchlist_item.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+def remove_watchlist(watchlist_id):
+    # if form.validate_on_submit():
+        # name=form.data['name']
+    watchlist = Watchlist.query.get(watchlist_id)
+    watchlist_items = Watchlist_Item.query.filter(Watchlist_Item.watchlist_id == watchlist_id).all()
+    items_length = len(watchlist_items)
+    i = 0
+    while(i < items_length):
+        item = watchlist_items[i]
+        ticker = item.ticker
+        remove_watchlist_item(watchlist_id, ticker)            
+        i += 1
+    db.session.delete(watchlist)
+    db.session.commit()
+    return watchlist.to_dict()
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-# TBD
-# # /api/watchlists/
-# @watchlist_routes.route('/', methods=['DELETE'])
-# @login_required
-# def remove_watchlist():
-#     if form.validate_on_submit():
-#         name=form.data['name']
-#         watchlist = Watchlist.query.filter(Watchlist.name == name).first()
-#         db.session.delete(watchlist)
-#         db.session.commit()
-#         return watchlist.to_dict()
-#     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+
+# /api/watchlists/:watchlist_id/stock/:ticker
+@watchlist_routes.route('/<int:watchlist_id>/items/<ticker>', methods=['DELETE'])
+@login_required
+def remove_watchlist_item(watchlist_id, ticker):
+    # form = NewWatchlistItemForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+    # if form.validate_on_submit():
+        # ticker=form.data['ticker']
+    watchlist_item = Watchlist_Item.query.filter(Watchlist_Item.ticker == ticker).first()
+    db.session.delete(watchlist_item)
+    db.session.commit()
+    return watchlist_item.to_dict()
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
