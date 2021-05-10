@@ -55,7 +55,7 @@ p {
     display: grid;
     grid-template-areas:
         'logo search . links';
-    grid-template-columns: 200px 2fr 1fr 400px;
+    grid-template-columns: 100px 2fr 1fr 400px;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
@@ -70,15 +70,14 @@ p {
 }
 
 .nav-logo{
-    width: 130px;
+    width: 35px;
+    padding-top: 8px;
 }
 
 .search-bar{
     border: 1px solid grey;
     border-radius: 5px;
-    width: 400px;
-    padding: 8px;
-
+    width: 500px;
 }
 
 a.nav-link {
