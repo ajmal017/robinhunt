@@ -10,7 +10,7 @@ def seed_trades():
         portfolio_id = 1,
         order_type = 'buy',
         ticker = 'TSLA',
-        order_price = 467.50,
+        order_price = 710.50,
         order_volume = 2,
         timestamp = today,
     )
@@ -19,7 +19,7 @@ def seed_trades():
         portfolio_id = 1,
         order_type = 'buy',
         ticker = 'AAPL',
-        order_price = 320.75,
+        order_price = 98.75,
         order_volume = 5,
         timestamp = today,
     )

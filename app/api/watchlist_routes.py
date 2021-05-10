@@ -92,3 +92,16 @@ def remove_watchlist_item(watchlist_id):
         db.session.commit()
         return watchlist_item.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+# TBD
+# # /api/watchlists/
+# @watchlist_routes.route('/', methods=['DELETE'])
+# @login_required
+# def remove_watchlist():
+#     if form.validate_on_submit():
+#         name=form.data['name']
+#         watchlist = Watchlist.query.filter(Watchlist.name == name).first()
+#         db.session.delete(watchlist)
+#         db.session.commit()
+#         return watchlist.to_dict()
+#     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
