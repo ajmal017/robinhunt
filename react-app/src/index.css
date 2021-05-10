@@ -55,7 +55,7 @@ p {
     display: grid;
     grid-template-areas:
         'logo search . links';
-    grid-template-columns: 100px 2fr 1fr 400px;
+    grid-template-columns: 120px 2fr 1fr 400px;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
@@ -133,11 +133,30 @@ a.nav-link:hover {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 15px 20px 15px 20px;
+    padding: 15px 20px 15px 30px;
     margin: 0px;
     border-bottom: 1px solid lightgrey;
-    
+    font-weight: bold;
 }
+
+.watchlist-selection{ 
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    padding-top: 10px;
+    margin: 0px;
+    /* border-bottom: 1px solid lightgrey; */
+}
+
+.watchlist-selection > select{ 
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 7px 10px 5px;
+    margin: 0px;
+}
+
 
 .watchlist-item{ 
     display: flex;
@@ -147,6 +166,35 @@ a.nav-link:hover {
     margin:30px;
     font-size: 14px;
     font-weight: bold;
+}
+
+.new-watchlist{ 
+    justify-content: space-between;
+    align-items: center;
+    margin:10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.new-watchlist-section{
+    padding: 5px;
+}
+
+.new-watchlist-section > input{
+    width: 90%;
+    border: none;
+    border-radius: 3px;
+    height: 10px;
+    padding: 10px;
+    border: 1px solid lightgrey;
+}
+
+.new-watchlist-section > button{
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px 5px 10px;
+    color: white;
+    background-color: var(--GREEN_TEXT)
 }
 
 
@@ -531,6 +579,22 @@ a.nav-link:hover {
     /* width: 90% */
 }
 
+.flex-container-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 5px; */
+    /* width: 90% */
+}
+
+.flex-container-around {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* padding: 5px; */
+    /* width: 90% */
+}
+
 .flex-container-stack {
     display: flex;
     align-items: flex-start;
@@ -561,4 +625,8 @@ a.nav-link:hover {
 .grey-underline {
     border-bottom: 2px solid var(--BOX_SHADOW);
     margin-bottom: 20px;
+}
+
+.hidden {
+    display: none
 }

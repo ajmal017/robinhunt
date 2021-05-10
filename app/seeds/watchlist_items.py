@@ -26,11 +26,23 @@ def seed_watchlist_items():
         ticker = 'AMZN',
     )
 
+    demo_watchlist_item_6 = Watchlist_Item(
+        watchlist_id = 2,
+        ticker = 'CLOV',
+    )
+
+    demo_watchlist_item_7 = Watchlist_Item(
+        watchlist_id = 2,
+        ticker = 'CSTL',
+    )
+
     db.session.add(demo_watchlist_item_1)
     db.session.add(demo_watchlist_item_2)
     db.session.add(demo_watchlist_item_3)
     db.session.add(demo_watchlist_item_4)
     db.session.add(demo_watchlist_item_5)
+    db.session.add(demo_watchlist_item_6)
+    db.session.add(demo_watchlist_item_7)
     db.session.commit()
 
 
