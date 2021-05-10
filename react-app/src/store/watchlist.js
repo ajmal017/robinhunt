@@ -101,20 +101,7 @@ export const deleteWatchlist = (watchlist_id) => async (dispatch) => {
 
 
 
-
-// // Remove user portfolio object from state
-// export const deleteTrades = () => async (dispatch) => {
-//     const response = await fetch('/api/trades/', {
-//         headers: { 'Content-Type': 'application/json' },
-//     })
-
-//     const data = await response.json(); // wait until finished removing on backend 
-//     dispatch(removeTrades()) // then remove from state
-// }
-
-
-
-// User Authentication Reducer --------------------
+// Watchlist Reducer --------------------
 const initialState = { watchlists: null, watchlist_items: null };
 
 export default function reducer(state = initialState, action) {
@@ -135,13 +122,6 @@ export default function reducer(state = initialState, action) {
             allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
             allWatchlistItems.push(action.payload) // add newly created to copied array
             return { ...state, watchlist_items: allWatchlistItems }; // replace existing list with new list
-        
-        // case REMOVE_WATCHLIST_ITEM:
-        //     allWatchlistItems = [...state.watchlist_items]; // save new copy of existing WLs
-        //     let removedItem = action.payload
-        //     console.log(removedItem)
-        //     allWatchlistItems.filter(item => item.ticker !== action.payload.ticker) // remove recently deleted watchlist from state
-        //     return { ...state, watchlist_items: allWatchlistItems };
 
         case REMOVE_WATCHLIST:
             allWatchlists = [...state.watchlists]; // save new copy of existing WLs
