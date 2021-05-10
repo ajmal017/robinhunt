@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import session from './session';
 import portfolio from './portfolio';
 import trade from './trade';
-// import task from './task';
+import watchlist from './watchlist';
 // import comment from './comment';
 // import user from './user';
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     session,
     portfolio,
     trade,
-    // task,
+    watchlist,
     // comment,
     // user
 });
