@@ -20,9 +20,11 @@ const StockPage = () => {
     const [summary, setSummary] = useState({})
     const [financials, setFinancials] = useState({})
     const [lastPrice, setLastPrice] = useState(0)
+    const [holdings, setHoldings] = useState([]);
     
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
+    const trades = useSelector(state => state.trade.trades)
     const watchlists = useSelector(state => state.watchlist.watchlists)
 
     const [watchlistId, setWatchlistId] = useState(1)
@@ -252,12 +254,13 @@ const StockPage = () => {
     }, [userId, watchlistId])
 
     useEffect(() => {
-        if (portfolioId) dispatch(loadTrades(portfolioId))
+        if (portfolioId) {
+            dispatch(loadTrades(portfolioId))
+            // console.log('trades > ', trades)
+        }
     }, [portfolioId])
 
-
-
-
+    // console.log(trades)
 
     // WATCHLIST 
 
@@ -268,7 +271,7 @@ const StockPage = () => {
 
     const AddToListOnSubmit = (e) => {
         e.preventDefault()
-        console.log(Number(watchlistId))
+        // console.log(Number(watchlistId))
         
         dispatch(addWatchlistItem(Number(watchlistId), ticker))
         setListFormVisible(false)
@@ -285,6 +288,57 @@ const StockPage = () => {
         dispatch(deleteWatchlistItem(Number(watchlistId), ticker))
         setListFormVisible(false)
     }
+
+    // SELL ORDER REQUIRED
+
+    // helper func for buildHoldings
+    const avgCost = (oldVolume, oldCost, newVolume, newCost) => {
+        let existingCost = oldVolume * oldCost;
+        let newTradeCost = newVolume * newCost;
+        let totalVolume = oldVolume + newVolume;
+        let averageCost = (existingCost + newTradeCost) / totalVolume
+        return averageCost;
+    }
+
+    // aggregates trade data for simplified portfolio component rendering and fetches
+    const buildHoldings = () => {
+        let myHoldings = {};
+        for (let i = 0; i < trades.length; i++) {
+            let trade = trades[i];
+            let ticker = trade.ticker;
+            let type = trade.order_type;
+            let cost = trade.order_price;
+            let volume = trade.order_volume;
+            if (!myHoldings.hasOwnProperty(ticker)) {
+                myHoldings[ticker] = { volume, cost }
+            } else {
+                if (type == 'buy') {
+                    myHoldings[ticker].cost = avgCost(myHoldings[ticker].volume, myHoldings[ticker].cost, volume, cost)
+                    myHoldings[ticker].volume += volume
+                } else if (type == 'sell') {
+                    myHoldings[ticker].volume -= volume
+                }
+            }
+        }
+        let newHoldings = [];
+        for (let key in myHoldings) {
+            let holding = { 'ticker': key, 'volume': myHoldings[key].volume, 'cost': myHoldings[key].cost }
+            newHoldings.push(holding);
+        }
+        // console.log(newHoldings)
+        setHoldings(newHoldings)
+        // contextHoldings.setContextHoldings(newHoldings)
+        // dispatch(loadHoldings(newHoldings))
+    }
+
+    useEffect(() => {
+        if (trades) {
+            buildHoldings()
+            // console.log('holdings', holdings)
+        }
+    }, [trades])
+    // console.log(holdings)
+
 
     return (
         <div className='stock-page-container'>
@@ -360,7 +414,7 @@ const StockPage = () => {
                 </div>
             </div>
             <div className="stock-order-container">
-                <OrderForm stock={ticker} price={lastPrice} cashBalance={cashBalance}/>
+                <OrderForm stock={ticker} price={lastPrice} cashBalance={cashBalance} portfolioId={portfolioId} holdings={holdings}/>
             </div>
             <div className="add-to-watchlist">
                 <p onClick={showListForm}>Update Watchlist</p>

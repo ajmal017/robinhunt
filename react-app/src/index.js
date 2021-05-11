@@ -9,9 +9,9 @@ const store = configureStore();
 
 const Root = () => {
   return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+      <Provider store={store}>
+        <App />
+      </Provider>
   )
 }
 

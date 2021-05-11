@@ -2,11 +2,13 @@
 
 // Constants --------------------
 const SET_PORTFOLIO = 'portfolio/SET_PORTFOLIO';
+
 // const UPDATE_CASH_BALANCE = 'portfolio/UPDATE_CASH_BALANCE';
 
 
 // Action Creators --------------------
 const setPortfolio = portfolio => ({ type: SET_PORTFOLIO, payload: portfolio })
+
 // const updateCashBalance = balance => ({ type: UPDATE_CASH_BALANCE, payload: balance })
 
 
@@ -40,14 +42,14 @@ export const updateBalance = (portfolio_id, adjustment) => async (dispatch) => {
 
 
 
-
 // Portfolio Reducer --------------------
-const initialState = { portfolio: null };
+const initialState = { portfolio: null, holdings: null };
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_PORTFOLIO:
             return { ...state, portfolio: action.payload };
+        
         // case UPDATE_CASH_BALANCE:
         //     let newPortfolio = state.portfolio;
         //     newPortfolio.cash_balance = action.payload

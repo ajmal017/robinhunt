@@ -19,7 +19,7 @@ def update_cash(portfolio_id):
     portfolio = Portfolio.query.get(portfolio_id)
     body = request.get_json()
     adjustment = body.get('adjustment')
-    newBalance = portfolio.cash_balance + adjustment
+    newBalance = portfolio.cash_balance + float(adjustment)
     portfolio.cash_balance = newBalance
     db.session.add(portfolio)
     db.session.commit()

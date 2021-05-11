@@ -5,7 +5,7 @@ import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices }) => {    
+const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, news, prices }) => {    
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
@@ -75,7 +75,7 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices })
                     
                     <div className='portfolio-item-div'>
                         <p className="portfolio-summary-item">Cash Balance:</p>
-                        <p className="portfolio-summary-item">${cashBalance}</p>
+                        <p className="portfolio-summary-item">${Number(cashBalance).toFixed(2)}</p>
                     </div>
                     <div className='portfolio-item-div grey-underline'>
                         <p className="portfolio-summary-item">Est. Holdings Value: </p>

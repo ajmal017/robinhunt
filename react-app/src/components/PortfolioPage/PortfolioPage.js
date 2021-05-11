@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
-import { loadPortfolio, updateBalance } from '../../store/portfolio'
+import { loadPortfolio, loadHoldings } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
 import Watchlist from './Watchlist';
@@ -15,6 +15,9 @@ const PortfolioPage = () => {
     const [newListName, setNewListName] = useState("")
     const [newListVisible, setNewListVisible] = useState(false)
     const [holdings, setHoldings] = useState([]);
+
+    // const contextHoldings = useHoldings()
+    // console.log('these be port CH', contextHoldings.contextHoldings)
 
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
@@ -72,6 +75,8 @@ const PortfolioPage = () => {
         }
         // console.log(newHoldings)
         setHoldings(newHoldings)
+        // contextHoldings.setContextHoldings(newHoldings)
+        // dispatch(loadHoldings(newHoldings))
     }
 
     const getPrice = async(ticker) => {
@@ -91,7 +96,7 @@ const PortfolioPage = () => {
     useEffect(() => {
         if (portfolioId) {
             dispatch(loadTrades(portfolioId))
-            dispatch(updateBalance(portfolioId, 1000))
+            // dispatch(updateBalance(portfolioId, 1000))
         }
     }, [portfolioId])
 
@@ -107,6 +112,11 @@ const PortfolioPage = () => {
         getNews()
         if(trades) buildHoldings()
     }, [dispatch, trades, userId])
+
+    // useEffect(() => {
+    //     contextHoldings.setContextHoldings(holdings)
+    // }, [holdings])
+
 
 
     // WATCHLIST RELATED
@@ -143,7 +153,7 @@ const PortfolioPage = () => {
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} holdings={holdings} news={news} prices={prices}/>
+                <PortfolioContent user={user} cashBalance={cashBalance} portfolioId={portfolioId} trades={trades} holdings={holdings} news={news} prices={prices}/>
             </div>
             <div className="portfolio-watchlist">
                 <div className='watchlist-container'>
