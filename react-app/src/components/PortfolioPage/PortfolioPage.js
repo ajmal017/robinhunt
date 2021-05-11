@@ -71,7 +71,8 @@ const PortfolioPage = () => {
         let newHoldings = [];
         for (let key in myHoldings){
             let holding = { 'ticker':key, 'volume':myHoldings[key].volume, 'cost':myHoldings[key].cost}
-            newHoldings.push(holding);
+            if(holding.volume > 0) newHoldings.push(holding);
+            // newHoldings.push(holding)
         }
         // console.log(newHoldings)
         setHoldings(newHoldings)
