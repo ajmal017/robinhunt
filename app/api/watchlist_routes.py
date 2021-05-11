@@ -43,6 +43,7 @@ def get_watchlist_items(watchlist_id):
 
 # POST ROUTES 
 
+# add new watchlist
 # /api/watchlists/
 @watchlist_routes.route('/', methods=['POST'])
 @login_required
@@ -60,6 +61,7 @@ def add_watchlist():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
+# add new watchlist item to watchlist
 # /api/watchlists/:watchlist_id
 @watchlist_routes.route('/<int:watchlist_id>/items/<ticker>', methods=['POST'])
 @login_required

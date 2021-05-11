@@ -108,7 +108,6 @@ a.nav-link:hover {
     margin-top: 30px;
     margin-left: 20px;
     margin-right: 20px;
-    overflow-y: scroll;
 }
 
 .portfolio-content{ 
@@ -171,15 +170,15 @@ a.nav-link:hover {
 }
 
 .watchlist-button > button{
-    border: 1px solid var(--RED_TEXT);
-    background-color: var(--RED_TEXT);
+    border: 1px solid var(--GREEN_TEXT);
+    background-color: var(--GREEN_TEXT);
     border-radius: 5px;
     color: var(--WHITE);
     font-weight: bold;
     padding: 5px 20px 5px 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    transition: background-color 400ms;
+    transition: background-color 400ms, border 400ms;
 }
 
 .watchlist-button > button:hover{
@@ -321,11 +320,21 @@ a.nav-link:hover {
     grid-area: order; 
     /* background-color: skyblue; */
     margin:15px 15px 10px 10px;
-    max-height: 70%;
+    height: 90%;
     border-radius: 5px;
     padding:0px;
     box-shadow: 1px 1px 15px 2px lightgrey;
     overflow-y: scroll;
+}
+
+.stock-order-confirm{ 
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+.stock-order-balance{ 
+    font-size: 12px;
+    padding: 25px;
 }
 
 .add-to-watchlist{ 
@@ -333,7 +342,7 @@ a.nav-link:hover {
     border: 1px solid var(--GREEN_TEXT);
     border-radius: 5px;
     position: relative;
-    bottom: 100px;
+    bottom: 20px;
     left: 50px;
     max-height: 30px;
     width: 200px;
@@ -421,12 +430,23 @@ a.nav-link:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 20px 10px 20px;
     font-size: 14px;
     font-weight: bold;
 }
 
-.order-input input{ 
+.order-input > select{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.order-input > input{ 
     text-align: right;
     padding: 8px 2px 8px 2px;
     font-size: 14px;
@@ -435,12 +455,12 @@ a.nav-link:hover {
     background-color: whitesmoke;
 }
 
-.order-input input:focus{ 
+.order-input > input:focus{ 
     border: 1px solid var(--GREEN_TEXT);
     background-color: var(--WHITE);
 }
 
-.order-button button{
+.order-button > button{
     border: 1px solid var(--GREEN_TEXT);
     background-color: var(--GREEN_TEXT);
     border-radius: 5px;

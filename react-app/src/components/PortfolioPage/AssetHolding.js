@@ -5,22 +5,22 @@ import React, { useEffect, useState } from "react";
 const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, currencyFormatter }) => {
 
     //raw data
-    let current_price =currentPrice; // replace with API call
     let total_cost =shares * purchasePrice;
-    let equity_value =shares * current_price
+    let equity_value =shares * currentPrice
 
     // formatted 
-    let fPrice = currencyFormatter(current_price); // replace with API call
+    let fPrice = currencyFormatter(currentPrice); // replace with API call
     let fPurchasePrice = currencyFormatter(purchasePrice)
-    let fEquityValue = currencyFormatter(shares * current_price)
+    let fEquityValue = currencyFormatter(shares * currentPrice)
     let fTotalReturn = currencyFormatter(equity_value - total_cost)
+    let fShares = Number(shares).toFixed(2)
     
     equityObj[`${symbol}`] = equity_value
    
     return (
             <tr className='holding-row'>
                 <td className=""><a href={`/stocks/${symbol}`}>{symbol}</a></td>
-                <td className="">{shares}</td>
+                <td className="">{fShares}</td>
                 <td className="">{fPrice}</td>
                 <td className="">{fPurchasePrice}</td>
                 <td className="">{fTotalReturn}</td>

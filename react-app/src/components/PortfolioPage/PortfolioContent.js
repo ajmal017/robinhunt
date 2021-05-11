@@ -5,12 +5,13 @@ import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {    
+const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, news, prices }) => {    
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
     const [returnPercent, setReturnPercent] = useState(0)
+    const [equityValues, setEquityValues] = useState([])
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
@@ -23,10 +24,18 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
         }
         return total
     }
-    let capitalInvested;
-    let fCapInvested;
-    let myReturn;
-    if(trades) capitalInvested = trades.reduce((sum, trade) => sum += (trade.order_price*trade.order_volume), 0)
+
+    const getEquityValues = () => {
+        let myEquity = [];
+        for (let key in equityObj){
+            let holding = {'ticker':key, 'equityValue': Number(equityObj[key]).toFixed(2)}
+            myEquity.push(holding)
+        }
+        return myEquity
+    }
+
+    let capitalInvested, fCapInvested, myReturn;
+    if(holdings) capitalInvested = holdings.reduce((sum, holding) => sum += (holding.cost*holding.volume), 0)
     if(capitalInvested) fCapInvested = currencyFormatter(capitalInvested)
     if(fCapInvested && capInvested === 0) setCapInvested(fCapInvested)
     
@@ -47,9 +56,14 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
         }
     }, [equityObj, myReturn])
 
+    useEffect(() => {
+        let myEquity = getEquityValues()
+        setEquityValues(myEquity)
+    }, [holdingValue])
+
     const chartDisplay = (
         <div className='flex-container'>
-            <PortfolioChart trades={trades} />
+            <PortfolioChart values={equityValues} />
         </div>
     )
     
@@ -61,7 +75,7 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
                     
                     <div className='portfolio-item-div'>
                         <p className="portfolio-summary-item">Cash Balance:</p>
-                        <p className="portfolio-summary-item">${cashBalance}</p>
+                        <p className="portfolio-summary-item">${Number(cashBalance).toFixed(2)}</p>
                     </div>
                     <div className='portfolio-item-div grey-underline'>
                         <p className="portfolio-summary-item">Est. Holdings Value: </p>
@@ -94,9 +108,9 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {trades && prices && trades.map((trade, idx) => {
+                        {holdings && prices && prices.length > 0 && holdings.map((holding, idx) => {
                             let price = prices[idx].c
-                            return <AssetHolding key={trade.id} symbol={trade.ticker} shares={trade.order_volume} currentPrice={price} purchasePrice={trade.order_price} equityObj={equityObj} currencyFormatter={currencyFormatter} />
+                            return <AssetHolding key={holding.ticker} symbol={holding.ticker} shares={holding.volume} currentPrice={price} purchasePrice={holding.cost} equityObj={equityObj} currencyFormatter={currencyFormatter} />
                             })
                         }
                     </tbody>
