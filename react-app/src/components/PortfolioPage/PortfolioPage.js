@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
-import { loadPortfolio } from '../../store/portfolio'
+import { loadPortfolio, updateBalance } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
 import Watchlist from './Watchlist';
@@ -20,15 +20,12 @@ const PortfolioPage = () => {
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
     const watchlists = useSelector(state => state.watchlist.watchlists)
-    // const watchlist_items = useSelector(state => state.watchlist.watchlist_items)
 
     let userId, cashBalance, portfolioId, watchlist;
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
     watchlists ? watchlist = watchlists[watchlistId] : watchlist = 'test'
-    // watchlist ? watchlistId = watchlist.id : watchlistId = ""
-    console.log(trades)
 
     const getNews = async() => {
         const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
@@ -39,6 +36,7 @@ const PortfolioPage = () => {
         }
     }
 
+    // helper func for buildHoldings
     const avgCost = (oldVolume, oldCost, newVolume, newCost) => {
         let existingCost = oldVolume * oldCost;
         let newTradeCost = newVolume * newCost;
@@ -47,6 +45,7 @@ const PortfolioPage = () => {
         return averageCost;
     }
     
+    // aggregates trade data for simplified portfolio component rendering and fetches
     const buildHoldings = () => {
         let myHoldings = {};
         for(let i = 0; i< trades.length; i++){
@@ -59,13 +58,9 @@ const PortfolioPage = () => {
                 myHoldings[ticker] = {volume, cost}
             } else {
                 if (type == 'buy') {
-                    console.log('volume', myHoldings[ticker].volume)
-                    console.log('cost', myHoldings[ticker].cost)
                     myHoldings[ticker].cost = avgCost(myHoldings[ticker].volume, myHoldings[ticker].cost, volume, cost)
                     myHoldings[ticker].volume += volume
                 } else if (type == 'sell'){
-                    console.log('volume', myHoldings[ticker].volume)
-                    console.log('cost', myHoldings[ticker].cost)
                     myHoldings[ticker].volume -= volume
                 }
             }
@@ -75,7 +70,7 @@ const PortfolioPage = () => {
             let holding = { 'ticker':key, 'volume':myHoldings[key].volume, 'cost':myHoldings[key].cost}
             newHoldings.push(holding);
         }
-        console.log(newHoldings)
+        // console.log(newHoldings)
         setHoldings(newHoldings)
     }
 
@@ -88,7 +83,7 @@ const PortfolioPage = () => {
         if(holdings) {
             let allPrices = holdings.map(holding => getPrice(holding.ticker)) // returns array of promises
             let priceData = await Promise.all(allPrices) // returns array of objects
-            console.log('priceData', priceData)
+            // console.log('priceData', priceData)
             setPrices(priceData)
         }
     }
@@ -96,6 +91,7 @@ const PortfolioPage = () => {
     useEffect(() => {
         if (portfolioId) {
             dispatch(loadTrades(portfolioId))
+            dispatch(updateBalance(portfolioId, 1000))
         }
     }, [portfolioId])
 
@@ -108,9 +104,7 @@ const PortfolioPage = () => {
     useEffect(() => {
         if(userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
-        // dispatch(loadWatchlistItems(watchlistId))
         getNews()
-        // loadPrices()
         if(trades) buildHoldings()
     }, [dispatch, trades, userId])
 

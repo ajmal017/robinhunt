@@ -9,8 +9,8 @@ const Watchlist = () => {
     return (
             <div>
 
-            { watchlist_items && watchlist_items.map(item => {
-               return <WatchlistItem stock={item.ticker} price={125.37}/>
+            { watchlist_items && watchlist_items.map((item,idx) => {
+               return <WatchlistItem key={`${item}-${idx}`} stock={item.ticker} price={125.37}/>
             })}
             </div>
     )

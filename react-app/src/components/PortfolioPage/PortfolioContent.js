@@ -11,6 +11,7 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices })
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
     const [returnPercent, setReturnPercent] = useState(0)
+    const [equityValues, setEquityValues] = useState([])
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
@@ -23,10 +24,18 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices })
         }
         return total
     }
-    let capitalInvested;
-    let fCapInvested;
-    let myReturn;
-    if(trades) capitalInvested = trades.reduce((sum, trade) => sum += (trade.order_price*trade.order_volume), 0)
+
+    const getEquityValues = () => {
+        let myEquity = [];
+        for (let key in equityObj){
+            let holding = {'ticker':key, 'equityValue': Number(equityObj[key]).toFixed(2)}
+            myEquity.push(holding)
+        }
+        return myEquity
+    }
+
+    let capitalInvested, fCapInvested, myReturn;
+    if(holdings) capitalInvested = holdings.reduce((sum, holding) => sum += (holding.cost*holding.volume), 0)
     if(capitalInvested) fCapInvested = currencyFormatter(capitalInvested)
     if(fCapInvested && capInvested === 0) setCapInvested(fCapInvested)
     
@@ -47,9 +56,14 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices })
         }
     }, [equityObj, myReturn])
 
+    useEffect(() => {
+        let myEquity = getEquityValues()
+        setEquityValues(myEquity)
+    }, [holdingValue])
+
     const chartDisplay = (
         <div className='flex-container'>
-            <PortfolioChart trades={trades} />
+            <PortfolioChart values={equityValues} />
         </div>
     )
     

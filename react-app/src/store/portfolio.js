@@ -2,17 +2,17 @@
 
 // Constants --------------------
 const SET_PORTFOLIO = 'portfolio/SET_PORTFOLIO';
-// const REMOVE_PORTFOLIO = 'portfolio/REMOVE_PORTFOLIO';
-
+// const UPDATE_CASH_BALANCE = 'portfolio/UPDATE_CASH_BALANCE';
 
 
 // Action Creators --------------------
 const setPortfolio = portfolio => ({ type: SET_PORTFOLIO, payload: portfolio })
-// const removePortfolio = () => ({ type: REMOVE_PORTFOLIO })
-
+// const updateCashBalance = balance => ({ type: UPDATE_CASH_BALANCE, payload: balance })
 
 
 // Thunks --------------------
+
+// GET
 // Add user portfolio object to state
 export const loadPortfolio = (userId) => async (dispatch) => {
     const response = await fetch(`/api/portfolios/${userId}`, {
@@ -24,27 +24,34 @@ export const loadPortfolio = (userId) => async (dispatch) => {
 }
 
 
-// Remove user portfolio object from state
-// export const deletePortfolio = () => async (dispatch) => {
-//     const response = await fetch('/api/portfolio/', {
-//         headers: { 'Content-Type': 'application/json' },
-//     })
+// PATCH
+// Update cash balance on user's portfolio
+export const updateBalance = (portfolio_id, adjustment) => async (dispatch) => {
+    console.log('patch balance', portfolio_id, adjustment)
+    const response = await fetch(`/api/portfolios/${portfolio_id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adjustment })
+    })
+    const portfolio = await response.json();
+    if (portfolio.errors) return;
+    dispatch(setPortfolio(portfolio))
+}
 
-//     const data = await response.json(); // wait until finished removing on backend 
-//     dispatch(removePortfolio()) // then remove from state
-// }
 
 
 
-// User Authentication Reducer --------------------
+// Portfolio Reducer --------------------
 const initialState = { portfolio: null };
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_PORTFOLIO:
             return { ...state, portfolio: action.payload };
-        // case REMOVE_PORTFOLIO:
-        //     return { ...state, portfolio: null };
+        // case UPDATE_CASH_BALANCE:
+        //     let newPortfolio = state.portfolio;
+        //     newPortfolio.cash_balance = action.payload
+        //     return { ...state, portfolio: newPortfolio };
         default:
             return state;
     }
