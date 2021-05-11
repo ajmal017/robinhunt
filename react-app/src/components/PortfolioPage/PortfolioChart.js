@@ -2,7 +2,7 @@ import React from 'react';
 import PieChart, { Series,HoverStyle} from 'devextreme-react/pie-chart';
 
 // Template borrowed from DevExtreme (see link below)
-// Packages to Install: 'npm install devextreme devextreme-react'
+// Packages to Install: npm install devextreme devextreme-react
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/Charts/DoughnutSelection/React/Light/
 
 const PortfolioChart = ({ trades }) => {

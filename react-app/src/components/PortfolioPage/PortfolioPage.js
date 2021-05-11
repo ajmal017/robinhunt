@@ -14,6 +14,7 @@ const PortfolioPage = () => {
     const [watchlistId, setWatchlistId] = useState(1)
     const [newListName, setNewListName] = useState("")
     const [newListVisible, setNewListVisible] = useState(false)
+    const [holdings, setHoldings] = useState([]);
 
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
@@ -27,7 +28,7 @@ const PortfolioPage = () => {
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
     watchlists ? watchlist = watchlists[watchlistId] : watchlist = 'test'
     // watchlist ? watchlistId = watchlist.id : watchlistId = ""
-    
+    console.log(trades)
 
     const getNews = async() => {
         const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
@@ -38,37 +39,79 @@ const PortfolioPage = () => {
         }
     }
 
+    const avgCost = (oldVolume, oldCost, newVolume, newCost) => {
+        let existingCost = oldVolume * oldCost;
+        let newTradeCost = newVolume * newCost;
+        let totalVolume = oldVolume + newVolume;
+        let averageCost = (existingCost + newTradeCost) / totalVolume
+        return averageCost;
+    }
+    
+    const buildHoldings = () => {
+        let myHoldings = {};
+        for(let i = 0; i< trades.length; i++){
+            let trade = trades[i];
+            let ticker = trade.ticker;
+            let type = trade.order_type;
+            let cost = trade.order_price;
+            let volume = trade.order_volume;
+            if(!myHoldings.hasOwnProperty(ticker)){
+                myHoldings[ticker] = {volume, cost}
+            } else {
+                if (type == 'buy') {
+                    console.log('volume', myHoldings[ticker].volume)
+                    console.log('cost', myHoldings[ticker].cost)
+                    myHoldings[ticker].cost = avgCost(myHoldings[ticker].volume, myHoldings[ticker].cost, volume, cost)
+                    myHoldings[ticker].volume += volume
+                } else if (type == 'sell'){
+                    console.log('volume', myHoldings[ticker].volume)
+                    console.log('cost', myHoldings[ticker].cost)
+                    myHoldings[ticker].volume -= volume
+                }
+            }
+        }
+        let newHoldings = [];
+        for (let key in myHoldings){
+            let holding = { 'ticker':key, 'volume':myHoldings[key].volume, 'cost':myHoldings[key].cost}
+            newHoldings.push(holding);
+        }
+        console.log(newHoldings)
+        setHoldings(newHoldings)
+    }
+
     const getPrice = async(ticker) => {
         let res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=c27ut2aad3ic393ffql0`, { json: true })
         return res.json() // returns promise for loadPrices function
     }    
 
     const loadPrices = async() => {
-        if(trades) {
-            let allPrices = trades.map(trade => getPrice(trade.ticker)) // returns array of promises
+        if(holdings) {
+            let allPrices = holdings.map(holding => getPrice(holding.ticker)) // returns array of promises
             let priceData = await Promise.all(allPrices) // returns array of objects
-            setPrices(priceData)
-        }
-    }
-
-    const loadWatchlistPrices = async () => {
-        if (watchlist) {
-            let allPrices = trades.map(trade => getPrice(trade.ticker)) // returns array of promises
-            let priceData = await Promise.all(allPrices) // returns array of objects
+            console.log('priceData', priceData)
             setPrices(priceData)
         }
     }
 
     useEffect(() => {
-        if (portfolioId) dispatch(loadTrades(portfolioId))
+        if (portfolioId) {
+            dispatch(loadTrades(portfolioId))
+        }
     }, [portfolioId])
+
+    useEffect(() => {
+        if (holdings) {
+            loadPrices()
+        }
+    }, [holdings])
     
     useEffect(() => {
         if(userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
         // dispatch(loadWatchlistItems(watchlistId))
         getNews()
-        loadPrices()
+        // loadPrices()
+        if(trades) buildHoldings()
     }, [dispatch, trades, userId])
 
 
@@ -106,7 +149,7 @@ const PortfolioPage = () => {
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} news={news} prices={prices}/>
+                <PortfolioContent user={user} cashBalance={cashBalance} trades={trades} holdings={holdings} news={news} prices={prices}/>
             </div>
             <div className="portfolio-watchlist">
                 <div className='watchlist-container'>

@@ -5,7 +5,7 @@ import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {    
+const PortfolioContent = ({ user, cashBalance, trades, holdings, news, prices }) => {    
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
@@ -94,9 +94,9 @@ const PortfolioContent = ({ user, cashBalance, trades, news, prices }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {trades && prices && trades.map((trade, idx) => {
+                        {holdings && prices && prices.length > 0 && holdings.map((holding, idx) => {
                             let price = prices[idx].c
-                            return <AssetHolding key={trade.id} symbol={trade.ticker} shares={trade.order_volume} currentPrice={price} purchasePrice={trade.order_price} equityObj={equityObj} currencyFormatter={currencyFormatter} />
+                            return <AssetHolding key={holding.ticker} symbol={holding.ticker} shares={holding.volume} currentPrice={price} purchasePrice={holding.cost} equityObj={equityObj} currencyFormatter={currencyFormatter} />
                             })
                         }
                     </tbody>

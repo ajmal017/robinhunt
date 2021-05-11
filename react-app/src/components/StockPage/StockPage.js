@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
+import { loadPortfolio } from '../../store/portfolio'
+import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlistItem, deleteWatchlistItem } from '../../store/watchlist';
 import OrderForm from './OrderForm';
 
@@ -18,13 +20,18 @@ const StockPage = () => {
     const [summary, setSummary] = useState({})
     const [financials, setFinancials] = useState({})
     const [lastPrice, setLastPrice] = useState(0)
-
     
     const user = useSelector(state => state.session.user)
+    const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const watchlists = useSelector(state => state.watchlist.watchlists)
 
     const [watchlistId, setWatchlistId] = useState(1)
     const [listFormVisible, setListFormVisible] = useState(false)
+
+    let userId, cashBalance, portfolioId, watchlist;
+    user ? userId = user.id : userId = ""
+    user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
+    user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
     
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
@@ -239,9 +246,16 @@ const StockPage = () => {
     }, [ticker])
 
     useEffect(() => {
-        if(user) dispatch(loadWatchlists(user.id))
+        if (userId) dispatch(loadPortfolio(userId))
+        if (userId) dispatch(loadWatchlists(userId))
         dispatch(loadWatchlistItems(watchlistId))
-    }, [user, watchlistId])
+    }, [userId, watchlistId])
+
+    useEffect(() => {
+        if (portfolioId) dispatch(loadTrades(portfolioId))
+    }, [portfolioId])
+
+
 
 
 
@@ -346,7 +360,7 @@ const StockPage = () => {
                 </div>
             </div>
             <div className="stock-order-container">
-                <OrderForm stock={ticker} price={lastPrice}/>
+                <OrderForm stock={ticker} price={lastPrice} cashBalance={cashBalance}/>
             </div>
             <div className="add-to-watchlist">
                 <p onClick={showListForm}>Update Watchlist</p>
