@@ -23,8 +23,8 @@ const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, 
                 <td className="">{fShares}</td>
                 <td className="">{fPrice}</td>
                 <td className="">{fPurchasePrice}</td>
-                <td className="">{fTotalReturn}</td>
                 <td className="">{fEquityValue}</td>
+                <td className="">{fTotalReturn}</td>
             </tr>
     )
 }

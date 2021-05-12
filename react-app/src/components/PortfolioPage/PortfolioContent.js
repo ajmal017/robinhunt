@@ -103,8 +103,8 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
                             <td>Shares</td>
                             <td>Price</td>
                             <td>Avg Cost</td>
-                            <td>Total Return</td>
                             <td>Equity Value</td>
+                            <td>Net Value</td>
                         </tr>
                     </thead>
                     <tbody>
