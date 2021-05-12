@@ -3,7 +3,7 @@ from app.models import db, Watchlist_Item
 def seed_watchlist_items():
     demo_watchlist_item_1 = Watchlist_Item(
         watchlist_id = 1,
-        ticker = 'ZEN',
+        ticker = 'TSLA',
     )
 
     demo_watchlist_item_2 = Watchlist_Item(

@@ -2,7 +2,7 @@ from app.models import db, Portfolio
 
 
 def seed_portfolios():
-    demo_portfolio = Portfolio(user_id=1, cash_balance=2000.25)
+    demo_portfolio = Portfolio(user_id=1, cash_balance=5000.00)
     db.session.add(demo_portfolio)
     db.session.commit()
 

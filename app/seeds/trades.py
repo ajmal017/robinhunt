@@ -9,9 +9,9 @@ def seed_trades():
     demo_trade_1 = Trade(
         portfolio_id = 1,
         order_type = 'buy',
-        ticker = 'TSLA',
-        order_price = 710.50,
-        order_volume = 2,
+        ticker = 'PLUG',
+        order_price = 8.28,
+        order_volume = 20,
         timestamp = today,
     )
 
@@ -33,9 +33,29 @@ def seed_trades():
         timestamp = today,
     )
 
+    demo_trade_4 = Trade(
+        portfolio_id = 1,
+        order_type = 'buy',
+        ticker = 'BABA',
+        order_price = 224.13,
+        order_volume = 3,
+        timestamp = today,
+    )
+
+    demo_trade_5 = Trade(
+        portfolio_id = 1,
+        order_type = 'buy',
+        ticker = 'NFLX',
+        order_price = 467.39,
+        order_volume = 2,
+        timestamp = today,
+    )
+
     db.session.add(demo_trade_1)
     db.session.add(demo_trade_2)
     db.session.add(demo_trade_3)
+    db.session.add(demo_trade_4)
+    db.session.add(demo_trade_5)
     db.session.commit()
 
 
