@@ -182,7 +182,7 @@ const PortfolioPage = () => {
                     </div>
                     <Watchlist/>
                     <div className='watchlist-button flex-container'>
-                        <button className='' onClick={deleteList}>Delete List</button>
+                        <button className='' onClick={deleteList}>Remove List</button>
                     </div>
                 </div>
             </div>
