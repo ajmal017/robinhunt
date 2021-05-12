@@ -6,7 +6,8 @@ import { signup } from '../../store/session';
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user)
-  const splashImg = require('../../front-assets/robinhood_splash_img.jpeg')
+  const splashImg = require('../../front-assets/washed_splash_img.png')
+  const welcomeImg = require('../../front-assets/welcome_banner.png')
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -43,11 +44,14 @@ const SignUpForm = () => {
   const redirect_message = '  Log in'
   return (
     <div className='splash-container'>
-      <div className='splash-image-container flex-container'>
-        <img className='splash-image' src={splashImg}></img>
+      <div className='splash-image-container'>
+        <img className='splash-image-2' src={splashImg}></img>
       </div>
       <div className='splash-fields'>
-        <h2>Welcome to Robinhunt</h2>
+        {/* <h2>Welcome to Robinhunt</h2> */}
+        <div className=''>
+          <img className='welcome-image' src={welcomeImg}></img>
+        </div>
         <br></br>
         <form className='splash-form' onSubmit={onSignUp}>
           <div>
