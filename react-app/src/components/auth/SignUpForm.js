@@ -7,7 +7,7 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user)
   const splashImg = require('../../front-assets/washed_splash_img.png')
-  const welcomeImg = require('../../front-assets/welcome_banner.png')
+  const welcomeImg = require('../../front-assets/welcome_banner_animation.gif')
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
