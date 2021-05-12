@@ -88,7 +88,7 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
                     </div>
     
                     <div className='portfolio-item-div'>
-                        <h4 style={{'fontSize': '15px'}} className="portfolio-summary-item">Net Holding Value: </h4>
+                        <h4 style={{'fontSize': '15px'}} className="portfolio-summary-item">Net Holdings Value: </h4>
                         <h4 style={{ 'fontSize': '15px' }} className="portfolio-summary-item">${totalReturn}</h4>
                     </div>
                 </div>
