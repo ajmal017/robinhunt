@@ -190,7 +190,7 @@ a.nav-link:hover {
     /* font-weight: bold; */
     color: var(--WHITE);
     border: 1px solid var(--RED_TEXT);
-    background-color: var(--DARK_RED);
+    background-color: var(--RED_TEXT);
 }
 
 
@@ -540,8 +540,9 @@ a.nav-link:hover {
         'splash-image splash-fields';
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    grid-gap: 10px;
+    /* grid-gap: 10px; */
     height: 100vh;
+    /* max-height: 100vh; */
 }
 
 .splash-image-container{ 
@@ -550,9 +551,9 @@ a.nav-link:hover {
     height: 100vh;
 }
 
-.splash-image {
-    width: 110%;
-    /* object-fit: cover; */
+.splash-image{
+    width: 50vw;
+    object-fit: contain;
 }
 
 .splash-fields{ 
