@@ -99,7 +99,7 @@ This is the backend for the Flask React project.
 
 
 
-name: Push Container to Heroku
+<!-- name: Push Container to Heroku
 
 on: 
   push:
@@ -122,4 +122,11 @@ jobs:
     - name: Release
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a robinhunt web 
+      run: heroku container:release -a robinhunt web  -->
+
+      <!-- RESET AND UPDATE DB -->
+      <!-- 
+      heroku pg reset -a robinhunt --confirm robinhunt
+      heroku run flask db upgrade -a robinhunt
+      heroku run flask seed all -a robinhunt 
+      -->

@@ -425,8 +425,11 @@ const StockPage = () => {
                                 return <option value={list.id}>{list.name}</option>
                             })}
                         </select>
-                        <button type='submit'>Add to List</button>
-                        <button onClick={remove}>Remove from List</button>
+                        <div className='flex-container adjust-list'>
+                            <button type='submit'>Add</button>
+                            <button onClick={remove}>Remove</button>
+
+                        </div>
                         <button onClick={cancel}>Cancel</button>
                     </form>
                 </div>

@@ -123,7 +123,7 @@ a.nav-link:hover {
 }
 
 .watchlist-container{ 
-    margin:15px 20px 0px 20px;
+    margin:15px 30px 0px 25px;
     max-height: 80%;
     border-radius: 5px;
     padding-bottom: 1px;
@@ -153,11 +153,12 @@ a.nav-link:hover {
 .watchlist-selection > select{ 
     font-family: 'Nunito Sans', sans-serif;
     font-size: 15px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: none;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 0px 5px 8px;
     margin: 0px;
     width: 80%;
+    /* border-bottom: 1px solid lightgrey; */
 }
 
 
@@ -166,26 +167,30 @@ a.nav-link:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin:30px;
+    margin:20px 30px 20px 30px;
     font-size: 14px;
     font-weight: bold;
 }
 
 .watchlist-button > button{
-    border: 1px solid var(--GREEN_TEXT);
-    background-color: var(--GREEN_TEXT);
+    /* border: 1px solid var(--GREEN_TEXT); */
+    /* background-color: var(--GREEN_TEXT); */
+    border: 1px solid white;
+    background-color: var(--WHITE);
     border-radius: 5px;
-    color: var(--WHITE);
-    font-weight: bold;
-    padding: 5px 20px 5px 20px;
+    color: var(--CHARCOAL);
+    font-size: 14px;
+    padding: 5px 40px 5px 40px;
     margin-top: 10px;
     margin-bottom: 10px;
-    transition: background-color 400ms, border 400ms;
+    transition: background-color 400ms, border 400ms, color 200ms;
 }
 
 .watchlist-button > button:hover{
+    /* font-weight: bold; */
+    color: var(--WHITE);
     border: 1px solid var(--RED_TEXT);
-    background-color: var(--DARK_RED);
+    background-color: var(--RED_TEXT);
 }
 
 
@@ -305,7 +310,6 @@ a.nav-link:hover {
     width: 100%;
     margin-left: 50px;
     margin-right: 50px;
-    overflow-y: scroll;
 }
 
 .stock-chart{ 
@@ -376,6 +380,7 @@ a.nav-link:hover {
     position: relative;
     top: 30px;
     right: 0px;
+    width: 90%;
     padding: 10px 10px 10px 10px;
     color: var(--GREEN_TEXT);
 }
@@ -392,7 +397,8 @@ a.nav-link:hover {
     padding: 5px;
     border: none;
     border-radius: 3px;
-    width: 100%;
+    width: 165px;
+    margin-left: 5px;
     transition: background-color 400ms, color 200ms;
 }
 
@@ -404,12 +410,30 @@ a.nav-link:hover {
     background-color: var(--GREEN_TEXT)
 }
 
+.adjust-list > button { 
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 0px;
+    border: none;
+    border-radius: 3px;
+    width: 80px;
+    transition: background-color 400ms, color 200ms;
+}
+
+.adjust-list > button:hover{ 
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    color: white;
+    background-color: var(--GREEN_TEXT)
+}
 .add-to-list-form > select{ 
     margin-top: 10px;
     padding: 5px;
     border: none;
     border-radius: 3px;
-    width: 100%;
+    width: 90%;
     transition: background-color 400ms, color 200ms;
 }
 
@@ -516,8 +540,9 @@ a.nav-link:hover {
         'splash-image splash-fields';
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    grid-gap: 10px;
+    /* grid-gap: 10px; */
     height: 100vh;
+    /* max-height: 100vh; */
 }
 
 .splash-image-container{ 
@@ -526,9 +551,9 @@ a.nav-link:hover {
     height: 100vh;
 }
 
-.splash-image {
-    width: 110%;
-    /* object-fit: cover; */
+.splash-image{
+    width: 50vw;
+    object-fit: contain;
 }
 
 .splash-fields{ 
@@ -685,6 +710,11 @@ a.nav-link:hover {
 
 .news-title > a {
     color: var(--CHARCOAL);
+    transition: color 400ms;
+}
+
+.news-title > a:hover {
+    color: var(--GREEN_TEXT);
 }
 
 

@@ -40,7 +40,7 @@ const LoginForm = () => {
 
   return (
     <div className='splash-container'>
-      <div className='splash-image-container flex-container'>
+      <div className='splash-image-container'>
         <img className='splash-image' src={splashImg}></img>
       </div>
       <div className='splash-fields'>
