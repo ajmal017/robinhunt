@@ -8,10 +8,11 @@ import { updateBalance } from '../../store/portfolio';
 const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     const dispatch = useDispatch()
     const history = useHistory()
-
+    const gif = require('../../front-assets/order_confirm_animation.gif')
     const [holdingQty, setHoldingQty] = useState(0)
     const [orderType, setOrderType] = useState('buy')
     const [showConfirmation, setShowConfirmation] = useState(false)
+    const [showGif, setShowGif] = useState(false)
     
     // BUY FIELDS
     const [amount, setAmount] = useState(0)
@@ -42,6 +43,14 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
         displayConfirm = 'none';
         displayReview = '';
     }
+
+    let displayGif;
+    if(showGif){
+        displayGif = '';
+    } else {
+        displayGif = 'none';
+    }
+    
 
     const revealSubmit = (e) => {
         e.preventDefault();
@@ -82,8 +91,8 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
         }
 
         setShowConfirmation(false);
-        alert(`Your order has been filled!`)
-        setTimeout(() => history.push('/'), 1000)
+        setShowGif(true)
+        setTimeout(() => history.push('/'), 3000)
     }
 
     let formFields; 
@@ -101,6 +110,9 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                         <h4 className='min-margin'>Confirmation Notice:</h4>
                     <div>I hereby confirm intent to purchase ~{Number(buyOrderQty).toFixed(2)} shares of {stock}. I acknowledge order price may be subject to change depending on market conditions as order is executed.</div>
+                </div>
+                <div style={{ 'display': `${displayGif}` }} className='flex-container'>
+                    <img style={{'width':'180px', 'marginBottom':'200px', 'marginTop':'30px'}} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
                     <button disabled={amount === 0 && (buyOrderQty === 0)} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
@@ -131,6 +143,9 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                     <h4 className='min-margin'>Confirmation Notice:</h4>
                     <div>I hereby confirm intent to sell ~{Number(sellOrderQty).toFixed(2)} shares of {stock}. I acknowledge sell order price may be subject to change depending on market conditions as order is executed.</div>
+                </div>
+                <div style={{ 'display': `${displayGif}` }} className='flex-container'>
+                    <img style={{ 'width': '180px', 'marginBottom': '200px', 'marginTop': '30px' }} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
                     <button disabled={sellOrderQty === 0 && returnValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>

@@ -6,7 +6,7 @@ import AsyncSearch from './AsyncSearch'
 
 const NavBar = ({ setAuthenticated }) => {
   const user = useSelector( state => state.session.user )
-  const feather = require('../front-assets/feather_icon.png')
+  const feather = require('../front-assets/logo_animation.gif')
 
   const authLinks = (
     <div className='flex-container'>
