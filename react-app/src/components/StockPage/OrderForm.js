@@ -81,11 +81,9 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
             }
         }
 
-        // dispatch(submitTrade(portfolioId, order_type, ticker, order_price, order_volume))
-        // dispatch(updateBalance(portfolioId))
-        // alert('trade complete!')
-        // history.push('/')
-        // setShowConfirmation(false);
+        setShowConfirmation(false);
+        alert(`Your order has been filled!`)
+        setTimeout(() => history.push('/'), 1000)
     }
 
     let formFields; 
@@ -105,9 +103,9 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                     <div>I hereby confirm intent to purchase ~{Number(buyOrderQty).toFixed(2)} shares of {stock}. I acknowledge order price may be subject to change depending on market conditions as order is executed.</div>
                 </div>
                 <div className='order-button flex-container'>
-                    <button disabled={amount === 0 && buyOrderQty !== 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
+                    <button disabled={amount === 0 && (buyOrderQty === 0)} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
                     <div className='order-button flex-container-stack'>
-                        <button style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
+                        <button disabled={amount === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
                         <button style={{ 'display': `${displayConfirm}` }} onClick={cancelSubmit}> Cancel</button>
                     </div>
                 </div>
@@ -137,7 +135,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                 <div className='order-button flex-container'>
                     <button disabled={sellOrderQty === 0 && returnValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
                     <div className='order-button flex-container-stack'>
-                        <button style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
+                        <button disabled={returnValue === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
                         <button style={{ 'display': `${displayConfirm}` }} onClick={cancelSubmit}> Cancel</button>
                     </div>
                 </div>
