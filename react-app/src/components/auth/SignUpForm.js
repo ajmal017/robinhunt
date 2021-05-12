@@ -59,6 +59,7 @@ const SignUpForm = () => {
             <input
               type="text"
               name="username"
+              required={true}
               onChange={updateUsername}
               value={username}
             ></input>
@@ -68,6 +69,7 @@ const SignUpForm = () => {
             <input
               type="text"
               name="email"
+              required={true}
               onChange={updateEmail}
               value={email}
             ></input>
@@ -77,6 +79,7 @@ const SignUpForm = () => {
             <input
               type="password"
               name="password"
+              required={true}
               onChange={updatePassword}
               value={password}
             ></input>
