@@ -125,8 +125,7 @@ jobs:
       run: heroku container:release -a robinhunt web  -->
 
       <!-- RESET AND UPDATE DB -->
-      <!-- 
-      heroku pg reset -a robinhunt --confirm robinhunt
+   
+      heroku pg:reset DATABASE_URL -a robinhunt --confirm robinhunt
       heroku run flask db upgrade -a robinhunt
       heroku run flask seed all -a robinhunt 
-      -->
