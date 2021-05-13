@@ -27,13 +27,15 @@ const StockPage = () => {
     const trades = useSelector(state => state.trade.trades)
     const watchlists = useSelector(state => state.watchlist.watchlists)
 
-    const [watchlistId, setWatchlistId] = useState(1)
+    const [watchlistId, setWatchlistId] = useState(0)
     const [listFormVisible, setListFormVisible] = useState(false)
 
     let userId, cashBalance, portfolioId, watchlist;
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
+    watchlists ? watchlist = watchlists[0] : watchlist = null;
+
     
     // const [pastData, setPastData] = useState([])
     // const [series, setSeries] = useState(null);
@@ -252,6 +254,12 @@ const StockPage = () => {
         if (userId) dispatch(loadWatchlists(userId))
         dispatch(loadWatchlistItems(watchlistId))
     }, [userId, watchlistId])
+
+    useEffect(() => {
+        if(watchlists && watchlistId === 0) {
+            setWatchlistId(watchlists[0].id)
+        }
+    }, [watchlists])
 
     useEffect(() => {
         if (portfolioId) {

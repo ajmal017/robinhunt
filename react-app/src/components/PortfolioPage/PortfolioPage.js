@@ -11,7 +11,7 @@ const PortfolioPage = () => {
     const dispatch = useDispatch()
     const [news, setNews] = useState([])
     const [prices, setPrices] = useState(null)
-    const [watchlistId, setWatchlistId] = useState(1)
+    const [watchlistId, setWatchlistId] = useState(0)
     const [newListName, setNewListName] = useState("")
     const [newListVisible, setNewListVisible] = useState(false)
     const [holdings, setHoldings] = useState([]);
@@ -28,7 +28,7 @@ const PortfolioPage = () => {
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
-    watchlists ? watchlist = watchlists[watchlistId] : watchlist = 'test'
+    watchlists ? watchlist = watchlists[0] : watchlist = null
 
     const getNews = async() => {
         const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
@@ -114,9 +114,12 @@ const PortfolioPage = () => {
         if(trades) buildHoldings()
     }, [dispatch, trades, userId])
 
-    // useEffect(() => {
-    //     contextHoldings.setContextHoldings(holdings)
-    // }, [holdings])
+    useEffect(() => {
+        if (watchlists && watchlistId === 0) {
+            setWatchlistId(watchlists[0].id)
+        }
+    }, [watchlists])
+
 
 
 

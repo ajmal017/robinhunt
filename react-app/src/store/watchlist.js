@@ -60,7 +60,7 @@ export const addWatchlist = (name, user_id) => async (dispatch) => {
 }
 
 export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
-    // console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
+    console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
     const response = await fetch(`/api/watchlists/${watchlist_id}/items/${ticker}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

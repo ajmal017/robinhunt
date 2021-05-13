@@ -52,8 +52,8 @@ def add_watchlist():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         watchlist = Watchlist(
-            name=form.data['name'],
             user_id=form.data['user_id'],
+            name=form.data['name'],
         )
         db.session.add(watchlist)
         db.session.commit()
