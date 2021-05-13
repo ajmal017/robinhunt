@@ -12,6 +12,8 @@ import OrderForm from './OrderForm';
 // https://www.unixtimestamp.com/
 
 const StockPage = () => {
+    const alphaKey = process.env.ALPHA_VANTAGE_API_KEY
+    // const finnKey = process.env.FINNHUB_API_KEY
     const { ticker } = useParams()
     const dispatch = useDispatch()
     const chartContainer = useRef(null)
@@ -113,8 +115,7 @@ const StockPage = () => {
 
     // grab historical chart data (1min) || API: https://www.alphavantage.co/documentation/
     const fetchHistoricalData = async (series) => {
-        // Alpha Vantage API KEY: 09CXQ7G0M8U90O13
-        let key = '09CXQ7G0M8U90O13'
+        let key = alphaKey;
         let response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&outputsize=full&apikey=${key}`)
         if (response.ok) {
             let data = await response.json()
@@ -135,8 +136,7 @@ const StockPage = () => {
 
     //!! NOTE: AV API LIMITED TO 5 CALLS PER MINUTE  !!// 
     const fetchCompanyOverview = async (series) => {             
-        // Alpha Vantage API KEY: 09CXQ7G0M8U90O13
-        let key = '09CXQ7G0M8U90O13'
+        let key = alphaKey
         let response = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${key}`)
         if (response.ok) {
             let data = await response.json()
@@ -167,7 +167,7 @@ const StockPage = () => {
     // async function to fetch company stock price data from Finnhub
     const mountSocket = (series) => {
         // create websocket connection to finnhub using my API key
-        priceSocket = new WebSocket('wss://ws.finnhub.io?token=c27ut2aad3ic393ffql0');
+        priceSocket = new WebSocket(`wss://ws.finnhub.io?token=c27ut2aad3ic393ffql0`);
 
         // Connection opened -> Subscribe
         priceSocket.addEventListener('open', function (event) {
