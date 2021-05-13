@@ -14,7 +14,7 @@ In addition to the core features above, I was able to implement the following bo
 
 - Market News Feed - render a feed of market news updated on every page refresh
 - Watchlists - create/delete watchlists and watchlists items that link to their stock page and show the latest pricing infomation
-- Trade Executions (Buy & Sell) - be able to place buy and sell trade executions and have them update your portfolio and cash balance
+- Mock Trade Executions (Buy & Sell) - be able to place buy and sell trade executions and have them update your portfolio and cash balance
 
 For more detailed info on the scope of the MVP features, check the MVP guide here. 
 
