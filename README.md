@@ -1,131 +1,61 @@
-# Flask React Project
+![banner](https://github.com/eramsay20/robinhunt/blob/main/assets/banner.png?raw=true)
 
-This is the backend for the Flask React project.
+## Welcome to Robinhunt! 
+***[Robinhunt](https://robinhunt.herokuapp.com/)*** is a clone of the popular [Robinhood](https://www.robinhood.com/) trading app that focuses on providing a commission-free stock trading platform to its users. 
 
-## Getting started
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-1. Clone this repository (only this branch)
+The goal of this two week full-stack project was to have 3 fully functional core MVP features finished, which include:  
+- Portfolio View - 
+- Stock Chart View - 
+- Dynamic Stock Search - 
 
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
+In addition to the core features above, I was able to implement the following bonus features:
 
-2. Install dependencies
+- Market News Feed -
+- Watchlists - 
+- Trade Executions (Buy & Sell) -
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+For more detailed info on the scope of the MVP features, check the MVP guide here. 
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+### Login/Signup/Splash Pages 
+When a user first tries to navigate to Robinhunt, they are auto redirected to a login splash page to sign into their account or sign up for a new one. The intent here was to limit feature accessibility without first creating or logging into an account. For simplicity of testing, I created an additional Demo User login button so others can check it out with sample cash and stock holdings seeded to see the full functionality on login. 
 
-   ```bash
-   pipenv shell
-   ```
+![Splash](#)
 
-   ```bash
-   flask db upgrade
-   ```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-   ```bash
-   flask seed all
-   ```
+### Main/Portfolio Page (MVP Feat #1)
+Once logged in, the user sees their portfolio dashboard as their 'home' page. On the left half of the screen lives a portfolio summary doughnut chart, a holdings table which shows the details and investment figures for each of the users open holdings, and a market news feed. Both the chart and the table are populated with the same array of holdings objects which were formatted on the frontend to render well. Each row in the holdings table makes an API fetch to Finnhub to grab the last known price for the stock, such that subsequent equity and net values can be calculated. 
 
-   ```bash
-   flask run
-   ```
+![Portfolio](#)
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
+### News Feed & Watchlists (Bonus Feats #1, #2)
+The news feed and watchlists rendered on this page are the first two bonus features I was able to implement. The news feed make an API call to Finnhub that fetches the last 100 general market news stories from Finnhub and filters them to show the latest 5. The watchlist on the right half of the screen shows a list of watchlist items that contain the link to a specific stock and its current price. Users can click the top-right plus button to open a hidden input/form to create a new list, and click the 'Remove List' button at the bottom of the container to remove whichever list is selected from the dropdown select field. Stocks can be added to a given watchlist on the stock page (more info below)
 
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
+![News & Splash](#)
 
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-## Deploy to Heroku
 
-1. Create a new project on Heroku
-2. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-3. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-4. Run
+### Dynamic Search Bar (MVP Feat #2)
+When logged in, a nav bar spans the top of both the portfolio page and stock page. The 'search bar' is actually a select field, leveraging both a 'react-select' library component, and an API call to Finnhub to grab all US stock tickers to dynamic populate select options as a user types. 
 
-   ```bash
-   heroku login
-   ```
+![Search](#)
 
-5. Login to the heroku container registry
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-   ```bash
-   heroku container:login
-   ```
-
-6. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
-   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
-7. Push your docker container to heroku from the root directory of your project.
-   This will build the dockerfile and push the image to your heroku container registry
-
-   ```bash
-   heroku container:push web -a {NAME_OF_HEROKU_APP}
-   ```
-
-8. Release your docker container to heroku
-
-   ```bash
-   heroku container:release web -a {NAME_OF_HEROKU_APP}
-   ```
-
-9. set up your database:
-
-   ```bash
-   heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-   heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-   ```
-
-10. Under Settings find "Config Vars" and add any additional/secret .env variables.
-
-11. profit
+ MORE TO COME
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
-<!-- name: Push Container to Heroku
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-on: 
-  push:
-    branches:
-      - main
+And that's about it! (happy dance!?!)
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Login to Heroku Container registry
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login 
-    - name: Build and push
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a robinhunt web 
-    - name: Release
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a robinhunt web  -->
-
-      <!-- RESET AND UPDATE DB -->
-   
-      heroku pg:reset DATABASE_URL -a robinhunt --confirm robinhunt
-      heroku run flask db upgrade -a robinhunt
-      heroku run flask seed all -a robinhunt 
+For more info about this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
