@@ -34,14 +34,6 @@ Once logged in, the user views their portfolio dashboard as their 'home' page. I
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-### News Feed & Watchlists (Bonus Feats #1, #2)
-The news feed and watchlists rendered on the portfolio page are the first two bonus features I was able to implement. The news feed makes an API call to Finnhub that fetches the latest 100 market news stories available from Finnhub and filters them to show the latest 5 instead. The watchlist on the right half of the screen shows a list of watchlist items that contain a link to watchlist stock and shows its current price on each page reload. Users can click the plus button in the top right corner to open a hidden input/form allowing the user to create a new list. Likewise, a user can click the 'Remove List' button at the bottom of the container to remove whichever list is selected from the dropdown select field. Stocks can be added or removed from a given watchlist on the stock page (more info below).
-
-![News & Splash](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/news_watchlists.png?raw=true)
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
 ### Dynamic Search Bar (MVP Feat #2)
 When logged in, a nav bar spans the top of both the portfolio page and stock page. The 'search bar' is actually a select field, leveraging both a 'react-select' package component and an API call to Finnhub to grab all US stock tickers. With these two linked, the select options to choose from below the input field dynamic populate as a user types. This ensures the user selects a valid stock symbol even if the data for the selected stock is limited, and thus avoids the need for a custom search results page and avoids typo errors.  
 
@@ -49,13 +41,28 @@ When logged in, a nav bar spans the top of both the portfolio page and stock pag
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
- MORE TO COME
+### Stock Profile and Chart (MVP Feat #3)
+When a user either searches for a stock or clicks a link from the holdings table or watchlist, they will be brought to a stock profile page. The stock page renders a line chart using a LightWeight chart line series template, and connects a websocket for the selected stock from Finnhub to receive real-time tick pricing updates as orders are placed. Below the chart lives company profile information for the selected stock, displaying a written overview of the company, its logo, a link to its website and popular financial metrics seen on many financial media sites. 
+
+![Search](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/stock_page_top.png?raw=true)
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+### News Feed & Watchlists (Bonus Feats #1, #2)
+The news feed and watchlists rendered on the portfolio page are the first two bonus features I was able to implement. The news feed makes an API call to Finnhub that fetches the latest 100 market news stories available from Finnhub and filters them to show the latest 5 instead. The watchlist on the right half of the screen shows a list of watchlist items that contain a link to watchlist stock and shows its current price on each page reload. Users can click the plus button in the top right corner to open a hidden input/form allowing the user to create a new list. Likewise, a user can click the 'Remove List' button at the bottom of the container to remove whichever list is selected from the dropdown select field. Stocks can be added or removed from a given watchlist on the stock page (more info below).
+
+![News & Splash](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/news_watchlists.png?raw=true)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+### Order Execution & Watchlist Updates (Bonus #3)
+On the right hand of the stock page lives a trade form that allows users to buy or sell shares of the selected stock. The user selects an order type (buy vs sell), enters the number of shares they wish to purchase or sell, and then sees the estimated cost or return value for the given order type which updates in real-time as the price socket info is added to the chart. Once an quantity of shares has been provided and the estimate cost/value is greater than zero, a user clicks 'Review Order' and sees a confirmation message summarizing the trade before clicking either 'Confirm' or 'Cancel'. When confirmed, an 'order complete!' animation appears, and then redirects the user back to the portfolio page again to see their purchase updated in their holdings summary. Additionally, below the order form lives an 'Update Watchlists' button, which when clicked reveals a hidden form with buttons to add or remove the stock from a given watchlist. 
+
+![Search](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/stock_page_top.png?raw=true)
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 And that's about it! (happy dance!?!)
 
-For more info about this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
+For more info about what went into to making this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
