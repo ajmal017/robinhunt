@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, Portfolio, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -63,13 +63,29 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        new_username = form.data['username'],
+        new_email = form.data['email'],
+        new_password = form.data['password']
+
+        # create the new user 
         user = User(
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
+            username = new_username,
+            email=new_email,
+            password=new_password,
         )
         db.session.add(user)
         db.session.commit()
+
+        # grab their auto-generated user_id from the new user ob 
+        new_user_obj = User.query.filter(User.email == new_email).first()
+        new_user_id = new_user_obj.id
+
+        # build a new portfolio for the user seeded with 5K play money
+        user_portfolio = Portfolio(user_id=new_user_id, cash_balance=5000.00)
+        db.session.add(user_portfolio)
+        db.session.commit()
+
+        # log the new user in and return the object to the front for Redux
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
