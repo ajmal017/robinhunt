@@ -9,35 +9,26 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const gif = require('../../front-assets/order_confirm_animation.gif')
+
     const [holdingQty, setHoldingQty] = useState(0)
-    const [orderType, setOrderType] = useState('buy')
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [showGif, setShowGif] = useState(false)
     
-    // BUY FIELDS
+    const [orderType, setOrderType] = useState('buy')
     const [orderValue, setOrderValue] = useState(0)
     const [orderVolume, setOrderVolume] = useState(0)
-    // const [amount, setAmount] = useState(0)
-    // const [buyOrderQty, setBuyOrderQty] = useState(0)
-    // const [returnValue, setReturnValue] = useState(0)
-    
-    // SELL FIELDS
-    // const [sellOrderQty, setSellOrderQty] = useState(0)
+
         
     useEffect(() => {
         let stockHolding = holdings.find(holding => holding.ticker === stock)
         if(stockHolding) {
             setHoldingQty(stockHolding.volume);
-            // setOrderVolume(stockHolding.volume)
         }
     }, [holdings])
 
-    useEffect(() => {        
-        setOrderValue(orderVolume * price)
-        // setReturnValue(sellOrderQty * price)
-    }, [price])
+    useEffect(() => { setOrderValue(orderVolume * price) }, [price])
 
-    let displayReview, displayConfirm;
+    let displayReview, displayConfirm, displayGif;
     if(showConfirmation) {
         displayConfirm = '';
         displayReview = 'none';
@@ -45,8 +36,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
         displayConfirm = 'none';
         displayReview = '';
     }
-
-    let displayGif;
+    
     if(showGif){
         displayGif = '';
     } else {
