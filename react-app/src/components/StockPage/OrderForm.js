@@ -173,7 +173,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                     </div>
                     <div style={{ 'borderBottom': '1px solid lightgrey' }} className='order-input'>
                         <label> Shares </label>
-                        <input type="number" name='amount' value={orderVolume} onChange={(e) => setOrderVolume(e.target.value)}></input>
+                        <input type="number" min='0' name='amount' value={orderVolume} onChange={(e) => setOrderVolume(e.target.value)}></input>
                     </div>
                     { formFields }
                 </form>
