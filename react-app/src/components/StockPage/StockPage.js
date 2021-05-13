@@ -257,7 +257,9 @@ const StockPage = () => {
 
     useEffect(() => {
         if(watchlists && watchlistId === 0) {
-            setWatchlistId(watchlists[0].id)
+            if (watchlists.length > 0) {
+                setWatchlistId(watchlists[0].id)
+            }
         }
     }, [watchlists])
 
@@ -425,7 +427,7 @@ const StockPage = () => {
                 <OrderForm stock={ticker} price={lastPrice} cashBalance={cashBalance} portfolioId={portfolioId} holdings={holdings}/>
             </div>
             <div className="add-to-watchlist">
-                <p onClick={showListForm}>Update Watchlist</p>
+                <p onClick={showListForm}>Update Watchlists</p>
                 <div style={{'display':`${display}`}} className="add-to-watchlist-select">
                     <form className='add-to-list-form' onSubmit={AddToListOnSubmit}>
                         <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >

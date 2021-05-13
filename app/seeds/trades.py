@@ -42,20 +42,10 @@ def seed_trades():
         timestamp = today,
     )
 
-    demo_trade_5 = Trade(
-        portfolio_id = 1,
-        order_type = 'buy',
-        ticker = 'NFLX',
-        order_price = 467.39,
-        order_volume = 2,
-        timestamp = today,
-    )
-
     db.session.add(demo_trade_1)
     db.session.add(demo_trade_2)
     db.session.add(demo_trade_3)
     db.session.add(demo_trade_4)
-    db.session.add(demo_trade_5)
     db.session.commit()
 
 

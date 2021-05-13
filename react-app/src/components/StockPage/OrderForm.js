@@ -15,24 +15,26 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     const [showGif, setShowGif] = useState(false)
     
     // BUY FIELDS
-    const [amount, setAmount] = useState(0)
-    const [buyOrderQty, setBuyOrderQty] = useState(0)
+    const [orderValue, setOrderValue] = useState(0)
+    const [orderVolume, setOrderVolume] = useState(0)
+    // const [amount, setAmount] = useState(0)
+    // const [buyOrderQty, setBuyOrderQty] = useState(0)
+    // const [returnValue, setReturnValue] = useState(0)
     
     // SELL FIELDS
-    const [sellOrderQty, setSellOrderQty] = useState(0)
-    const [returnValue, setReturnValue] = useState(0)
+    // const [sellOrderQty, setSellOrderQty] = useState(0)
         
     useEffect(() => {
         let stockHolding = holdings.find(holding => holding.ticker === stock)
         if(stockHolding) {
             setHoldingQty(stockHolding.volume);
-            setSellOrderQty(stockHolding.volume)
+            // setOrderVolume(stockHolding.volume)
         }
     }, [holdings])
 
-    useEffect(() => {
-        setBuyOrderQty(amount / price)
-        setReturnValue(sellOrderQty * price)
+    useEffect(() => {        
+        setOrderValue(orderVolume * price)
+        // setReturnValue(sellOrderQty * price)
     }, [price])
 
     let displayReview, displayConfirm;
@@ -64,60 +66,56 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
         let order_type = orderType;
         let ticker = stock;
         let order_price = Number(price).toFixed(2)
-        let buy_order_volume = Number(buyOrderQty).toFixed(2)
-        let sell_order_volume = Number(sellOrderQty).toFixed(2)
+        let order_volume = Number(orderVolume).toFixed(2)
         
         let cashAdjustment;
         if(order_type === 'buy'){
-            cashAdjustment = -1 * Number(amount).toFixed(2);
+            cashAdjustment = -1 * Number(orderValue).toFixed(2);
             if (cashBalance + cashAdjustment > 0){
-                dispatch(submitTrade(portfolioId, order_type, ticker, order_price, buy_order_volume))
+                dispatch(submitTrade(portfolioId, order_type, ticker, order_price, order_volume))
                 dispatch(updateBalance(portfolioId, cashAdjustment))
+                setShowConfirmation(false);
+                setShowGif(true)
+                setTimeout(() => history.push('/'), 3000)
             } else {
-                alert('not enough cash available to complete purchase!')
+                alert(`Hold up! You don't have enough cash available to complete the purchase!`)
             }
         } else {
-            cashAdjustment = Number(returnValue).toFixed(2)
-            if (sellOrderQty <= holdingQty){
-                dispatch(submitTrade(portfolioId, order_type, ticker, order_price, sell_order_volume))
+            cashAdjustment = Number(orderValue).toFixed(2)
+            if (orderVolume <= holdingQty){
+                dispatch(submitTrade(portfolioId, order_type, ticker, order_price, order_volume))
                 dispatch(updateBalance(portfolioId, cashAdjustment))
+                setShowConfirmation(false);
+                setShowGif(true)
+                setTimeout(() => history.push('/'), 3000)
             } else {
-                alert('not enough share available to sell!')
+                alert(`Whoa there! You don't enough share available to sell!`)
             }
         }
-
-        setShowConfirmation(false);
-        setShowGif(true)
-        setTimeout(() => history.push('/'), 3000)
     }
 
     let formFields; 
     if(orderType === 'buy') {
         formFields = (
             <>
-                <div style={{ 'borderBottom': '1px solid lightgrey' }} className='order-input'>
-                    <label> Amount ($) </label>
-                    <input type="number" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)}></input>
-                </div>
                 <div className='order-input'>
-                    <p style={{ 'fontWeight': 'bold' }}> Est. Quantity</p>
-                    <p style={{ 'paddingLeft': '80px' }}> {buyOrderQty && buyOrderQty.toFixed(6)} </p>
+                    <p style={{ 'fontWeight': 'bold' }}> Est. Cost</p>
+                    <p style={{ 'paddingLeft': '80px' }}> {orderValue && orderValue.toFixed(6)} </p>
                 </div>
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                         <h4 className='min-margin'>Confirmation Notice:</h4>
-                    <div>I hereby confirm intent to purchase ~{Number(buyOrderQty).toFixed(2)} shares of {stock}. I acknowledge order price may be subject to change depending on market conditions as order is executed.</div>
+                    <div>I hereby confirm intent to purchase ~{Number(orderVolume).toFixed(2)} shares of {stock}. I acknowledge order price may be subject to change depending on market conditions as order is executed.</div>
                 </div>
                 <div style={{ 'display': `${displayGif}` }} className='flex-container'>
                     <img style={{'width':'180px', 'marginBottom':'200px', 'marginTop':'30px'}} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
-                    <button disabled={amount === 0 && (buyOrderQty === 0)} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
+                    <button disabled={orderVolume === 0 && orderValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
                     <div className='order-button flex-container-stack'>
-                        <button disabled={amount === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
+                        <button disabled={orderValue === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
                         <button style={{ 'display': `${displayConfirm}` }} onClick={cancelSubmit}> Cancel</button>
                     </div>
                 </div>
@@ -132,25 +130,21 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     } else {
         formFields = (
             <>
-                <div style={{ 'borderBottom': '1px solid lightgrey' }} className='order-input'>
-                    <label> Shares </label>
-                    <input type="number" name='amount' value={sellOrderQty} onChange={(e) => setSellOrderQty(e.target.value)}></input>
-                </div>
                 <div className='order-input'>
                     <p style={{ 'fontWeight': 'bold' }}> Est. Value</p>
-                    <p style={{ 'paddingLeft': '80px' }}> {returnValue && returnValue.toFixed(2)} </p>
+                    <p style={{ 'paddingLeft': '80px' }}> {orderValue && orderValue.toFixed(2)} </p>
                 </div>
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                     <h4 className='min-margin'>Confirmation Notice:</h4>
-                    <div>I hereby confirm intent to sell ~{Number(sellOrderQty).toFixed(2)} shares of {stock}. I acknowledge sell order price may be subject to change depending on market conditions as order is executed.</div>
+                    <div>I hereby confirm intent to sell ~{Number(orderVolume).toFixed(2)} shares of {stock}. I acknowledge sell order price may be subject to change depending on market conditions as order is executed.</div>
                 </div>
                 <div style={{ 'display': `${displayGif}` }} className='flex-container'>
                     <img style={{ 'width': '180px', 'marginBottom': '200px', 'marginTop': '30px' }} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
-                    <button disabled={sellOrderQty === 0 && returnValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
+                    <button disabled={orderVolume === 0 && orderValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
                     <div className='order-button flex-container-stack'>
-                        <button disabled={returnValue === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
+                        <button disabled={orderValue === 0} style={{ 'display': `${displayConfirm}` }} type='submit'> Confirm</button>
                         <button style={{ 'display': `${displayConfirm}` }} onClick={cancelSubmit}> Cancel</button>
                     </div>
                 </div>
@@ -176,6 +170,10 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
                             <option value='buy'>Buy</option>
                             <option value='sell'>Sell</option>
                         </select>
+                    </div>
+                    <div style={{ 'borderBottom': '1px solid lightgrey' }} className='order-input'>
+                        <label> Shares </label>
+                        <input type="number" name='amount' value={orderVolume} onChange={(e) => setOrderVolume(e.target.value)}></input>
                     </div>
                     { formFields }
                 </form>

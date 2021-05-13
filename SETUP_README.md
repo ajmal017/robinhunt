@@ -124,7 +124,7 @@ jobs:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:release -a robinhunt web  -->
 
-      <!-- RESET AND UPDATE DB -->
+      <!-- RESET AND UPDATE HEROKU DB -->
    
       heroku pg:reset DATABASE_URL -a robinhunt --confirm robinhunt
       heroku run flask db upgrade -a robinhunt

@@ -116,7 +116,9 @@ const PortfolioPage = () => {
 
     useEffect(() => {
         if (watchlists && watchlistId === 0) {
-            setWatchlistId(watchlists[0].id)
+            if(watchlists.length > 0){
+                setWatchlistId(watchlists[0].id)
+            }
         }
     }, [watchlists])
 
