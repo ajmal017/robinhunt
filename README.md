@@ -5,6 +5,10 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+Technologies: React, Redux, Flask, Alembic, SQLAlchemy, CSS3 | AlphaVantage API, Finnhub API, LightWeight Charts, DevExtreme Charts
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 The goal of this two week full-stack project was to have 3 fully functional core MVP features finished, which include:  
 - Portfolio View - be able to see a summary of the user's portfolio holdings
 - Stock Chart View - view a real-time stock chart for a selected stock
