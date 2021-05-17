@@ -65,6 +65,4 @@ Assuming the user has either enough funds to purchase the shares, or has enough 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-And that's about it! (happy dance!?!)
-
 For more info about what went into to making this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
