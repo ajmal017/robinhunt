@@ -5,8 +5,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-Technologies: React, Redux, Flask, Alembic, SQLAlchemy, CSS3 
-APIs & Libraries: AlphaVantage API, Finnhub API, LightWeight Charts, DevExtreme Charts
+#### Technologies: React, Redux, Flask, Alembic, SQLAlchemy, CSS3 
+#### APIs & Libraries: AlphaVantage API, Finnhub API, LightWeight Charts, DevExtreme Charts
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
