@@ -5,6 +5,11 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+#### Technologies: React, Redux, Flask, SQLAlchemy, CSS3 
+#### APIs & Libraries: AlphaVantage API, Finnhub API, LightWeight Charts, DevExtreme Charts
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 The goal of this two week full-stack project was to have 3 fully functional core MVP features finished, which include:  
 - Portfolio View - be able to see a summary of the user's portfolio holdings
 - Stock Chart View - view a real-time stock chart for a selected stock
@@ -35,7 +40,7 @@ Once logged in, the user views their portfolio dashboard as their 'home' page. I
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 ### Dynamic Search Bar (MVP Feat #2)
-When logged in, a nav bar spans the top of both the portfolio page and stock page. The 'search bar' is actually a select field, leveraging both a 'react-select' package component and an API call to Finnhub to grab all US stock tickers. With these two linked, the select options to choose from below the input field dynamic populate as a user types. This ensures the user selects a valid stock symbol even if the data for the selected stock is limited, and thus avoids the need for a custom search results page and avoids typo errors.  
+When logged in, a nav bar spans the top of both the portfolio page and stock page. The 'search bar' is actually a select field, leveraging both a 'react-select' package component and an API call to Finnhub to grab all US stock tickers. With these two linked, the select options to choose from below the input field dynamically populates as a user types. This ensures the user selects a valid stock symbol even if the data for the selected stock is limited, and thus avoids the need for a custom search results page and avoids the wrong stock that may the same symbol.  
 
 ![Search](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/dynamic_search.png?raw=true)
 
@@ -64,7 +69,5 @@ Assuming the user has either enough funds to purchase the shares, or has enough 
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-And that's about it! (happy dance!?!)
 
 For more info about what went into to making this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
