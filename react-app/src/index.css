@@ -213,6 +213,8 @@ a.nav-link:hover {
     padding-bottom: 1px;
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
     overflow-y: scroll;
+    position: sticky;
+    top: 30px;
 }
 
 .watchlist-header{ 
@@ -248,12 +250,10 @@ a.nav-link:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* align-items: center; */
-    /* margin:20px 30px 20px 30px; */
     height: 50px;
     padding-left: 25px;
     padding-right: 25px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 800;
 }
 
@@ -270,20 +270,21 @@ background-color: var(--NEWS_SHADOW)
     font-size: 11px;
 }
 
-.watchlist-button > button{
+.remove-watchlist{
 
     border: 1px solid white;
     background-color: var(--WHITE);
     border-radius: 5px;
     color: var(--CHARCOAL);
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 12px;
     padding: 5px 40px 5px 40px;
     margin-top: 10px;
     margin-bottom: 10px;
     transition: background-color 400ms, border 400ms, color 200ms;
 }
 
-.watchlist-button > button:hover{
+.remove-watchlist:hover{
     color: var(--WHITE);
     border: 1px solid var(--RED_TEXT);
     background-color: var(--RED_TEXT);
@@ -406,19 +407,11 @@ background-color: var(--NEWS_SHADOW)
     margin-right: 50px;
 }
 
-.stock-chart{ 
-    grid-area: stock-chart;
-    /* background-color: skyblue; */
-}
-
-.stock-info{ 
-    grid-area: stock-info;
-    background-color: skyblue;
-}
+.stock-chart{ grid-area: stock-chart }
+.stock-info{ grid-area: stock-info }
 
 .stock-order-container{ 
     grid-area: order; 
-    /* background-color: skyblue; */
     margin:15px 15px 10px 10px;
     height: 90%;
     border-radius: 5px;
@@ -666,7 +659,7 @@ background-color: var(--NEWS_SHADOW)
 }
 
 
-/* FORMS  */
+/* SPLASH FORMS  */
 
 .splash-form {
     width: 300px;
@@ -716,7 +709,7 @@ background-color: var(--NEWS_SHADOW)
 /* AssetHolding  */
 .holding-table {
     width: 100%;
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
 }
 
 .holding-table-labels {
@@ -742,9 +735,9 @@ background-color: var(--NEWS_SHADOW)
     grid-template-rows: 1fr;
     height: 100%;
     width: 98%;
-    font-size: 14px;
+    font-size: 13px;
     border-top: 1px solid black;
-    padding: 5px;
+    padding: 4px;
     transition: background-color 400ms;
 }
 
@@ -754,6 +747,7 @@ background-color: var(--NEWS_SHADOW)
 
 .holding-row a {
     color: var(--GREEN_TEXT);
+    font-weight: 600;
     transition: background-color 400ms, color 400ms;
 }
 
@@ -915,7 +909,7 @@ background-color: var(--NEWS_SHADOW)
 
 .flex-container-stack {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 5px;

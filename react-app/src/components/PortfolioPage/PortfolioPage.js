@@ -17,9 +17,6 @@ const PortfolioPage = () => {
     const [newListVisible, setNewListVisible] = useState(false)
     const [holdings, setHoldings] = useState([]);
 
-    // const contextHoldings = useHoldings()
-    // console.log('these be port CH', contextHoldings.contextHoldings)
-
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
@@ -73,12 +70,8 @@ const PortfolioPage = () => {
         for (let key in myHoldings){
             let holding = { 'ticker':key, 'volume':myHoldings[key].volume, 'cost':myHoldings[key].cost}
             if(holding.volume > 0) newHoldings.push(holding);
-            // newHoldings.push(holding)
         }
-        // console.log(newHoldings)
         setHoldings(newHoldings)
-        // contextHoldings.setContextHoldings(newHoldings)
-        // dispatch(loadHoldings(newHoldings))
     }
 
     const getPrice = async(ticker) => {
@@ -98,7 +91,6 @@ const PortfolioPage = () => {
     useEffect(() => {
         if (portfolioId) {
             dispatch(loadTrades(portfolioId))
-            // dispatch(updateBalance(portfolioId, 1000))
         }
     }, [portfolioId])
 
@@ -190,7 +182,7 @@ const PortfolioPage = () => {
                     </div>
                     <Watchlist/>
                     <div className='watchlist-button flex-container'>
-                        <button className='' onClick={deleteList}>Remove List</button>
+                        <button className='remove-watchlist' onClick={deleteList}>Remove List</button>
                     </div>
                 </div>
             </div>
