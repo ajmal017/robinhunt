@@ -64,11 +64,6 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
     useEffect(() => {
         let myEquity = getEquityValues()
         setEquityValues(myEquity)
-
-        let lastNews = news[0];
-        let otherArticles = news.slice(1)
-        setLatestArticle(lastNews)
-        setArticles(otherArticles)
     }, [holdingValue])
 
     useEffect(() => {
@@ -159,7 +154,7 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
                             <div className="news-header-summary">
                                 <p>{latestArticle.summary}</p>
                             </div>
-                            <div className='news-source boldest capitalize'>
+                            <div style={{ 'paddingBottom': '20px' }} className='news-source boldest capitalize'>
                                 {latestArticle.category}
                             </div>
                         </div>

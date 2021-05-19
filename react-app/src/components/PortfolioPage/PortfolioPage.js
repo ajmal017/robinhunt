@@ -161,7 +161,7 @@ const PortfolioPage = () => {
                     <div>
                         <div className='flex-container-between watchlist-header'>
                             <div>Lists</div>
-                            <img style={{'width':'12px'}} src={plus_icon} onClick={showNewListForm}></img>
+                            <img className='add-watchlist-button' src={plus_icon} onClick={showNewListForm}></img>
                         </div>
                         <form style={{'display':`${display}`}} className='new-watchlist' onSubmit={newListOnSubmit}>
                             <div className='flex-container new-watchlist-section'>

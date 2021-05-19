@@ -39,7 +39,7 @@ body {
 }
 
 a {
-    color: var(--GREEN_TEXT);
+    color: var(--BLACK);
     text-decoration: none;
 }
 
@@ -225,6 +225,11 @@ a.nav-link:hover {
     margin: 0px;
     border-bottom: 1px solid lightgrey;
     font-weight: 700;
+}
+
+.add-watchlist-button{ 
+    cursor: pointer;
+    width: 12px;
 }
 
 .watchlist-selection{ 
@@ -804,7 +809,7 @@ background-color: var(--NEWS_SHADOW)
     width: 90%;
     color: var(--GREY_TEXT);
     margin-top:10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
 }
 
 .news-header-image-container {
@@ -819,7 +824,7 @@ background-color: var(--NEWS_SHADOW)
     border-radius: 5px;
     object-fit: cover;
     width: 100%;
-    height: 75%;
+    height: 150px;
     margin-right: 20px;
 }
 
