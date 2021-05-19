@@ -5,7 +5,7 @@ import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, news, refreshCount, setRefreshCount, prices }) => {
+const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCount, setRefreshCount, prices }) => {
     const bolt = require('../../front-assets/bolt.png')
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
