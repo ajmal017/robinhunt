@@ -94,6 +94,14 @@ div .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
 
+div .css-tlfecz-indicatorContainer {
+    display: none;
+} 
+
+.css-1okebmr-indicatorSeparator {
+    display: none;
+}
+
 
 /* ---------- REACT SELECT COMP (START) --------- */
 /* INPUT NOT ACTIVE */
