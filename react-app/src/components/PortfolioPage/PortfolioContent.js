@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loadTrades } from '../../store/trade'
 import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
@@ -11,7 +9,7 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
-    const [returnPercent, setReturnPercent] = useState(0)
+    const [returnPercent, setReturnPercent] = useState(0) // add logic to show up green triangle or down red triangle
     const [equityValues, setEquityValues] = useState([])
     const [newsButtonText, setNewsButtonText] = useState('Show newer articles')
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
