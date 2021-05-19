@@ -106,7 +106,7 @@ div .css-tlfecz-indicatorContainer {
 /* ---------- REACT SELECT COMP (START) --------- */
 /* INPUT NOT ACTIVE */
 div .css-yk16xz-control{
-    border: 1px solid var(--LOGO_GREEN);
+    border: 1px solid var(--GREEN_TEXT);
     transition: box-shadow 500ms, border 500ms;
 }
 
@@ -128,19 +128,19 @@ div  .css-1pahdxg-control:hover{
 
 /* MENU DROPDOWN  */
 div  .css-26l3qy-menu{
-    border: 1px solid var(--LOGO_GREEN);
+    border: 1px solid var(--GREEN_TEXT);
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
     background-color: WHITE;
 }
 
 div .css-26l3qy-menu > div > div{
     background-color: white;
-    transition: background-color 500ms, color 500ms;
+    transition: background-color 300ms, color 300ms;
 }
 
 div .css-26l3qy-menu > div > div:hover{
     color: white;
-    background-color: var(--LOGO_GREEN)
+    background-color: var(--GREEN_TEXT)
 }
 
 /* ---------- REACT SELECT COMP (END)--------- */
