@@ -1,6 +1,5 @@
 /* UNIVERSAL */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap');
 
 :root {
     --CHARCOAL: #222b37;
@@ -14,6 +13,7 @@
     --GREY_TEXT: #a2a2a2;
     --BOX_SHADOW: #e8e8eb;
     --BLACK: black;
+    --NEWS_SHADOW: #f5f8fa;
 
 }
 
@@ -32,6 +32,10 @@ a {
 
 p {
     margin: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
 }
 
 #pie {
@@ -107,7 +111,7 @@ div .css-tlfecz-indicatorContainer {
 /* INPUT NOT ACTIVE */
 div .css-yk16xz-control{
     border: 1px solid var(--GREEN_TEXT);
-    transition: box-shadow 500ms, border 500ms;
+    transition: box-shadow 300ms, border 300ms;
 }
 
 div .css-yk16xz-control:hover{
@@ -119,6 +123,7 @@ div .css-yk16xz-control:hover{
 div  .css-1pahdxg-control{
     border: none;
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    transition: box-shadow 300ms, border 300ms;
 }
 
 div  .css-1pahdxg-control:hover{
@@ -149,7 +154,7 @@ div .css-26l3qy-menu > div > div:hover{
 
 a.nav-link {
     padding: 20px;
-    font-weight: bold;
+    font-weight: 600;
     color: var(--CHARCOAL)
 }
 
@@ -202,7 +207,7 @@ a.nav-link:hover {
     padding: 15px 20px 15px 30px;
     margin: 0px;
     border-bottom: 1px solid lightgrey;
-    font-weight: bold;
+    /* font-weight: 600; */
 }
 
 .watchlist-selection{ 
@@ -230,7 +235,7 @@ a.nav-link:hover {
     align-items: center;
     margin:20px 30px 20px 30px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .watchlist-button > button{
@@ -258,7 +263,7 @@ a.nav-link:hover {
     align-items: center;
     margin:10px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .new-watchlist-section{
@@ -413,7 +418,7 @@ a.nav-link:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 14px;
     color: var(--GREEN_TEXT);
     padding-top:10px;
@@ -515,7 +520,7 @@ a.nav-link:hover {
     align-items: center;
     padding: 10px 20px 10px 20px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .order-input > select{ 
@@ -526,7 +531,7 @@ a.nav-link:hover {
     border: none;
     padding: 5px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .order-input > input{ 
@@ -548,7 +553,7 @@ a.nav-link:hover {
     background-color: var(--GREEN_TEXT);
     border-radius: 5px;
     color: var(--WHITE);
-    font-weight: bold;
+    font-weight: 600;
     padding: 15px 70px 15px 70px;
     margin-top: 20px;
 }
@@ -685,7 +690,7 @@ a.nav-link:hover {
 
 .holding-table-labels {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     display: grid;
     grid-template-areas:
       "symbol shares cPrice pPrice return equity";
@@ -728,45 +733,125 @@ a.nav-link:hover {
 
 
 
-/* NEWS CARD */
+/* NEWS HEADER CARD */
+
+.fetch-news-button {
+    background-color: var(--GREEN_HIGHLIGHT);
+    color: var(--GREEN_TEXT);
+    padding: 5px 10px 5px 10px;
+    margin: 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: background-color 400ms, color 400ms;
+}
+
+.fetch-news-button:hover {
+    background-color: var(--GREEN_TEXT);
+    color: var(--WHITE);
+    cursor: pointer;
+
+}
+
+.news-header-container {
+    display: grid;
+    grid-template-areas:
+        'info image';
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr;
+    height: 200px;
+    width: 100%;
+    transition: background-color 400ms, color 400ms;
+}
+
+.news-header-container:hover {
+    background-color: var(--NEWS_SHADOW);
+}
+
+.news-header-title  {
+    font-size: 16px;
+    width: 90%;
+    margin-top:10px;
+}
+
+.news-header-summary  {
+    font-size: 14px;
+    width: 90%;
+    color: var(--GREY_TEXT);
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+.news-header-image-container {
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.news-header-image  {
+    border-radius: 5px;
+    object-fit: cover;
+    width: 100%;
+    height: 75%;
+    margin-right: 20px;
+}
+
+/* NEWS ARTICLE CARD */
 
 .news-card-container {
     display: grid;
     grid-template-areas:
         'info image';
-    grid-template-columns: 1fr 150px;
+    grid-template-columns: 1fr 175px;
     grid-template-rows: 1fr;
-    height: 120px;
+    height: 150px;
     width: 100%;
-    border-top: 2px solid lightgrey;
+    border-top: 1px solid lightgrey;
+    transition: background-color 400ms, color 400ms;
+}
+
+.news-card-container:hover {
+    background-color: var(--NEWS_SHADOW);
 }
 
 .news-image-container {
   object-fit: cover;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
+}
+
+.news-image {
+    border-radius: 5px;
+    object-fit: cover;
+    width: 90%;
+    height: 60%;
+    margin-right: 20px;
 }
 
 .news-info-container {
   width: 100%;
   height: 100%;
-  padding-top: 10px;
-  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
+  color: var(--CHARCOAL)
 }
 
-.news-image {
-  border-radius: 5px;
-  object-fit: cover;
-  width: 80%;
-  height: 60%;
+.news-source{
+    font-size: 12px;
+    font-weight: 800;
 }
 
 .news-title  {
     font-size: 14px;
     width: 90%;
-    margin-top:10px;
+    margin-top:20px;
+    margin-bottom:20px;
 }
 
 .news-title > a {
@@ -774,9 +859,6 @@ a.nav-link:hover {
     transition: color 400ms;
 }
 
-.news-title > a:hover {
-    color: var(--GREEN_TEXT);
-}
 
 
 
@@ -824,7 +906,11 @@ a.nav-link:hover {
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.boldest {
+    font-weight: 800;
 }
 
 .grey-underline {
@@ -836,8 +922,16 @@ a.nav-link:hover {
     display: none
 }
 
+.capitalize {
+    text-transform: capitalize;
+}
+
 .num-flip > section {
     width: 100px;
     color: var(--GREEN_TEXT);
     font-family: 'Nunito Sans', sans-serif;
+}
+
+.line-above {
+    border-top: 1px solid lightgrey;
 }

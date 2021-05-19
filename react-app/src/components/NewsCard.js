@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const NewsCard = ({ article }) => {    
-
-    // const formatDate = (unixStamp) => {
-    //     let dateTime = new Date(unixStamp) // in unix
-    //     let isoDate = dateTime.toISOString()
-    //     let year = isoDate.slice(0,4)
-    //     // console.log(year)
-    //     let month = isoDate.slice(5, 7)
-    //     // console.log(month)
-    //     let day = isoDate.slice(8, 10)
-    //     // console.log(day)
-    //     let hour = isoDate.split('T')[1].slice(0,2)
-    //     let minute = isoDate.split('T')[1].slice(3, 5)
-    //     console.log(minute)
-    //     console.log(isoDate)
-    // }
-    // formatDate(article.datetime)
+    const bolt = require('../front-assets/bolt.png')
 
     return (
-        <div className="news-card-container">
-            <div className='news-info-container'>
-                <p className='min-margin bold'>{article.source}</p>
-                <div className="news-title">
-                    <a href={article.url}>{article.headline}</a>
+        <a href={article.url} target="_blank">
+            <div className="news-card-container">
+                <div className='news-info-container'>
+                    <p className='news-source boldest'>
+                        <img style={{'width':'10px', 'marginRight':'8px'}} src={bolt}></img>{article.source}
+                    </p>
+                    <div className="news-title">
+                        <p>{article.headline}</p>
+                    </div>
+                    <div className='news-source boldest capitalize'>
+                        {article.category}
+                    </div>
+                </div>
+                <div className='news-image-container'>
+                    <img className="news-image" src={article.image}></img>
                 </div>
             </div>
-            <div className='news-image-container'>
-                <img className="news-image" src={article.image}></img>
-            </div>
-        </div>
+        </a>
     )
 }
 
