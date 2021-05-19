@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AsyncSelect from 'react-select/async'
 
 const AsyncSearch = () => {
@@ -22,38 +22,21 @@ const AsyncSearch = () => {
             .then(data => data.result)
     }
 
-
     return (
-       
-        <div className="search-bar">
-            {/* <pre>Input Value: "{inputValue}"</pre> */}
-            <AsyncSelect
-                cacheOptions
-                defaultOptions
-                value={selectedValue}
-                getOptionLabel={e => `${e.symbol}: ${e.description}`}
-                getOptionValue={e => e.symbol}
-                loadOptions={loadOptions}
-                onInputChange={handleInputChange}
-                onChange={handleChange}
-            />
-            {/* <pre>Selected Value: {JSON.stringify(selectedValue)}</pre> */}
-        </div>
-
+       <>
+            <div className="search-bar">
+                <AsyncSelect
+                    cacheOptions
+                    value={selectedValue}
+                    getOptionLabel={e => `${e.symbol}: ${e.description}`}
+                    getOptionValue={e => e.symbol}
+                    loadOptions={loadOptions}
+                    onInputChange={handleInputChange}
+                    onChange={handleChange}
+                />
+            </div>
+        </>
     );
 }
 
 export default AsyncSearch;
-
-// STATIC TICKERS PULL
-    // const getSymbols = async () => {
-    //     let response = await fetch('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c27ut2aad3ic393ffql0', { json: true })
-    //     if (response.ok) {
-    //         let data = await response.json()
-    //         let searchData = data.map(symbol => {
-    //             return {'value': symbol.displaySymbol, 'label': `${symbol.displaySymbol}: ${symbol.description}`}
-    //         })
-    //         setSearchOptions(searchData)
-    //         // console.log(searchData)
-    //     }
-    // }

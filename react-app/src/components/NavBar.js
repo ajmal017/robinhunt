@@ -10,6 +10,9 @@ const NavBar = ({ setAuthenticated }) => {
 
   const authLinks = (
     <div className='flex-container'>
+      <a className='nav-link' href="#" exact={true}>
+        History
+      </a>
       <a className='nav-link' href="/" exact={true}>
         Portfolio
       </a>
