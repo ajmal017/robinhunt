@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import FlipNumbers from 'react-flip-numbers';
 import { submitTrade } from '../../store/trade';
 import { updateBalance } from '../../store/portfolio';
 
@@ -93,7 +94,9 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
             <>
                 <div className='order-input'>
                     <p style={{ 'fontWeight': 'bold' }}> Est. Cost</p>
-                    <p style={{ 'paddingLeft': '80px' }}> {orderValue && orderValue.toFixed(6)} </p>
+                    <p className='num-flip' style={{ 'paddingLeft': '60px' }}> {orderValue && 
+                        <FlipNumbers height={15} width={10} color="var(--GREEN_TEXT)" background="white" play perspective={200} duration={1} numbers={`$${orderValue.toFixed(2)}`} />
+                    } </p>
                 </div>
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                         <h4 className='min-margin'>Confirmation Notice:</h4>
