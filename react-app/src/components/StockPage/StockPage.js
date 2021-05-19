@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
 import { createChart } from 'lightweight-charts';
+import FlipNumbers from 'react-flip-numbers';
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlistItem, deleteWatchlistItem } from '../../store/watchlist';
@@ -10,6 +11,7 @@ import OrderForm from './OrderForm';
 // https://finnhub.io/docs/api/websocket-trades
 // https://finnhub.io/docs/api/quote
 // https://www.unixtimestamp.com/
+// https://www.npmjs.com/package/react-flip-numbers
 
 const StockPage = () => {
     const alphaKey = process.env.ALPHA_VANTAGE_API_KEY
@@ -186,13 +188,14 @@ const StockPage = () => {
                     lastTime = time
                     let newPricePoint = { 'time': time, 'value': price }
                     let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
-                    priceContainer.current.innerHTML = displayPrice;
+                    // priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
+                    setLastPrice(newPricePoint['value'])
                 } else if (lastTime < time){ // otherwise, check that new time is greater than last time to avoid errors
                     lastTime = time
                     let newPricePoint = {'time':time, 'value':price}      
                     let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
-                    priceContainer.current.innerHTML = displayPrice;
+                    // priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
                     setLastPrice(newPricePoint['value'])
                 } 
@@ -211,7 +214,7 @@ const StockPage = () => {
     // remove container content on ticker change 
     const removeChart = () => {
         chartContainer.current.innerHTML = ''
-        priceContainer.current.innerHTML = '...loading'
+        // priceContainer.current.innerHTML = '...loading'
     }
 
     // load pre-req async functions in order first
@@ -321,7 +324,9 @@ const StockPage = () => {
         <div className='stock-page-container'>
             <div className="stock-chart">
                 <h1 className='min-margin'>{profile.name}</h1>
-                <h3 className='min-margin' ref={priceContainer}>...loading</h3>
+                <h3 className='num-flip' ref={priceContainer}>
+                    <FlipNumbers height={20} width={15} color="var(--GREEN_TEXT)" background="white" play perspective={200} duration={1} numbers={`$${lastPrice.toFixed(2)}`} />
+                </h3>
                 <div ref={chartContainer}></div>
             </div>
             <div className="profile-info-container">

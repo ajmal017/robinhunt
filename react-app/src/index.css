@@ -779,3 +779,8 @@ a.nav-link:hover {
 .hidden {
     display: none
 }
+
+.num-flip > section {
+    width: 100px;
+    color: var(--GREEN_TEXT);
+}
