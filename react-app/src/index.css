@@ -26,6 +26,10 @@ select:focus-visible {
     outline: none;
 }
 
+input:focus-visible {
+    outline: none;
+}
+
 body {
     box-sizing: border-box;
     font-family: 'Nunito Sans', sans-serif;

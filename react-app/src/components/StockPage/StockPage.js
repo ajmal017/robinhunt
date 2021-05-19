@@ -131,6 +131,8 @@ const StockPage = () => {
             }
             let last360 = historical.slice(0, 360)
             prevClose = last360[0]['value']
+            console.log('previousClose ===', prevClose)
+            setLastPrice(prevClose)
             pastData = last360.reverse(); // historical data is sent most recent first... so need to reverse the order
             series.setData(pastData)
         }

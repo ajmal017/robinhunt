@@ -17,7 +17,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     
     const [orderType, setOrderType] = useState('buy')
     const [orderValue, setOrderValue] = useState(0)
-    const [orderVolume, setOrderVolume] = useState(0)
+    const [orderVolume, setOrderVolume] = useState(1)
 
         
     useEffect(() => {
@@ -27,7 +27,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
         }
     }, [holdings])
 
-    useEffect(() => { setOrderValue(orderVolume * price) }, [price])
+    useEffect(() => { setOrderValue(orderVolume * price) }, [price, orderVolume])
 
     let displayReview, displayConfirm, displayGif;
     if(showConfirmation) {
