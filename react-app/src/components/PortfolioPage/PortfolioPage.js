@@ -10,6 +10,7 @@ const PortfolioPage = () => {
     const plus_icon = require('../../front-assets/plus_icon.png')
     const dispatch = useDispatch()
     const [news, setNews] = useState([])
+    const [refreshCount, setRefreshCount] = useState(0)
     const [prices, setPrices] = useState(null)
     const [watchlistId, setWatchlistId] = useState(0)
     const [newListName, setNewListName] = useState("")
@@ -112,7 +113,7 @@ const PortfolioPage = () => {
         if (userId) dispatch(loadWatchlists(userId))
         getNews()
         if(trades) buildHoldings()
-    }, [dispatch, trades, userId])
+    }, [trades, userId])
 
     useEffect(() => {
         if (watchlists && watchlistId === 0) {
@@ -122,7 +123,9 @@ const PortfolioPage = () => {
         }
     }, [watchlists])
 
-
+    useEffect(() => {
+        getNews()
+    }, [refreshCount])
 
 
     // WATCHLIST RELATED
@@ -159,7 +162,7 @@ const PortfolioPage = () => {
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user} cashBalance={cashBalance} portfolioId={portfolioId} trades={trades} holdings={holdings} news={news} prices={prices}/>
+                <PortfolioContent user={user} cashBalance={cashBalance} portfolioId={portfolioId} trades={trades} holdings={holdings} news={news} refreshCount={refreshCount} setRefreshCount={setRefreshCount} prices={prices}/>
             </div>
             <div className="portfolio-watchlist">
                 <div className='watchlist-container'>

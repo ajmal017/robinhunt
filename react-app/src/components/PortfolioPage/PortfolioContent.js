@@ -5,15 +5,20 @@ import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, news, prices }) => {    
+const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, news, refreshCount, setRefreshCount, prices }) => {
+    const bolt = require('../../front-assets/bolt.png')
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
     const [returnPercent, setReturnPercent] = useState(0)
     const [equityValues, setEquityValues] = useState([])
+    const [newsButtonText, setNewsButtonText] = useState('Show newer articles')
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
+
+    const [latestArticle, setLatestArticle] = useState(null)
+    const [articles, setArticles] = useState(null)
 
     let equityObj = {};
     const getHoldingValue = () => {
@@ -59,13 +64,33 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
     useEffect(() => {
         let myEquity = getEquityValues()
         setEquityValues(myEquity)
+
+        let lastNews = news[0];
+        let otherArticles = news.slice(1)
+        setLatestArticle(lastNews)
+        setArticles(otherArticles)
     }, [holdingValue])
+
+    useEffect(() => {
+        let lastNews = news[0];
+        let otherArticles = news.slice(1)
+        setLatestArticle(lastNews)
+        setArticles(otherArticles)
+    }, [news])
 
     const chartDisplay = (
         <div className='flex-container'>
             <PortfolioChart values={equityValues} />
         </div>
     )
+
+    const updateNews = () => {
+        setRefreshCount(refreshCount+1)
+        setNewsButtonText(`All set! You're up to date`)
+        setTimeout(() => {
+            setNewsButtonText('Show newer articles')
+        }, [10000])
+    }
     
     return (
         <div className='portfolio-content-container'>
@@ -118,7 +143,33 @@ const PortfolioContent = ({ user, cashBalance, portfolioId, trades, holdings, ne
             </div>
             <div className="news-container">
                 <h2 className="">News</h2>
-                {news && news.map(article => (
+                <div className='flex-container line-above'>
+                    <p onClick={updateNews} className='fetch-news-button'> {newsButtonText}</p>
+                </div>
+                {latestArticle && 
+                (<a href={latestArticle.url} target="_blank">
+                    <div className="news-header-container">
+                        <div className='news-info-container'>
+                            <p className='news-source boldest'>
+                                <img style={{ 'width': '10px', 'marginRight': '8px' }} src={bolt}></img>{latestArticle.source}
+                            </p>
+                            <div className="news-header-title boldest">
+                                <p>{latestArticle.headline}</p>
+                            </div>
+                            <div className="news-header-summary">
+                                <p>{latestArticle.summary}</p>
+                            </div>
+                            <div className='news-source boldest capitalize'>
+                                {latestArticle.category}
+                            </div>
+                        </div>
+                        <div className='news-header-image-container'>
+                            <img className="news-header-image" src={latestArticle.image}></img>
+                        </div>
+                    </div>
+                </a>)
+                }
+                {articles && articles.map(article => (
                     <NewsCard key={article.id} article={article} />
                 ))}
             </div>
