@@ -94,9 +94,12 @@ div .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
 
+
+/* ---------- REACT SELECT COMP (START) --------- */
 /* INPUT NOT ACTIVE */
 div .css-yk16xz-control{
-    border: 1px solid var(--GREEN_TEXT);
+    border: 1px solid var(--LOGO_GREEN);
+    transition: box-shadow 500ms, border 500ms;
 }
 
 div .css-yk16xz-control:hover{
@@ -117,18 +120,22 @@ div  .css-1pahdxg-control:hover{
 
 /* MENU DROPDOWN  */
 div  .css-26l3qy-menu{
-    border: 1px solid var(--GREEN_TEXT);
+    border: 1px solid var(--LOGO_GREEN);
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
     background-color: WHITE;
 }
 
 div .css-26l3qy-menu > div > div{
     background-color: white;
+    transition: background-color 500ms, color 500ms;
 }
 
 div .css-26l3qy-menu > div > div:hover{
-    background-color: var(--GREEN_HIGHLIGHT)
+    color: white;
+    background-color: var(--LOGO_GREEN)
 }
+
+/* ---------- REACT SELECT COMP (END)--------- */
 
 /* NAV LINKS  */
 
@@ -196,18 +203,15 @@ a.nav-link:hover {
     justify-content:center;
     padding-top: 10px;
     margin: 0px;
-    /* border-bottom: 1px solid lightgrey; */
 }
 
 .watchlist-selection > select{ 
     font-family: 'Nunito Sans', sans-serif;
     font-size: 15px;
-    /* border-radius: 5px; */
     border: none;
     padding: 10px 0px 5px 8px;
     margin: 0px;
     width: 80%;
-    /* border-bottom: 1px solid lightgrey; */
 }
 
 
@@ -222,8 +226,7 @@ a.nav-link:hover {
 }
 
 .watchlist-button > button{
-    /* border: 1px solid var(--GREEN_TEXT); */
-    /* background-color: var(--GREEN_TEXT); */
+
     border: 1px solid white;
     background-color: var(--WHITE);
     border-radius: 5px;
@@ -236,14 +239,10 @@ a.nav-link:hover {
 }
 
 .watchlist-button > button:hover{
-    /* font-weight: bold; */
     color: var(--WHITE);
     border: 1px solid var(--RED_TEXT);
     background-color: var(--RED_TEXT);
 }
-
-
-
 
 
 .new-watchlist{ 
@@ -306,16 +305,17 @@ a.nav-link:hover {
         'summary chart';
     grid-template-columns: 300px 400px;
     grid-template-rows: 1fr;
+    box-shadow: 0px 10px 20px 2px var(--BOX_SHADOW);
 }
 
 .portfolio-summary{ 
     background-color: var(--GREY_SHADOW);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    border-right: 2px solid lightgrey;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-    /* margin-left: 20px; */
 
 }
 

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import AsyncSearch from './AsyncSearch'
 
@@ -10,9 +9,9 @@ const NavBar = ({ setAuthenticated }) => {
 
   const authLinks = (
     <div className='flex-container'>
-      <a className='nav-link' href="#" exact={true}>
+      {/* <a className='nav-link' href="#" exact={true}>
         History
-      </a>
+      </a> */}
       <a className='nav-link' href="/" exact={true}>
         Portfolio
       </a>
