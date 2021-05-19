@@ -59,7 +59,7 @@ p {
     display: grid;
     grid-template-areas:
         'logo search . links';
-    grid-template-columns: 120px 2fr 1fr 400px;
+    grid-template-columns: 120px 2fr 1fr 425px;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
@@ -79,10 +79,58 @@ p {
 }
 
 .search-bar{
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     border-radius: 5px;
-    width: 500px;
+    width: 400px;
 }
+
+/* HIDE DEFAULT SELECT TEXT  */
+div > .css-1wa3eu0-placeholder{
+    color: white;
+}
+
+/* HIDE DROPDOWN SELECT ARROW */
+div .css-1hb7zxy-IndicatorsContainer {
+    display: none;
+}
+
+/* INPUT NOT ACTIVE */
+div .css-yk16xz-control{
+    border: 1px solid var(--GREEN_TEXT);
+}
+
+div .css-yk16xz-control:hover{
+    border: none;
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+}
+
+/* INPUT ACTIVE */
+div  .css-1pahdxg-control{
+    border: none;
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+}
+
+div  .css-1pahdxg-control:hover{
+    border: none;
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+}
+
+/* MENU DROPDOWN  */
+div  .css-26l3qy-menu{
+    border: 1px solid var(--GREEN_TEXT);
+    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    background-color: WHITE;
+}
+
+div .css-26l3qy-menu > div > div{
+    background-color: white;
+}
+
+div .css-26l3qy-menu > div > div:hover{
+    background-color: var(--GREEN_HIGHLIGHT)
+}
+
+/* NAV LINKS  */
 
 a.nav-link {
     padding: 20px;
