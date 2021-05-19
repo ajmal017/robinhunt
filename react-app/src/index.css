@@ -1,5 +1,5 @@
 /* UNIVERSAL */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
 :root {
     --CHARCOAL: #222b37;
@@ -15,6 +15,15 @@
     --BLACK: black;
     --NEWS_SHADOW: #f5f8fa;
 
+}
+
+select {
+    border: none;
+}
+
+select:focus-visible {
+    border: 1px solid green;
+    outline: none;
 }
 
 body {
@@ -63,7 +72,7 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-areas:
         'logo search . links';
-    grid-template-columns: 120px 2fr 1fr 425px;
+    grid-template-columns: 120px 2fr 1fr 400px;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
@@ -154,8 +163,10 @@ div .css-26l3qy-menu > div > div:hover{
 
 a.nav-link {
     padding: 20px;
-    font-weight: 600;
-    color: var(--CHARCOAL)
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--CHARCOAL);
+    transition: color 300ms;
 }
 
 a.nav-link:hover {
@@ -188,7 +199,7 @@ a.nav-link:hover {
 
 .portfolio-watchlist{ 
     grid-area: watchlist; 
-    margin-right: 50px;
+    margin-right:30px;
 }
 
 .watchlist-container{ 
@@ -207,7 +218,7 @@ a.nav-link:hover {
     padding: 15px 20px 15px 30px;
     margin: 0px;
     border-bottom: 1px solid lightgrey;
-    /* font-weight: 600; */
+    font-weight: 700;
 }
 
 .watchlist-selection{ 
@@ -215,16 +226,17 @@ a.nav-link:hover {
     flex-direction: row;
     justify-content:center;
     padding-top: 10px;
-    margin: 0px;
+    margin: 0px 0px 10px 0px;
 }
 
 .watchlist-selection > select{ 
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     border: none;
-    padding: 10px 0px 5px 8px;
+    padding: 10px 0px 5px 0px;
     margin: 0px;
     width: 80%;
+    font-weight: 600;
 }
 
 
@@ -232,10 +244,26 @@ a.nav-link:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    margin:20px 30px 20px 30px;
+    /* align-items: center; */
+    /* margin:20px 30px 20px 30px; */
+    height: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
     font-size: 14px;
+    font-weight: 800;
+}
+
+.watchlist-item:hover{ 
+background-color: var(--NEWS_SHADOW)
+}
+
+.watchlist-item-price{ 
     font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
 }
 
 .watchlist-button > button{
@@ -263,7 +291,7 @@ a.nav-link:hover {
     align-items: center;
     margin:10px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .new-watchlist-section{
@@ -325,7 +353,7 @@ a.nav-link:hover {
     background-color: var(--GREY_SHADOW);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    border-right: 2px solid lightgrey;
+    /* border-right: 2px solid lightgrey; */
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
@@ -418,11 +446,10 @@ a.nav-link:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     color: var(--GREEN_TEXT);
     padding-top:10px;
-    /* padding-bottom: 0px; */
     transition: background-color 400ms;
 }
 
@@ -531,7 +558,7 @@ a.nav-link:hover {
     border: none;
     padding: 5px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .order-input > input{ 
@@ -690,7 +717,7 @@ a.nav-link:hover {
 
 .holding-table-labels {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     display: grid;
     grid-template-areas:
       "symbol shares cPrice pPrice return equity";
@@ -907,6 +934,10 @@ a.nav-link:hover {
 
 .bold {
     font-weight: 600;
+}
+
+.bolder {
+    font-weight: 700;
 }
 
 .boldest {
