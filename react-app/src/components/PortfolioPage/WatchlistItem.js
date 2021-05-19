@@ -30,9 +30,9 @@ const WatchlistItem = ({ stock }) => {
     return (
         <div className='watchlist-item'>
             <div>
-                <p style={{'paddingTop':'7px'}}><a href={`/stocks/${stock}`}>{stock}</a></p>
+                <p style={{'paddingTop':'10px'}}><a href={`/stocks/${stock}`}>{stock}</a></p>
             </div>
-            <img style={{'height':'35px', 'width':'50px'}} src={dashed}></img>
+            <img style={{'height':'40px', 'width':'50px'}} src={dashed}></img>
             <div className='watchlist-item-price'>
                 <p>${Number(price).toFixed(2)}</p>
                 <p style={{'color':`${changeColor}`}}>{Number(netChange).toFixed(2)}%</p>
