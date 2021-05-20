@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { loadTrades } from '../../store/trade'
+import React from "react";
 
 const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, currencyFormatter }) => {
-
     //raw data
     let total_cost =shares * purchasePrice;
     let equity_value =shares * currentPrice
 
     // formatted 
-    let fPrice = currencyFormatter(currentPrice); // replace with API call
+    let fPrice = currencyFormatter(currentPrice);
     let fPurchasePrice = currencyFormatter(purchasePrice)
     let fEquityValue = currencyFormatter(shares * currentPrice)
     let fTotalReturn = currencyFormatter(equity_value - total_cost)

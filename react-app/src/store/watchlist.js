@@ -1,4 +1,4 @@
-// USER PORTFOLIO STATE
+// WATCHLIST STATE
 
 // Constants --------------------
 const SET_WATCHLISTS = 'watchlist/SET_WATCHLISTS';

@@ -8,14 +8,14 @@ import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlistItem, deleteWatchlistItem } from '../../store/watchlist';
 import OrderForm from './OrderForm';
 
-// https://finnhub.io/docs/api/websocket-trades
-// https://finnhub.io/docs/api/quote
-// https://www.unixtimestamp.com/
-// https://www.npmjs.com/package/react-flip-numbers
+// INFORMATIONAL RESOURCES FOR RELATED COMPONENTS // 
+    // https://finnhub.io/docs/api/websocket-trades
+    // https://finnhub.io/docs/api/quote
+    // https://www.unixtimestamp.com/
+    // https://www.npmjs.com/package/react-flip-numbers
 
 const StockPage = () => {
     const alphaKey = process.env.ALPHA_VANTAGE_API_KEY
-    // const finnKey = process.env.FINNHUB_API_KEY
     const { ticker } = useParams()
     const dispatch = useDispatch()
     const chartContainer = useRef(null)
@@ -33,15 +33,12 @@ const StockPage = () => {
     const trades = useSelector(state => state.trade.trades)
     const watchlists = useSelector(state => state.watchlist.watchlists)
 
-    let userId, cashBalance, portfolioId, watchlist;
+    let userId, cashBalance, portfolioId;
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
-    watchlists ? watchlist = watchlists[0] : watchlist = null;
 
     let lineSeries, priceSocket, pastData, prevClose;
-    const currencyFormatter = (num) => Number(num).toFixed(2)
-    
     const initialize = async () => {
         // identify placement of chart in DOM
         let container = chartContainer.current
@@ -122,7 +119,6 @@ const StockPage = () => {
         if (response.ok) {
             let data = await response.json()
             let seriesData = data['Time Series (1min)'] 
-            // console.log(seriesData)
             let historical = []
             for (let key in seriesData){
                 let datetime = new Date(key).getTime()/1000; // convert to unix timestamp for lwChart
@@ -131,7 +127,6 @@ const StockPage = () => {
             }
             let last360 = historical.slice(0, 360)
             prevClose = last360[0]['value']
-            console.log('previousClose ===', prevClose)
             setLastPrice(prevClose)
             pastData = last360.reverse(); // historical data is sent most recent first... so need to reverse the order
             series.setData(pastData)
@@ -163,7 +158,6 @@ const StockPage = () => {
         if (response.ok) {
             let financialData = await response.json()
             let financialMetrics = financialData.metric
-            // console.log(financialMetrics)
             setFinancials(financialMetrics)
         }
     }
@@ -176,7 +170,6 @@ const StockPage = () => {
         // Connection opened -> Subscribe
         priceSocket.addEventListener('open', function (event) {
             priceSocket.send(JSON.stringify({ 'type': 'subscribe', 'symbol': ticker }))
-            // console.log(`priceSocket opened for ${ticker}!`)
         });
 
         let lastTime = null;
@@ -189,15 +182,11 @@ const StockPage = () => {
                 if(lastTime === null){ // if first data point, set 'lastTime' to the first instance
                     lastTime = time
                     let newPricePoint = { 'time': time, 'value': price }
-                    let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
-                    // priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
                     setLastPrice(newPricePoint['value'])
                 } else if (lastTime < time){ // otherwise, check that new time is greater than last time to avoid errors
                     lastTime = time
                     let newPricePoint = {'time':time, 'value':price}      
-                    let displayPrice = '$' + currencyFormatter(newPricePoint['value'])
-                    // priceContainer.current.innerHTML = displayPrice;
                     series.update(newPricePoint);
                     setLastPrice(newPricePoint['value'])
                 } 
@@ -213,10 +202,9 @@ const StockPage = () => {
         }
     }
 
-    // remove container content on ticker change 
+    // remove existing container content on stock selection change instantiated from Stock page
     const removeChart = () => {
         chartContainer.current.innerHTML = ''
-        // priceContainer.current.innerHTML = '...loading'
     }
 
     // load pre-req async functions in order first
@@ -237,26 +225,19 @@ const StockPage = () => {
 
     // run all functions on load in correct order via useEffect
     useEffect(() => {
-        unmountSocket(priceSocket) // if ticker changes from search, unmount existing socket then reload
+        unmountSocket(priceSocket)
         load()
         return () => unmountSocket(priceSocket)
-    }, [ticker])
+    }, [ticker]) // added dependency for if ticker changes from search bar to unmount existing socket then reloading new data
 
+    // load user portfolio and watchlist data
     useEffect(() => {
         if (userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
         dispatch(loadWatchlistItems(watchlistId))
-    }, [userId, watchlistId])
+    }, [dispatch, userId, watchlistId])
 
-    useEffect(() => {
-        if(watchlists && watchlistId === 0) {
-            if (watchlists.length > 0) {
-                setWatchlistId(watchlists[0].id)
-            }
-        }
-    }, [watchlists])
-
-    useEffect(() => { if (portfolioId) { dispatch(loadTrades(portfolioId)) } }, [portfolioId])
+    useEffect(() => { if (portfolioId) { dispatch(loadTrades(portfolioId)) } }, [dispatch, portfolioId])
 
     // WATCHLIST 
 
@@ -303,10 +284,10 @@ const StockPage = () => {
             if (!myHoldings.hasOwnProperty(ticker)) {
                 myHoldings[ticker] = { volume, cost }
             } else {
-                if (type == 'buy') {
+                if (type === 'buy') {
                     myHoldings[ticker].cost = avgCost(myHoldings[ticker].volume, myHoldings[ticker].cost, volume, cost)
                     myHoldings[ticker].volume += volume
-                } else if (type == 'sell') {
+                } else if (type === 'sell') {
                     myHoldings[ticker].volume -= volume
                 }
             }
@@ -319,6 +300,7 @@ const StockPage = () => {
         setHoldings(newHoldings)
     }
 
+    // adds user holdings back into state
     useEffect(() => { if (trades) { buildHoldings() } }, [trades])
 
 
@@ -406,7 +388,7 @@ const StockPage = () => {
                     <form className='add-to-list-form' onSubmit={AddToListOnSubmit}>
                         <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
                             {watchlists && watchlists.map(list => {
-                                return <option value={list.id}>{list.name}</option>
+                                return <option key={`list${list.id}`} value={list.id}>{list.name}</option>
                             })}
                         </select>
                         <div className='flex-container adjust-list'>

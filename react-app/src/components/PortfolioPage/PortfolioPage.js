@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
-import { loadPortfolio, loadHoldings } from '../../store/portfolio'
+import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
 import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
 import Watchlist from './Watchlist';
@@ -22,11 +22,10 @@ const PortfolioPage = () => {
     const trades = useSelector(state => state.trade.trades)
     const watchlists = useSelector(state => state.watchlist.watchlists)
 
-    let userId, cashBalance, portfolioId, watchlist;
+    let userId, cashBalance, portfolioId;
     user ? userId = user.id : userId = ""
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
-    watchlists ? watchlist = watchlists[0] : watchlist = null
 
     const getNews = async() => {
         const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
@@ -58,10 +57,10 @@ const PortfolioPage = () => {
             if(!myHoldings.hasOwnProperty(ticker)){
                 myHoldings[ticker] = {volume, cost}
             } else {
-                if (type == 'buy') {
+                if (type === 'buy') {
                     myHoldings[ticker].cost = avgCost(myHoldings[ticker].volume, myHoldings[ticker].cost, volume, cost)
                     myHoldings[ticker].volume += volume
-                } else if (type == 'sell'){
+                } else if (type === 'sell'){
                     myHoldings[ticker].volume -= volume
                 }
             }
@@ -74,16 +73,17 @@ const PortfolioPage = () => {
         setHoldings(newHoldings)
     }
 
+    // get stock price from Finnhub; returns promise for loadPrices function
     const getPrice = async(ticker) => {
         let res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=c27ut2aad3ic393ffql0`, { json: true })
-        return res.json() // returns promise for loadPrices function
+        return res.json()
     }    
 
+    // loads all holding prices, then sets priceData variable once all returns from Promise.all()
     const loadPrices = async() => {
         if(holdings) {
             let allPrices = holdings.map(holding => getPrice(holding.ticker)) // returns array of promises
             let priceData = await Promise.all(allPrices) // returns array of objects
-            // console.log('priceData', priceData)
             setPrices(priceData)
         }
     }
@@ -101,9 +101,9 @@ const PortfolioPage = () => {
     }, [holdings])
     
     useEffect(() => {
+        getNews()
         if(userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
-        getNews()
         if(trades) buildHoldings()
     }, [trades, userId])
 
@@ -115,6 +115,7 @@ const PortfolioPage = () => {
         }
     }, [watchlists])
 
+    // grabs latest news when user clicks 'show newer articles' button
     useEffect(() => {
         getNews()
     }, [refreshCount])
@@ -149,8 +150,6 @@ const PortfolioPage = () => {
         setWatchlistId(1)
     }
 
-    // RETURN RENDER
-
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
@@ -161,7 +160,7 @@ const PortfolioPage = () => {
                     <div>
                         <div className='flex-container-between watchlist-header'>
                             <div>Lists</div>
-                            <img className='add-watchlist-button' src={plus_icon} onClick={showNewListForm}></img>
+                            <img alt='plus' className='add-watchlist-button' src={plus_icon} onClick={showNewListForm}></img>
                         </div>
                         <form style={{'display':`${display}`}} className='new-watchlist' onSubmit={newListOnSubmit}>
                             <div className='flex-container new-watchlist-section'>
@@ -175,7 +174,7 @@ const PortfolioPage = () => {
                         <form className='watchlist-selection'>
                             <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
                                 { watchlists && watchlists.map(list => {
-                                    return <option value={list.id}>{list.name}</option>
+                                    return <option key={`watchlist${list.id}`} value={list.id}>{list.name}</option>
                                 })}
                             </select>
                         </form>

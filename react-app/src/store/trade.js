@@ -1,4 +1,4 @@
-// USER PORTFOLIO STATE
+// TRADES STATE
 
 // Constants --------------------
 const SET_TRADES = 'trade/SET_TRADES';

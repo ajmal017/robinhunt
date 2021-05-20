@@ -21,21 +21,10 @@ const SignUpForm = () => {
     }
   };
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
+  const updateUsername = (e) => setUsername(e.target.value);
+  const updateEmail = (e) => setEmail(e.target.value);
+  const updatePassword = (e) => setPassword(e.target.value);
+  const updateRepeatPassword = (e) => setRepeatPassword(e.target.value);
 
   if (user) {
     return <Redirect to="/" />;
@@ -45,11 +34,11 @@ const SignUpForm = () => {
   return (
     <div className='splash-container'>
       <div className='splash-image-container'>
-        <img className='splash-image-2' src={upArrow}></img>
+        <img alt='line-up-target' className='splash-image-2' src={upArrow}></img>
       </div>
       <div className='splash-fields'>
         <div className=''>
-          <img className='welcome-image' src={welcomeImg}></img>
+          <img alt='welcome-animation' className='welcome-image' src={welcomeImg}></img>
         </div>
         <br></br>
         <form className='splash-form' onSubmit={onSignUp}>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FlipNumbers from 'react-flip-numbers';
+
 import { submitTrade } from '../../store/trade';
 import { updateBalance } from '../../store/portfolio';
 
@@ -15,18 +16,19 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [showGif, setShowGif] = useState(false)
     
+    // order execution fields
     const [orderType, setOrderType] = useState('buy')
     const [orderValue, setOrderValue] = useState(0)
     const [orderVolume, setOrderVolume] = useState(1)
 
         
+    // see if user has any shares of this stock, and if so, set default holdQty for display in messages
     useEffect(() => {
         let stockHolding = holdings.find(holding => holding.ticker === stock)
-        if(stockHolding) {
-            setHoldingQty(stockHolding.volume);
-        }
-    }, [holdings])
+        if(stockHolding) { setHoldingQty(stockHolding.volume) }
+    }, [holdings, stock])
 
+    // update the order value/cost as prices and/or volume selections change
     useEffect(() => { setOrderValue(orderVolume * price) }, [price, orderVolume])
 
     let displayReview, displayConfirm, displayGif;
@@ -88,22 +90,23 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
         }
     }
 
+    // define which fields and text to display based on whether its a buy or sell order
     let formFields; 
     if(orderType === 'buy') {
         formFields = (
             <>
                 <div className='order-input'>
                     <p style={{ 'fontWeight': 'bold' }}> Est. Cost</p>
-                    <p className='num-flip' style={{ 'paddingLeft': '60px' }}> {orderValue && 
-                        <FlipNumbers height={15} width={10} color="var(--GREEN_TEXT)" background="white" play perspective={200} duration={1} numbers={`$${orderValue.toFixed(2)}`} />
-                    } </p>
+                    <div className='num-flip'> {orderValue && 
+                        <FlipNumbers height={14} width={9} color="var(--GREEN_TEXT)" background="white" play perspective={200} duration={1} numbers={`$${orderValue.toFixed(2)}`} />
+                    } </div>
                 </div>
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                         <h4 className='min-margin'>Confirmation Notice:</h4>
                     <div>I hereby confirm intent to purchase ~{Number(orderVolume).toFixed(2)} shares of {stock}. I acknowledge order price may be subject to change depending on market conditions as order is executed.</div>
                 </div>
                 <div style={{ 'display': `${displayGif}` }} className='flex-container'>
-                    <img style={{'width':'180px', 'marginBottom':'200px', 'marginTop':'30px'}} src={gif}></img>
+                    <img alt='order-complete-buy' style={{'width':'180px', 'marginBottom':'200px', 'marginTop':'30px'}} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
                     <button disabled={orderVolume === 0 && orderValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
@@ -125,14 +128,16 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
             <>
                 <div className='order-input'>
                     <p style={{ 'fontWeight': 'bold' }}> Est. Value</p>
-                    <p style={{ 'paddingLeft': '80px' }}> {orderValue && orderValue.toFixed(2)} </p>
+                    <div className='num-flip'> {orderValue &&
+                        <FlipNumbers height={14} width={9} color="var(--GREEN_TEXT)" background="white" play perspective={200} duration={1} numbers={`$${orderValue.toFixed(2)}`} />
+                    } </div>
                 </div>
                 <div style={{ 'display': `${displayConfirm}` }} className='stock-order-confirm'>
                     <h4 className='min-margin'>Confirmation Notice:</h4>
                     <div>I hereby confirm intent to sell ~{Number(orderVolume).toFixed(2)} shares of {stock}. I acknowledge sell order price may be subject to change depending on market conditions as order is executed.</div>
                 </div>
                 <div style={{ 'display': `${displayGif}` }} className='flex-container'>
-                    <img style={{ 'width': '180px', 'marginBottom': '200px', 'marginTop': '30px' }} src={gif}></img>
+                    <img alt='order-complete-sell' style={{ 'width': '180px', 'marginBottom': '200px', 'marginTop': '30px' }} src={gif}></img>
                 </div>
                 <div className='order-button flex-container'>
                     <button disabled={orderVolume === 0 && orderValue === 0} style={{ 'display': `${displayReview}` }} onClick={revealSubmit}> Review Order</button>
@@ -150,6 +155,8 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
 
         )
     }
+
+
     return (
         <div>
             <div>
