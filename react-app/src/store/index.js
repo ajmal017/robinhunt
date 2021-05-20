@@ -4,8 +4,6 @@ import session from './session';
 import portfolio from './portfolio';
 import trade from './trade';
 import watchlist from './watchlist';
-// import comment from './comment';
-// import user from './user';
 
 
 const rootReducer = combineReducers({
@@ -13,12 +11,9 @@ const rootReducer = combineReducers({
     portfolio,
     trade,
     watchlist,
-    // comment,
-    // user
 });
 
 let enhancer;
-
 if (process.env.NODE_ENV === 'production') {
     enhancer = applyMiddleware(thunk);
 } else {

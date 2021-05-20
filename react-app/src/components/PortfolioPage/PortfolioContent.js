@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import AssetHolding from './AssetHolding'
 import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
-const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCount, setRefreshCount, prices }) => {
+const PortfolioContent = ({ cashBalance, holdings, news, refreshCount, setRefreshCount, prices }) => {
     const bolt = require('../../front-assets/bolt.png')
     const upArrow = require('../../front-assets/up.png')
     const downArrow = require('../../front-assets/down.png')
@@ -11,14 +11,13 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
-    const [returnPercent, setReturnPercent] = useState(0) // add logic to show up green triangle or down red triangle
     const [equityValues, setEquityValues] = useState([])
     const [newsButtonText, setNewsButtonText] = useState('Show newer articles')
-    const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
-    const currencyFormatter = (num) => Number(num).toFixed(2)
-
     const [latestArticle, setLatestArticle] = useState(null)
     const [articles, setArticles] = useState(null)
+
+    const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
+    const currencyFormatter = (num) => Number(num).toFixed(2)
 
     let equityObj = {};
     const getHoldingValue = () => {
@@ -56,8 +55,6 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
         if (holdingValue > 0 && capInvested > 0) {
             let myReturn = currencyFormatter(holdingValue - capInvested)
             setTotalReturn(myReturn)
-            let percentage = Number((myReturn / capInvested)*100).toFixed(2);
-            setReturnPercent(percentage)
         }
     }, [equityObj, myReturn])
 
@@ -112,8 +109,8 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
                     <div className='portfolio-item-div'>
                         <p className="portfolio-summary-item bolder">Net Holdings Value: </p>
                         {totalReturn > 0 ? 
-                        (<p className="portfolio-summary-item bolder">${totalReturn}<img style={{ 'width': '8px', 'height': '8px', 'marginLeft':'5px' }} src={upArrow}></img></p>) :
-                        (<p className="portfolio-summary-item bolder">${totalReturn}<img style={{ 'width': '8px', 'height': '8px', 'marginLeft': '5px' }} src={downArrow}></img></p>)
+                        (<p className="portfolio-summary-item bolder">${totalReturn}<img alt='up-arrow' style={{ 'width': '8px', 'height': '8px', 'marginLeft':'5px' }} src={upArrow}></img></p>) :
+                        (<p className="portfolio-summary-item bolder">${totalReturn}<img alt='down-arrow' style={{ 'width': '8px', 'height': '8px', 'marginLeft': '5px' }} src={downArrow}></img></p>)
                         }
                     </div>
                 </div>
@@ -147,11 +144,11 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
                     <p onClick={updateNews} className='fetch-news-button'> {newsButtonText}</p>
                 </div>
                 {latestArticle && 
-                (<a href={latestArticle.url} target="_blank">
+                    (<a href={latestArticle.url} rel="noopener noreferrer" target="_blank">
                     <div className="news-header-container">
                         <div className='news-info-container'>
                             <p className='news-source boldest'>
-                                <img style={{ 'width': '10px', 'marginRight': '8px' }} src={bolt}></img>{latestArticle.source}
+                                <img alt='bolt' style={{ 'width': '10px', 'marginRight': '8px' }} src={bolt}></img>{latestArticle.source}
                             </p>
                             <div className="news-header-title boldest">
                                 <p>{latestArticle.headline}</p>
@@ -164,7 +161,7 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
                             </div>
                         </div>
                         <div className='news-header-image-container'>
-                            <img className="news-header-image" src={latestArticle.image}></img>
+                            <img alt='article-pic' className="news-header-image" src={latestArticle.image}></img>
                         </div>
                     </div>
                 </a>)
@@ -178,17 +175,3 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
 }
 
 export default PortfolioContent;
-
-
-// FINNHUB API: SAMPLE NEWS OBJ RESPONSE
-// {
-//     "category": "technology",
-//         "datetime": 1596589501,
-//             "headline": "Square surges after reporting 64% jump in revenue, more customers using Cash App",
-//                 "id": 5085164,
-//                     "image": "https://image.cnbcfm.com/api/v1/image/105569283-1542050972462rts25mct.jpg?v=1542051069",
-//                         "related": "",
-//                             "source": "CNBC",
-//                                 "summary": "Shares of Square soared on Tuesday evening after posting better-than-expected quarterly results and strong growth in its consumer payments app.",
-//                                     "url": "https://www.cnbc.com/2020/08/04/square-sq-earnings-q2-2020.html"
-// },

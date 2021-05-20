@@ -42,12 +42,11 @@ const LoginForm = () => {
   return (
     <div className='splash-container'>
       <div className='splash-image-container'>
-        <img className='splash-image-2' src={upArrow}></img>
+        <img alt='up-line-target' className='splash-image-2' src={upArrow}></img>
       </div>
       <div className='splash-fields'>
-        {/* <h2>Welcome to Robinhunt</h2> */}
         <div className=''>
-          <img className='welcome-image' src={welcomeImg}></img>
+          <img alt='welcome-animation' className='welcome-image' src={welcomeImg}></img>
         </div>
         <br></br>
         <form className='splash-form' onSubmit={onLogin}>
@@ -61,7 +60,6 @@ const LoginForm = () => {
             <input
               name="email"
               type="text"
-              // placeholder="Email"
               value={email}
               required={true}
               onChange={updateEmail}
@@ -72,7 +70,6 @@ const LoginForm = () => {
             <input
               name="password"
               type="password"
-              // placeholder="Password"
               value={password}
               required={true}
               onChange={updatePassword}

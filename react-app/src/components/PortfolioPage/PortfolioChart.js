@@ -1,5 +1,5 @@
 import React from 'react';
-import PieChart, { Series,HoverStyle} from 'devextreme-react/pie-chart';
+import PieChart, { Series, HoverStyle} from 'devextreme-react/pie-chart';
 
 // Template borrowed from DevExtreme (see link below)
 // Packages to Install: npm install devextreme devextreme-react

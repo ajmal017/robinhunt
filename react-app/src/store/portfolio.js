@@ -1,16 +1,10 @@
-// USER PORTFOLIO STATE
+// PORTFOLIO STATE
 
 // Constants --------------------
 const SET_PORTFOLIO = 'portfolio/SET_PORTFOLIO';
 
-// const UPDATE_CASH_BALANCE = 'portfolio/UPDATE_CASH_BALANCE';
-
-
 // Action Creators --------------------
 const setPortfolio = portfolio => ({ type: SET_PORTFOLIO, payload: portfolio })
-
-// const updateCashBalance = balance => ({ type: UPDATE_CASH_BALANCE, payload: balance })
-
 
 // Thunks --------------------
 
@@ -49,11 +43,6 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_PORTFOLIO:
             return { ...state, portfolio: action.payload };
-        
-        // case UPDATE_CASH_BALANCE:
-        //     let newPortfolio = state.portfolio;
-        //     newPortfolio.cash_balance = action.payload
-        //     return { ...state, portfolio: newPortfolio };
         default:
             return state;
     }

@@ -1,7 +1,6 @@
 // USER AUTH STATE
 
 
-
 // Constants --------------------
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
@@ -45,7 +44,7 @@ export const logout = () => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
     })
 
-    const data = await response.json(); // wait until finished removing on backend 
+    await response.json(); // wait until finished removing on backend 
     dispatch(removeUser()) // then remove from state
 }
 

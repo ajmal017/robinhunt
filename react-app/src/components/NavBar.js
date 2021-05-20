@@ -7,12 +7,13 @@ const NavBar = ({ setAuthenticated }) => {
   const user = useSelector( state => state.session.user )
   const feather = require('../front-assets/logo_animation.gif')
 
+  // planning to add history tabs showing transaction history for logged in user
   const authLinks = (
     <div className='flex-container'>
-      {/* <a className='nav-link' href="#" exact={true}>
+      {/* <a className='nav-link' href="#">
         History
       </a> */}
-      <a className='nav-link' href="/" exact={true}>
+      <a className='nav-link' href="/">
         Portfolio
       </a>
       <LogoutButton />
@@ -25,7 +26,7 @@ const NavBar = ({ setAuthenticated }) => {
   return (
     <div className='nav-container'>
       <div style={{ 'justifyContent': 'flex-end', 'paddingRight':'15px' }}className="nav-item">
-        <a href='/'><img className='nav-logo' src={feather}></img></a>
+        <a href='/'><img alt='feather-animation' className='nav-logo' src={feather}></img></a>
       </div>
       <div style={{ 'justifyContent': 'flex-start' }} className="nav-item">
           <AsyncSearch />

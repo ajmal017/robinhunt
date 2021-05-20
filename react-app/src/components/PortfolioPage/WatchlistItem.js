@@ -11,10 +11,9 @@ const WatchlistItem = ({ stock }) => {
         let data = await res.json()
         return data 
     }
-    let newPrice;
     const loadPrices = async(ticker) => {
         let quote = await getPrice(ticker)
-        let current = quote.c // c = current, o = open
+        let current = quote.c // c = current price, o = open price
         let change = ((quote.c - quote.o)/(quote.o))*100
         setPrice(current)
         setNetChange(change)
@@ -32,7 +31,7 @@ const WatchlistItem = ({ stock }) => {
                 <div>
                     <p style={{'paddingTop':'18px', 'color':'var(--GREEN_TEXT)'}}>{stock}</p>
                 </div>
-                <img style={{'height':'40px', 'width':'50px', 'paddingTop':'5px'}} src={dashed}></img>
+                <img alt='dashed-line' style={{'height':'40px', 'width':'50px', 'paddingTop':'5px'}} src={dashed}></img>
                 <div className='watchlist-item-price'>
                     <p>${Number(price).toFixed(2)}</p>
                     <p style={{'color':`${changeColor}`}}>{Number(netChange).toFixed(2)}%</p>

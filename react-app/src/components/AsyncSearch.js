@@ -4,7 +4,7 @@ import AsyncSelect from 'react-select/async'
 
 const AsyncSearch = () => {
     const history = useHistory()
-    const [inputValue, setInputValue] = useState(null)
+    const [inputValue, setInputValue] = useState(null) // input value and setSelected appear greyed out, but are actually in use
     const [selectedValue, setSelectedValue] = useState(null)
 
     const handleInputChange = value => {
