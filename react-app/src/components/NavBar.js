@@ -31,9 +31,9 @@ const NavBar = ({ setAuthenticated }) => {
           <AsyncSearch />
       </div>
       <div className="nav-item">
+          {linkDisplay}
       </div>
       <div className="nav-item">
-          {linkDisplay}
       </div>
     </div>
   );
