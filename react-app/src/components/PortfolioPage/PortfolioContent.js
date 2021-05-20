@@ -5,6 +5,8 @@ import PortfolioChart from './PortfolioChart'
 
 const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCount, setRefreshCount, prices }) => {
     const bolt = require('../../front-assets/bolt.png')
+    const upArrow = require('../../front-assets/up.png')
+    const downArrow = require('../../front-assets/down.png')
     const [holdingValue, setHoldingValue] = useState(0)
     const [portValue, setPortValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
@@ -89,8 +91,10 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
         <div className='portfolio-content-container'>
             <div className="chart-container">
                 <div className='portfolio-summary'>
-                    <h3 style={{ 'paddingBottom': '20px', 'fontSize':'18px' }} className="indent-heading min-margin">Portfolio Value: ${portValue}</h3>
-                    
+                    <div className='portfolio-item-div'>
+                        <h3 style={{ 'paddingBottom': '20px', 'fontSize':'18px' }} className="indent-heading min-margin">Portfolio Value:</h3>
+                        <h3 style={{ 'paddingBottom': '20px', 'fontSize': '16px', 'marginLeft': '10px' }} className="indent-heading min-margin">${portValue}</h3>
+                    </div>
                     <div className='portfolio-item-div'>
                         <p className="portfolio-summary-item">Cash Balance:</p>
                         <p className="portfolio-summary-item">${Number(cashBalance).toFixed(2)}</p>
@@ -106,8 +110,11 @@ const PortfolioContent = ({ user, cashBalance, trades, holdings, news, refreshCo
                     </div>
     
                     <div className='portfolio-item-div'>
-                        <h4 style={{'fontSize': '15px'}} className="portfolio-summary-item">Net Holdings Value: </h4>
-                        <h4 style={{ 'fontSize': '15px' }} className="portfolio-summary-item">${totalReturn}</h4>
+                        <p className="portfolio-summary-item bolder">Net Holdings Value: </p>
+                        {totalReturn > 0 ? 
+                        (<p className="portfolio-summary-item bolder">${totalReturn}<img style={{ 'width': '8px', 'height': '8px', 'marginLeft':'5px' }} src={upArrow}></img></p>) :
+                        (<p className="portfolio-summary-item bolder">${totalReturn}<img style={{ 'width': '8px', 'height': '8px', 'marginLeft': '5px' }} src={downArrow}></img></p>)
+                        }
                     </div>
                 </div>
                 {chartDisplay}
