@@ -234,10 +234,18 @@ const StockPage = () => {
     useEffect(() => {
         if (userId) dispatch(loadPortfolio(userId))
         if (userId) dispatch(loadWatchlists(userId))
-        dispatch(loadWatchlistItems(watchlistId))
-    }, [dispatch, userId, watchlistId])
+    }, [dispatch, userId])
 
     useEffect(() => { if (portfolioId) { dispatch(loadTrades(portfolioId)) } }, [dispatch, portfolioId])
+
+    useEffect(() => {
+        if (watchlists && watchlistId === 0) { // set 1st list by default once watchlists load
+            if (watchlists.length > 0) {
+                setWatchlistId(watchlists[0].id)
+            }
+        }
+        dispatch(loadWatchlistItems(watchlistId))
+    },[watchlists, watchlistId])
 
     // WATCHLIST 
 
