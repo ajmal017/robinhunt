@@ -61,14 +61,14 @@ h1, h2, h3, h4, h5, h6 {
 .app-container {
     display: grid;
     grid-template-areas:
-        'app-header'
-        'app-main';
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr;
+        '. app-header .'
+        '. app-main .';
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 50px 1fr;
     height: 100vh;
 }
-.app-header{ grid-area: 'app-header'; }
-.app-main{ grid-area: 'app-main'; }
+.app-header{ grid-area: app-header; }
+.app-main{ grid-area: app-main; }
 
 /* NAV BAR */
 
@@ -76,11 +76,11 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-areas:
         'logo search links .';
-    grid-template-columns: 120px 625px 425px 1fr;
+    grid-template-columns: 50px 650px 400px 1fr;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
-    margin: 0px;
+    margin: 0px 0px 0px 50px;
 }
 
 .nav-item{
@@ -185,19 +185,19 @@ a.nav-link:hover {
     display: grid;
     grid-template-areas:
         'content watchlist';
-    grid-template-columns: 800px 300px;
+    grid-template-columns: 750px 300px;
     grid-template-rows: 1fr;
     grid-gap: 10px;
     height: 100%;
     width: 100%;
     margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 50px;
+    margin-right: 0px;
 }
 
 .portfolio-content{ 
     grid-area: content;
-    margin-left: 50px;
+    /* margin-left: 50px; */
 }
 
 .portfolio-watchlist{ 
@@ -362,7 +362,6 @@ background-color: var(--NEWS_SHADOW)
     background-color: var(--GREY_SHADOW);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    /* border-right: 2px solid lightgrey; */
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
@@ -384,13 +383,11 @@ background-color: var(--NEWS_SHADOW)
 
 .holdings-container{ 
     grid-area: holdings;
-    /* background-color: var(--GREEN_HIGHLIGHT); */
 }
 
 .news-container{ 
     grid-area: news;
     height: 100%;
-    /* background-color: var(--GREEN_HIGHLIGHT); */
 }
 
 
@@ -402,13 +399,13 @@ background-color: var(--NEWS_SHADOW)
     grid-template-areas:
         'stock-chart order'
         'stock-info .';
-    grid-template-columns: 760px 300px;
+    grid-template-columns: 720px 300px;
     grid-template-rows: 400px 1fr;
     grid-gap: 10px;
     height: 90%;
     width: 100%;
     margin-left: 50px;
-    margin-right: 50px;
+    margin-right: 0px;
 }
 
 .stock-chart{ grid-area: stock-chart }
@@ -416,7 +413,7 @@ background-color: var(--NEWS_SHADOW)
 
 .stock-order-container{ 
     grid-area: order; 
-    margin:15px 15px 10px 10px;
+    margin:15px 0px 10px 30px;
     height: 90%;
     border-radius: 5px;
     padding:0px;
@@ -440,7 +437,7 @@ background-color: var(--NEWS_SHADOW)
     border-radius: 5px;
     position: relative;
     bottom: 20px;
-    left: 50px;
+    left: 70px;
     max-height: 30px;
     width: 200px;
 

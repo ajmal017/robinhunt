@@ -33,7 +33,7 @@ function App() {
                   <div className="app-header">
                     <NavBar />
                   </div>
-                  <div className="app-main flex-container">
+                  <div className="app-main">
                     <PortfolioPage />
                   </div>
                 </div>
