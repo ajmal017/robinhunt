@@ -22,7 +22,6 @@ const removeWatchlist = watchlist => ({ type: REMOVE_WATCHLIST, payload: watchli
 // Thunks --------------------
 
 export const loadWatchlists = (userId) => async (dispatch) => {
-    // console.log('WE IN THA THUNK', userId)
     const response = await fetch(`/api/watchlists/${userId}`, {
         headers: { 'Content-Type': 'application/json' }
     })
@@ -33,12 +32,10 @@ export const loadWatchlists = (userId) => async (dispatch) => {
 }
 
 export const loadWatchlistItems = (watchlistId) => async (dispatch) => {
-    // console.log('WE IN THA THUNK: WATCH', watchlistId)
     const response = await fetch(`/api/watchlists/${watchlistId}/items`, {
         headers: { 'Content-Type': 'application/json' }
     })
     const data = await response.json();
-    // console.log(data)
     if (data.errors) return;
     let watchlist_items = data.watchlist_items
     dispatch(setWatchlistItems(watchlist_items))
@@ -73,8 +70,18 @@ export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
 
 // DELETE 
 
+export const deleteWatchlist = (watchlist_id) => async (dispatch) => {
+    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    const deleted_watchlist = await response.json();
+    console.log(deleted_watchlist)
+    if (deleted_watchlist.errors) return;
+    dispatch(removeWatchlist(deleted_watchlist))
+}
+
 export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
-    // console.log('WE IN THA THUNK: RM WL', watchlist_id, ticker)
     const response = await fetch(`/api/watchlists/${watchlist_id}/items/${ticker}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -84,18 +91,6 @@ export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) =>
     console.log(watchlist_item)
     if (watchlist_item.errors) return;
     dispatch(removeWatchlistItem(watchlist_item))
-}
-
-export const deleteWatchlist = (watchlist_id) => async (dispatch) => {
-    console.log('WE IN THA THUNK: DEL WL', watchlist_id)
-    const response = await fetch(`/api/watchlists/${watchlist_id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-    })
-    const deleted_watchlist = await response.json();
-    console.log(deleted_watchlist)
-    if (deleted_watchlist.errors) return;
-    dispatch(removeWatchlist(deleted_watchlist))
 }
 
 
@@ -125,12 +120,15 @@ export default function reducer(state = initialState, action) {
 
         case REMOVE_WATCHLIST:
             allWatchlists = [...state.watchlists]; // save new copy of existing WLs
-            allWatchlistItems = [...state.watchlist_items]
             let removedWatchlist = action.payload
-            console.log(removedWatchlist)
             allWatchlists.filter(list => list.id !== removedWatchlist.id) // remove recently deleted watchlist from state
-            allWatchlistItems.filter(item => item.watchlist_id !== removedWatchlist.id) // remove recently deleted watchlist from state
-            return { ...state, watchlist_items: allWatchlistItems, watchlists: allWatchlists};
+            return { ...state, watchlists: allWatchlists};
+
+        case REMOVE_WATCHLIST_ITEM:
+            allWatchlistItems = [...state.watchlist_items] // save new copy of all existing WL items
+            let removedWatchlistItem = action.payload
+            allWatchlistItems.filter(item => item.id !== removedWatchlistItem.id) // remove recently deleted watchlist item from state
+            return { ...state, watchlist_items: allWatchlistItems };
         
         default:
             return state;

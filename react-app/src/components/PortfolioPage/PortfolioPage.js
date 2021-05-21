@@ -3,30 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
-import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
+import { loadWatchlists } from '../../store/watchlist';
 import Watchlist from './Watchlist';
 
 const PortfolioPage = () => {
-    const plus_icon = require('../../front-assets/plus_icon.png')
     const dispatch = useDispatch()
     const [news, setNews] = useState([])
     const [refreshCount, setRefreshCount] = useState(0)
     const [prices, setPrices] = useState(null)
-    const [watchlistId, setWatchlistId] = useState(0)
-    const [newListName, setNewListName] = useState("")
-    const [newListVisible, setNewListVisible] = useState(false)
     const [holdings, setHoldings] = useState([]);
 
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
-    const watchlists = useSelector(state => state.watchlist.watchlists)
 
-    let userId, cashBalance, portfolioId;
-    user ? userId = user.id : userId = ""
+    let cashBalance, portfolioId;
     user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
     user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
 
+    // function to grab most recent 5 news articles
     const getNews = async() => {
         const response = await fetch('https://finnhub.io/api/v1/news?category=general&token=c27ut2aad3ic393ffql0', { json: true })
         if(response.ok) {
@@ -89,66 +84,27 @@ const PortfolioPage = () => {
     }
 
     useEffect(() => {
-        if (portfolioId) {
-            dispatch(loadTrades(portfolioId))
-        }
+        getNews()
+    }, [])
+
+    useEffect(() => {
+        if (portfolioId) dispatch(loadTrades(portfolioId))
     }, [portfolioId])
 
     useEffect(() => {
-        if (holdings) {
-            loadPrices()
-        }
+        if (holdings) loadPrices() 
     }, [holdings])
     
     useEffect(() => {
-        getNews()
-        if(userId) dispatch(loadPortfolio(userId))
-        if (userId) dispatch(loadWatchlists(userId))
-        if(trades) buildHoldings()
-    }, [trades, userId])
+        if(user) dispatch(loadPortfolio(user.id))
+    }, [user])
 
     useEffect(() => {
-        if (watchlists && watchlistId === 0) {
-            if(watchlists.length > 0){
-                setWatchlistId(watchlists[0].id)
-            }
-        }
-    }, [watchlists])
+        if (trades) buildHoldings()
+    }, [trades])
 
     // grabs latest news when user clicks 'show newer articles' button
-    useEffect(() => {
-        getNews()
-    }, [refreshCount])
-
-
-    // WATCHLIST RELATED
-
-    useEffect(() => {
-        if (userId) dispatch(loadWatchlists(userId))
-        dispatch(loadWatchlistItems(watchlistId))
-    }, [watchlistId])
-
-    let display;
-    newListVisible ? display = '' : display = 'none'
-    
-    const showNewListForm = () => setNewListVisible(true)
-
-    const newListOnSubmit = (e) => {
-        e.preventDefault()
-        dispatch(addWatchlist(newListName, userId))
-        setNewListVisible(false)
-    }
-
-    const newListOnCancel = (e) => {
-        e.preventDefault()
-        setNewListName('')
-        setNewListVisible(false)
-    }
-
-    const deleteList = () => {
-        dispatch(deleteWatchlist(watchlistId))
-        setWatchlistId(1)
-    }
+    useEffect(() => { getNews()}, [refreshCount])
 
     return (
         <div className='portfolio-page-container'>
@@ -156,34 +112,7 @@ const PortfolioPage = () => {
                 <PortfolioContent user={user} cashBalance={cashBalance} portfolioId={portfolioId} trades={trades} holdings={holdings} news={news} refreshCount={refreshCount} setRefreshCount={setRefreshCount} prices={prices}/>
             </div>
             <div className="portfolio-watchlist">
-                <div className='watchlist-container'>
-                    <div>
-                        <div className='flex-container-between watchlist-header'>
-                            <div>Lists</div>
-                            <img alt='plus' className='add-watchlist-button' src={plus_icon} onClick={showNewListForm}></img>
-                        </div>
-                        <form style={{'display':`${display}`}} className='new-watchlist' onSubmit={newListOnSubmit}>
-                            <div className='flex-container new-watchlist-section'>
-                                <input style={{'marginLeft': '5px'}} className='' value={newListName} type='text' placeholder='List name...' onChange={(e) => setNewListName(e.target.value)}></input>
-                            </div>
-                            <div className='flex-container-around new-watchlist-section'>
-                                <button onClick={newListOnCancel}>Cancel</button>
-                                <button type="submit">Create List</button>
-                            </div>
-                        </form>
-                        <form className='watchlist-selection'>
-                            <select value={watchlistId} onChange={(e) => setWatchlistId(e.target.value)} >
-                                { watchlists && watchlists.map(list => {
-                                    return <option key={`watchlist${list.id}`} value={list.id}>{list.name}</option>
-                                })}
-                            </select>
-                        </form>
-                    </div>
-                    <Watchlist/>
-                    <div className='watchlist-button flex-container'>
-                        <button className='remove-watchlist' onClick={deleteList}>Remove List</button>
-                    </div>
-                </div>
+                <Watchlist userId={user.id}/>
             </div>
         </div>
     )
