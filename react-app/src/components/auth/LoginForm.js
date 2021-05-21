@@ -79,6 +79,11 @@ const LoginForm = () => {
             <div className="redirect-text"> Don't have an account?<a href="/signup">{redirect_message}</a></div>
           </div>
         </form>
+        <div className='project-links'>
+          <span>© Eric Ramsay. All rights reserved.</span> 
+          <a style={{'marginTop':'30px'}}target="_blank" rel="noopener noreferrer" href="https://github.com/eramsay20/robinhunt#readme">View Project ReadMe</a> 
+          <a target="_blank" rel="noopener noreferrer" href="https://eramsay20.github.io/portfolio/">View Eric Ramsay's Portfolio</a>
+        </div>
       </div>
     </div>
   );
