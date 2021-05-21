@@ -85,6 +85,9 @@ const SignUpForm = () => {
           <button type="submit">Sign Up</button>
           <div className="redirect-text"> Already have an account?<a href="/login">{redirect_message}</a></div>
         </form>
+        <div className='project-links'>
+          <p>© Eric Ramsay. All rights reserved.</p>
+        </div>
       </div>
     </div>
   );

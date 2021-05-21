@@ -169,6 +169,11 @@ const PortfolioContent = ({ cashBalance, holdings, news, refreshCount, setRefres
                 {articles && articles.map(article => (
                     <NewsCard key={article.id} article={article} />
                 ))}
+                <div className='project-links-row'>
+                    <span>© Eric Ramsay. All rights reserved.</span> 
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/eramsay20/robinhunt#readme">View Project ReadMe</a>  
+                    <a target="_blank" rel="noopener noreferrer" href="https://eramsay20.github.io/portfolio/">View Eric Ramsay's Portfolio</a>
+                </div>
             </div>
         </div>
     )
