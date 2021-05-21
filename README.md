@@ -74,4 +74,12 @@ Below the order form lives an 'Update Watchlists' button, which when clicked rev
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+### History Transaction Ledger (Bonus #4)
+The last bonus feature added was a history tab. When clicked from the nav bar, the user is navigated to a History page that shows a ledger of trade transactions. Each ledger item shows details for the transaction, including the stock, order type, execution time and total amount spent or gained as a result.
+
+![History](https://github.com/eramsay20/robinhunt/blob/main/assets/completed/history.png?raw=true)
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 For more info about what went into to making this project, checkout the full planning documentation links outlined in the project wiki page, [here!](https://github.com/eramsay20/robinhunt/wiki). 
