@@ -3,21 +3,21 @@ import { useSelector } from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
 import AsyncSearch from './AsyncSearch'
 
-const NavBar = ({ setAuthenticated }) => {
+const NavBar = () => {
   const user = useSelector( state => state.session.user )
   const feather = require('../front-assets/logo_animation.gif')
 
   // planning to add history tabs showing transaction history for logged in user
   const authLinks = (
-    <div className='flex-container'>
-      {/* <a className='nav-link' href="#">
-        History
-      </a> */}
+    <>
       <a className='nav-link' href="/">
         Portfolio
       </a>
+      <a className='nav-link' href="/history">
+        History
+      </a>
       <LogoutButton />
-    </div>
+    </>
   )
 
   let linkDisplay;

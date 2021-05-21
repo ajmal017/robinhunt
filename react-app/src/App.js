@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PortfolioPage from './components/PortfolioPage/PortfolioPage'
 import StockPage from './components/StockPage/StockPage'
+import HistoryPage from './components/HistoryPage/HistoryPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -35,6 +36,16 @@ function App() {
                   </div>
                   <div className="app-main">
                     <PortfolioPage />
+                  </div>
+                </div>
+              </ProtectedRoute>
+              <ProtectedRoute path="/history" exact={true}>
+                <div className='app-container'>
+                  <div className="app-header">
+                    <NavBar />
+                  </div>
+                  <div className="app-main">
+                    <HistoryPage />
                   </div>
                 </div>
               </ProtectedRoute>
