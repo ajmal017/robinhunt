@@ -1,10 +1,11 @@
+// REFACTOR FINISHED
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PortfolioContent from './PortfolioContent'
+import Watchlist from './Watchlist';
 import { loadPortfolio } from '../../store/portfolio'
 import { loadTrades } from '../../store/trade'
-import { loadWatchlists } from '../../store/watchlist';
-import Watchlist from './Watchlist';
 
 const PortfolioPage = () => {
     const dispatch = useDispatch()
@@ -16,10 +17,6 @@ const PortfolioPage = () => {
     const user = useSelector(state => state.session.user)
     const user_portfolio = useSelector(state => state.portfolio.portfolio)
     const trades = useSelector(state => state.trade.trades)
-
-    let cashBalance, portfolioId;
-    user_portfolio ? cashBalance = user_portfolio.cash_balance : cashBalance = 0
-    user_portfolio ? portfolioId = user_portfolio.id : cashBalance = ""
 
     // function to grab most recent 5 news articles
     const getNews = async() => {
@@ -82,34 +79,43 @@ const PortfolioPage = () => {
             setPrices(priceData)
         }
     }
-
+    
+    // grab news once on initial load
     useEffect(() => {
         getNews()
     }, [])
-
-    useEffect(() => {
-        if (portfolioId) dispatch(loadTrades(portfolioId))
-    }, [portfolioId])
-
-    useEffect(() => {
-        if (holdings) loadPrices() 
-    }, [holdings])
     
+    // grabs latest news when user clicks 'show newer articles' button
+    useEffect(() => { getNews() }, [refreshCount])
+
+    // load user's portfolio after user is loaded from state
     useEffect(() => {
         if(user) dispatch(loadPortfolio(user.id))
     }, [user])
 
+    // load trades after user portfolio loads from state
+    useEffect(() => {
+        if (user_portfolio) dispatch(loadTrades(user_portfolio.id))
+    }, [user_portfolio])
+
+    // build holdings array after user's trades load into state
     useEffect(() => {
         if (trades) buildHoldings()
     }, [trades])
+    
+    // get the latest prices for each holding once holdings array is built 
+    useEffect(() => {
+        if (holdings) loadPrices() 
+    }, [holdings])
+    
 
-    // grabs latest news when user clicks 'show newer articles' button
-    useEffect(() => { getNews()}, [refreshCount])
 
     return (
         <div className='portfolio-page-container'>
             <div className="portfolio-content flex-container">
-                <PortfolioContent user={user} cashBalance={cashBalance} portfolioId={portfolioId} trades={trades} holdings={holdings} news={news} refreshCount={refreshCount} setRefreshCount={setRefreshCount} prices={prices}/>
+            { user_portfolio && 
+                    <PortfolioContent user={user} cashBalance={user_portfolio.cash_balance} portfolioId={user_portfolio.id} trades={trades} holdings={holdings} news={news} refreshCount={refreshCount} setRefreshCount={setRefreshCount} prices={prices}/>
+            }
             </div>
             <div className="portfolio-watchlist">
                 <Watchlist userId={user.id}/>

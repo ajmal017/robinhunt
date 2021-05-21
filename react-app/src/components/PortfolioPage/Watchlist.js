@@ -1,3 +1,5 @@
+//REFACTOR FINISHED 
+
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadWatchlists, loadWatchlistItems, addWatchlist, deleteWatchlist } from '../../store/watchlist';
@@ -13,7 +15,7 @@ const Watchlist = ({ userId }) => {
     const [newListName, setNewListName] = useState("")
     const [newListVisible, setNewListVisible] = useState('none')
 
-    // load/reload watchlist and wlItems
+    // load/reload watchlist and wlItems when wID changes
     useEffect(() => {
         dispatch(loadWatchlists(userId))
         dispatch(loadWatchlistItems(watchlistId))
@@ -28,10 +30,6 @@ const Watchlist = ({ userId }) => {
         }
     }, [watchlists])
 
-
-
-    /* WATCHLIST FORM FUNCTIONS */
-    
     // reveal new list form
     const showNewListForm = () => setNewListVisible('')
 
