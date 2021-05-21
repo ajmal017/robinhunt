@@ -109,8 +109,8 @@ const PortfolioContent = ({ cashBalance, holdings, news, refreshCount, setRefres
                     <div className='portfolio-item-div'>
                         <p className="portfolio-summary-item bolder">Net Holdings Value: </p>
                         {totalReturn > 0 ? 
-                        (<p className="portfolio-summary-item bolder">${totalReturn}<img alt='up-arrow' style={{ 'width': '8px', 'height': '8px', 'marginLeft':'5px' }} src={upArrow}></img></p>) :
-                        (<p className="portfolio-summary-item bolder">${totalReturn}<img alt='down-arrow' style={{ 'width': '8px', 'height': '8px', 'marginLeft': '5px' }} src={downArrow}></img></p>)
+                            (<p className="portfolio-summary-item bolder"><img alt='up-arrow' style={{ 'width': '8px', 'height': '8px', 'marginRight': '5px' }} src={upArrow}></img>${totalReturn}</p>) :
+                            (<p className="portfolio-summary-item bolder"><img alt='down-arrow' style={{ 'width': '8px', 'height': '8px', 'marginRight': '5px' }} src={downArrow}></img>${totalReturn}</p>)
                         }
                     </div>
                 </div>
