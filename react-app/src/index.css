@@ -17,19 +17,6 @@
 
 }
 
-select {
-    border: none;
-}
-
-select:focus-visible {
-    border: 1px solid green;
-    outline: none;
-}
-
-input:focus-visible {
-    outline: none;
-}
-
 body {
     box-sizing: border-box;
     font-family: 'Nunito Sans', sans-serif;
@@ -51,10 +38,24 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+select {
+    border: none;
+}
+
+select:focus-visible {
+    border: 1px solid green;
+    outline: none;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
 #pie {
     height: 150px;
     width: 300px;
 }
+
 
 /* ROOT LAYOUT  */
 
@@ -70,13 +71,14 @@ h1, h2, h3, h4, h5, h6 {
 .app-header{ grid-area: app-header; }
 .app-main{ grid-area: app-main; }
 
+
 /* NAV BAR */
 
 .nav-container {
     display: grid;
     grid-template-areas:
         'logo search links .';
-    grid-template-columns: 50px 650px 400px 1fr;
+    grid-template-columns: 50px 675px 300px 1fr;
     grid-template-rows: 1fr;
     width: 100%;
     padding: 0px;
@@ -86,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-item{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 60px;
 }
 
@@ -100,70 +102,68 @@ h1, h2, h3, h4, h5, h6 {
     width: 400px;
 }
 
-/* HIDE DEFAULT SELECT TEXT  */
-div > .css-1wa3eu0-placeholder{
-    color: white;
-}
-
-/* HIDE DROPDOWN SELECT ARROW */
-div .css-1hb7zxy-IndicatorsContainer {
-    display: none;
-}
-
-div .css-tlfecz-indicatorContainer {
-    display: none;
-} 
-
-.css-1okebmr-indicatorSeparator {
-    display: none;
-}
-
-
 /* ---------- REACT SELECT COMP (START) --------- */
-/* INPUT NOT ACTIVE */
-div .css-yk16xz-control{
-    border: 1px solid var(--GREEN_TEXT);
-    transition: box-shadow 300ms, border 300ms;
-}
+    /* HIDE DEFAULT SELECT TEXT  */
+    div > .css-1wa3eu0-placeholder{
+        color: white;
+    }
 
-div .css-yk16xz-control:hover{
-    border: none;
-    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
-}
+    /* HIDE DROPDOWN SELECT ARROW */
+    div .css-1hb7zxy-IndicatorsContainer {
+        display: none;
+    }
 
-/* INPUT ACTIVE */
-div  .css-1pahdxg-control{
-    border: none;
-    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
-    transition: box-shadow 300ms, border 300ms;
-}
+    div .css-tlfecz-indicatorContainer {
+        display: none;
+    } 
 
-div  .css-1pahdxg-control:hover{
-    border: none;
-    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
-}
+    .css-1okebmr-indicatorSeparator {
+        display: none;
+    }
 
-/* MENU DROPDOWN  */
-div  .css-26l3qy-menu{
-    border: 1px solid var(--GREEN_TEXT);
-    box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
-    background-color: WHITE;
-}
+    /* INPUT NOT ACTIVE */
+    div .css-yk16xz-control{
+        border: 1px solid var(--GREEN_TEXT);
+        transition: box-shadow 300ms, border 300ms;
+    }
 
-div .css-26l3qy-menu > div > div{
-    background-color: white;
-    transition: background-color 300ms, color 300ms;
-}
+    div .css-yk16xz-control:hover{
+        border: none;
+        box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    }
 
-div .css-26l3qy-menu > div > div:hover{
-    color: white;
-    background-color: var(--GREEN_TEXT)
-}
+    /* INPUT ACTIVE */
+    div  .css-1pahdxg-control{
+        border: none;
+        box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+        transition: box-shadow 300ms, border 300ms;
+    }
 
+    div  .css-1pahdxg-control:hover{
+        border: none;
+        box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    }
+
+    /* MENU DROPDOWN  */
+    div  .css-26l3qy-menu{
+        border: 1px solid var(--GREEN_TEXT);
+        box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+        background-color: WHITE;
+    }
+
+    div .css-26l3qy-menu > div > div{
+        background-color: white;
+        transition: background-color 300ms, color 300ms;
+    }
+
+    div .css-26l3qy-menu > div > div:hover{
+        color: white;
+        background-color: var(--GREEN_TEXT)
+    }
 /* ---------- REACT SELECT COMP (END)--------- */
 
-/* NAV LINKS  */
 
+/* LINKS  */
 a.nav-link {
     padding: 20px;
     font-size: 14px;
@@ -177,10 +177,7 @@ a.nav-link:hover {
 }
 
 
-
-
 /* PORTFOLIO PAGE LAYOUT  */
-
 .portfolio-page-container {
     display: grid;
     grid-template-areas:
@@ -390,6 +387,56 @@ background-color: var(--NEWS_SHADOW)
     height: 100%;
 }
 
+
+
+/* HISTORY PAGE LAYOUT  */
+
+.history-page-container {
+    display: grid;
+    grid-template-areas:
+        'ledger other';
+    grid-template-columns: 750px 300px;
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 0px;
+}
+
+.history-ledger-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ledger-item-container {
+    display: flex;
+    flex-direction: column;
+
+    height: 60px;
+    width: 100%;
+    transition: background-color 400ms, color 400ms;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    border-top: 1px solid lightgrey;
+}
+
+.ledger-item-container:hover {
+    background-color: var(--NEWS_SHADOW);
+}
+
+.ledger-item-summary {
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: capitalize;
+    padding-top: 5px;
+}
+
+.ledger-item-detail {
+    font-size: 12px;
+    padding-top: 10px;
+}
 
 
 /* STOCK PAGE LAYOUT  */
