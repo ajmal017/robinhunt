@@ -33,19 +33,9 @@ def seed_trades():
         timestamp = today,
     )
 
-    demo_trade_4 = Trade(
-        portfolio_id = 1,
-        order_type = 'buy',
-        ticker = 'BABA',
-        order_price = 224.13,
-        order_volume = 3,
-        timestamp = today,
-    )
-
     db.session.add(demo_trade_1)
     db.session.add(demo_trade_2)
     db.session.add(demo_trade_3)
-    db.session.add(demo_trade_4)
     db.session.commit()
 
 
