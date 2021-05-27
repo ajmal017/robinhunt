@@ -44,7 +44,7 @@ const StockPage = () => {
         let container = chartContainer.current
         // create chart 
         let chart = createChart(container, {
-            width: 700,
+            width: 650,
             height: 300,
             layout: {
                 backgroundColor: '#ffffff',

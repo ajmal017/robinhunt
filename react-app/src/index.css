@@ -64,7 +64,7 @@ input:focus-visible {
     grid-template-areas:
         '. app-header .'
         '. app-main .';
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 50px 1fr;
     height: 100vh;
 }
@@ -77,11 +77,10 @@ input:focus-visible {
 .nav-container {
     display: grid;
     grid-template-areas:
-        'logo search links .';
-    grid-template-columns: 50px 675px 300px 1fr;
+        'logo search links';
+    grid-template-columns: 50px 625px 300px; 
     grid-template-rows: 1fr;
     width: 100%;
-    padding: 0px;
     margin: 0px 0px 0px 50px;
 }
 
@@ -216,35 +215,33 @@ a.nav-link:hover {
     display: grid;
     grid-template-areas:
         'content watchlist';
-    grid-template-columns: 750px 300px;
+    grid-template-columns: 700px 300px;
     grid-template-rows: 1fr;
     grid-gap: 10px;
     height: 100%;
-    width: 100%;
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 40px;
     margin-right: 0px;
 }
 
-.portfolio-content{ 
-    grid-area: content;
-    /* margin-left: 50px; */
-}
+.portfolio-content{ grid-area: content }
 
 .portfolio-watchlist{ 
     grid-area: watchlist; 
-    margin-right:30px;
+    display: flex;
+    justify-content: center;
+
 }
 
 .watchlist-container{ 
-    margin:15px 30px 0px 25px;
-    max-height: 80%;
+    margin-top:15px;
     border-radius: 5px;
     padding-bottom: 1px;
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
-    overflow-y: scroll;
     position: sticky;
     top: 30px;
+    width: 225px;
+    height: fit-content;
 }
 
 .watchlist-header{ 
@@ -252,7 +249,6 @@ a.nav-link:hover {
     flex-direction: row;
     justify-content: flex-start;
     padding: 15px 20px 15px 30px;
-    margin: 0px;
     border-bottom: 1px solid lightgrey;
     font-weight: 700;
 }
@@ -480,7 +476,7 @@ background-color: var(--NEWS_SHADOW)
     grid-template-areas:
         'stock-chart order'
         'stock-info .';
-    grid-template-columns: 720px 300px;
+    grid-template-columns: 675px 300px;
     grid-template-rows: 400px 1fr;
     grid-gap: 10px;
     height: 90%;
@@ -494,8 +490,9 @@ background-color: var(--NEWS_SHADOW)
 
 .stock-order-container{ 
     grid-area: order; 
-    margin:15px 0px 10px 30px;
-    height: 90%;
+    margin: 15px 0px 0px 20px;
+    width: 250px;
+    height: 85%;
     border-radius: 5px;
     padding:0px;
     box-shadow: 1px 1px 15px 2px lightgrey;
@@ -505,11 +502,12 @@ background-color: var(--NEWS_SHADOW)
 .stock-order-confirm{ 
     font-size: 12px;
     padding-left: 20px;
+    padding-right: 20px;
 }
 
 .stock-order-balance{ 
     font-size: 12px;
-    padding: 25px;
+    margin: 20px 20px 0px 40px;
 }
 
 .add-to-watchlist{ 
@@ -518,7 +516,7 @@ background-color: var(--NEWS_SHADOW)
     border-radius: 5px;
     position: relative;
     bottom: 20px;
-    left: 70px;
+    left: 45px;
     max-height: 30px;
     width: 200px;
 
@@ -660,8 +658,9 @@ background-color: var(--NEWS_SHADOW)
     border-radius: 5px;
     color: var(--WHITE);
     font-weight: 600;
-    padding: 15px 70px 15px 70px;
-    margin-top: 20px;
+    padding: 10px 40px 10px 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 
