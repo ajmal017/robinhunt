@@ -23,7 +23,7 @@ const LedgerItem = ({ trade }) => {
                     <p>{fDate}, {fTime}</p>
                     { trade.order_volume === 1 ?
                         (<p>{trade.order_volume} share at ${trade.order_price.toFixed(2)}</p>) :
-                        (<p>{trade.order_volume} shares at ${trade.order_price}</p>)
+                        (<p>{trade.order_volume} shares at ${trade.order_price.toFixed(2)}</p>)
                     }
                 </div>
             </div>

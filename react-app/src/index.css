@@ -175,6 +175,14 @@ a.nav-link:hover {
     color: var(--GREEN_TEXT)
 }
 
+.company-link {
+    transition: color 300ms;
+}
+
+.company-link:hover {
+    color: var(--GREEN_TEXT)
+}
+
 .project-links {
     display: flex;
     align-items: center;

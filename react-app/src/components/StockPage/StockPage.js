@@ -333,7 +333,7 @@ const StockPage = () => {
                         </div>
                         <div className='flex-container-stack min-margin'>
                             <h4 className='min-margin'>About</h4>
-                            <a href={profile.weburl}>{profile.name}</a>
+                            <a className='company-link' target="_blank" href={profile.weburl}>{profile.name}</a>
                         </div>
                         <div className='flex-container-stack min-margin'>
                             <h4 className='min-margin'>Industry</h4>
