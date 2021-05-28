@@ -713,7 +713,7 @@ background-color: var(--NEWS_SHADOW)
 
 .splash-image-container{ 
     grid-area: splash-image;
-    background-image: linear-gradient(to bottom right, var(--LOGO_GREEN), var(--GREEN_HIGHLIGHT));
+    background-image: url();
     height: 100vh;
     width: 50vw;
     transition: margin 2s;
@@ -725,9 +725,8 @@ background-color: var(--NEWS_SHADOW)
 }
 
 .welcome-image{
-    height: 225px;
-    margin-top: -30px;
-    margin-bottom: -15px;
+    height: 150px;
+    margin-bottom: 0px;
 }
 
 .splash-fields{ 
@@ -750,6 +749,7 @@ background-color: var(--NEWS_SHADOW)
     padding: 40px;
     border-radius: 10px;
     box-shadow: 1px 1px 20px 2px var(--BOX_SHADOW);
+    margin-bottom: 20px;
 }
 
 .splash-form button {

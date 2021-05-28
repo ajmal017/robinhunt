@@ -6,8 +6,8 @@ import { login } from "../../store/session";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
-  const upArrow = require('../../front-assets/up_arrow.png')
   const welcomeImg = require('../../front-assets/welcome_banner_animation.gif')
+  const background = require('../../front-assets/robinhood_splash_img.jpeg')
 
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -41,8 +41,7 @@ const LoginForm = () => {
 
   return (
     <div className='splash-container'>
-      <div className='splash-image-container'>
-        <img alt='up-line-target' className='splash-image-2' src={upArrow}></img>
+      <div className='splash-image-container' style={{ 'backgroundImage': `url(${background})`, 'backgroundSize': 'cover', 'opacity': '.7' }}>
       </div>
       <div className='splash-fields'>
         <div className=''>
