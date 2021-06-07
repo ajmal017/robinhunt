@@ -5,7 +5,7 @@ import AsyncSearch from './AsyncSearch'
 
 const NavBar = () => {
   const user = useSelector( state => state.session.user )
-  const feather = require('../front-assets/logo_animation.gif')
+  const feather = require('../front-assets/robinhunt_arrow.png')
 
   // planning to add history tabs showing transaction history for logged in user
   const authLinks = (

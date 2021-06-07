@@ -6,7 +6,7 @@ import { signup } from '../../store/session';
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user)
-  const welcomeImg = require('../../front-assets/welcome_banner_animation.gif')
+  const welcomeImg = require('../../front-assets/welcome_banner.png')
   const background = require('../../front-assets/robinhood_splash_img.jpeg')
 
   const [username, setUsername] = useState("");

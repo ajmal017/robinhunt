@@ -3,23 +3,11 @@ from flask_login import login_required
 from app.forms import NewWatchlistForm
 from app.forms import NewWatchlistItemForm
 from app.models import db, Watchlist, Watchlist_Item
-
+from app.api.auth_routes import serialize_error_messages
 
 watchlist_routes = Blueprint('watchlists', __name__)
 
-
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f"{field} : {error}")
-    return errorMessages
-
-
-# GET ROUTES 
+# WATCHLIST GET ROUTES 
 
 # /api/watchlists/:user_id
 # grab all watchlists for the logged in user 
@@ -41,7 +29,7 @@ def get_watchlist_items(watchlist_id):
 
 
 
-# POST ROUTES 
+# WATCHLIST POST ROUTES 
 
 # add new watchlist
 # /api/watchlists/
@@ -58,7 +46,7 @@ def add_watchlist():
         db.session.add(watchlist)
         db.session.commit()
         return watchlist.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': serialize_error_messages(form.errors)}, 401
 
 
 # add new watchlist item to watchlist
@@ -76,7 +64,7 @@ def add_watchlist_item(watchlist_id, ticker):
 
 
 
-# DELETE routes
+# WATCHLIST DELETE routes
 
 # /api/watchlists/:watchlist_id
 @watchlist_routes.route('/<int:watchlist_id>', methods=['DELETE'])

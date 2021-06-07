@@ -94,6 +94,7 @@ input:focus-visible {
 .nav-logo{
     width: 35px;
     padding-top: 8px;
+    animation: 2s linear 0s 1 reveal;
 }
 
 .search-bar{
@@ -733,8 +734,14 @@ background-color: var(--NEWS_SHADOW)
 }
 
 .welcome-image{
-    height: 150px;
+    height: 200px;
     margin-bottom: 0px;
+    animation: 2s linear 0s 1 reveal;
+}
+
+@keyframes reveal {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
 }
 
 .splash-fields{ 

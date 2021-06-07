@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 auth_routes = Blueprint('auth', __name__)
 
 
-def validation_errors_to_error_messages(validation_errors):
+def serialize_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
     """
@@ -43,7 +43,7 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': serialize_error_messages(form.errors)}, 401
 
 
 @auth_routes.route('/logout')
@@ -88,7 +88,7 @@ def sign_up():
         # log the new user in and return the object to the front for Redux
         login_user(user)
         return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': serialize_error_messages(form.errors)}, 401
 
 
 @auth_routes.route('/unauthorized')
