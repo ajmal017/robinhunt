@@ -388,7 +388,7 @@ const StockPage = () => {
                 </div>
             </div>
             <div className="stock-order-container">
-                <OrderForm stock={ticker} price={lastPrice} cashBalance={cashBalance} portfolioId={portfolioId} holdings={holdings}/>
+                <OrderForm userId={userId} stock={ticker} price={lastPrice} cashBalance={cashBalance} portfolioId={portfolioId} holdings={holdings}/>
             </div>
             <div className="add-to-watchlist">
                 <p onClick={showListForm}>Update Watchlists</p>

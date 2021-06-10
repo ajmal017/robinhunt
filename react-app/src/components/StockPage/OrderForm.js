@@ -7,7 +7,7 @@ import { submitTrade } from '../../store/trade';
 import { updateBalance } from '../../store/portfolio';
 
 
-const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
+const OrderForm = ({ userId, stock, price, cashBalance, portfolioId, holdings }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const gif = require('../../front-assets/order_confirm_animation.gif')
@@ -69,7 +69,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
             cashAdjustment = -1 * Number(orderValue).toFixed(2);
             if (cashBalance + cashAdjustment > 0){
                 dispatch(submitTrade(portfolioId, order_type, ticker, order_price, order_volume))
-                dispatch(updateBalance(portfolioId, cashAdjustment))
+                dispatch(updateBalance(userId, portfolioId, cashAdjustment))
                 setShowConfirmation(false);
                 setShowGif(true)
                 setTimeout(() => history.push('/'), 3000)
@@ -80,7 +80,7 @@ const OrderForm = ({ stock, price, cashBalance, portfolioId, holdings }) => {
             cashAdjustment = Number(orderValue).toFixed(2)
             if (orderVolume <= holdingQty){
                 dispatch(submitTrade(portfolioId, order_type, ticker, order_price, order_volume))
-                dispatch(updateBalance(portfolioId, cashAdjustment))
+                dispatch(updateBalance(userId, portfolioId, cashAdjustment))
                 setShowConfirmation(false);
                 setShowGif(true)
                 setTimeout(() => history.push('/'), 3000)

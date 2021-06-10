@@ -10,8 +10,8 @@ const setPortfolio = portfolio => ({ type: SET_PORTFOLIO, payload: portfolio })
 
 // GET
 // Add user portfolio object to state
-export const loadPortfolio = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/portfolios/${userId}`, {
+export const loadPortfolio = (user_id) => async (dispatch) => {
+    const response = await fetch(`/api/users/${user_id}/portfolios`, {
         headers: { 'Content-Type': 'application/json' }
     })
     const data = await response.json();
@@ -22,9 +22,9 @@ export const loadPortfolio = (userId) => async (dispatch) => {
 
 // PATCH
 // Update cash balance on user's portfolio
-export const updateBalance = (portfolio_id, adjustment) => async (dispatch) => {
-    console.log('patch balance', portfolio_id, adjustment)
-    const response = await fetch(`/api/portfolios/${portfolio_id}`, {
+export const updateBalance = (user_id, portfolio_id, adjustment) => async (dispatch) => {
+    console.log('patch balance', user_id, portfolio_id, adjustment)
+    const response = await fetch(`/api/users/${user_id}/portfolios/${portfolio_id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ adjustment })

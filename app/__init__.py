@@ -8,7 +8,6 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-from .api.portfolio_routes import portfolio_routes
 from .api.trade_routes import trade_routes
 from .api.watchlist_routes import watchlist_routes
 
@@ -35,7 +34,6 @@ app.config.from_object(Config)
 
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(portfolio_routes, url_prefix='/api/portfolios')
 app.register_blueprint(trade_routes, url_prefix='/api/trades')
 app.register_blueprint(watchlist_routes, url_prefix='/api/watchlists')
 
@@ -51,7 +49,7 @@ CORS(app)
 # request made over http is redirected to https.
 # Well.........
 
-@app.before_request
+@app.before_request  # redirect request to use https
 def https_redirect():
     if os.environ.get('FLASK_ENV') == 'production':
         if request.headers.get('X-Forwarded-Proto') == 'http':
@@ -60,14 +58,12 @@ def https_redirect():
             return redirect(url, code=code)
 
 
-@app.after_request
+@app.after_request #inject csrf after request is made
 def inject_csrf_token(response):
     response.set_cookie('csrf_token',
                         generate_csrf(),
-                        secure=True if os.environ.get(
-                            'FLASK_ENV') == 'production' else False,
-                        samesite='Strict' if os.environ.get(
-                            'FLASK_ENV') == 'production' else None,
+                        secure=True if os.environ.get('FLASK_ENV') == 'production' else False,
+                        samesite='Strict' if os.environ.get('FLASK_ENV') == 'production' else None,
                         httponly=True)
     return response
 
