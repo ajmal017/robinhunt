@@ -32,11 +32,11 @@ export const loadTrades = (portfolioId) => async (dispatch) => {
 
 // POST
 export const submitTrade = (portfolio_id, order_type, ticker, order_price, order_volume) => async (dispatch) => {
-    console.log(portfolio_id, order_type, ticker, order_price, order_volume)
+    // console.log(portfolio_id, order_type, ticker, order_price, order_volume)
     let numPrice = parseFloat(order_price).toFixed(2)
     let numVolume = parseFloat(order_volume).toFixed(2)
     
-    console.log(portfolio_id, order_type, ticker, numPrice, numVolume)
+    // console.log(portfolio_id, order_type, ticker, numPrice, numVolume)
     const response = await fetch(`/api/trades/${portfolio_id}/stocks/${ticker}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

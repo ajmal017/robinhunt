@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FlipNumbers from 'react-flip-numbers';
-
 import { submitTrade } from '../../store/trade';
 import { updateBalance } from '../../store/portfolio';
 
@@ -158,7 +157,7 @@ const OrderForm = ({ userId, stock, price, cashBalance, portfolioId, holdings })
 
 
     return (
-        <div>
+        <div className="stock-order-container">
             <div>
                 <h4 className='order-header'>Trade {stock}</h4>
             </div>

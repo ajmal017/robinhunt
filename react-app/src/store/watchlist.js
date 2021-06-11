@@ -57,7 +57,7 @@ export const addWatchlist = (name, user_id) => async (dispatch) => {
 }
 
 export const addWatchlistItem = (watchlist_id, ticker) => async (dispatch) => {
-    console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
+    // console.log('WE IN THA THUNK: ADD WL', watchlist_id, ticker)
     const response = await fetch(`/api/watchlists/${watchlist_id}/items/${ticker}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -76,7 +76,7 @@ export const deleteWatchlist = (watchlist_id) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
     })
     const deleted_watchlist = await response.json();
-    console.log(deleted_watchlist)
+    // console.log(deleted_watchlist)
     if (deleted_watchlist.errors) return;
     dispatch(removeWatchlist(deleted_watchlist))
 }
@@ -88,7 +88,7 @@ export const deleteWatchlistItem = (watchlist_id, ticker) => async (dispatch) =>
         body: JSON.stringify({ ticker })
     })
     const watchlist_item = await response.json();
-    console.log(watchlist_item)
+    // console.log(watchlist_item)
     if (watchlist_item.errors) return;
     dispatch(removeWatchlistItem(watchlist_item))
 }
