@@ -328,8 +328,8 @@ const StockPage = () => {
                     </div>
                     <div className='company-summary'>{summary.Description}</div>
                     <div className='info-container'>
-                        <div className='flex-container-stack'>
-                            <img alt='profile-logo' className='profile-logo' src={profile.logo}></img>
+                        <div className='flex-container' >
+                            <div style={{ 'backgroundImage':`url(${profile.logo})`, 'backgroundSize':'cover', 'backgroundRepeat':'no-repeat', 'width':'50px', 'height':'50px', 'marginLeft':'30px', 'marginTop':'5px'}}></div>
                         </div>
                         <div className='flex-container-stack min-margin'>
                             <h4 className='min-margin'>About</h4>

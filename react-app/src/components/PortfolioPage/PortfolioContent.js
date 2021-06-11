@@ -4,22 +4,25 @@ import NewsCard from '../NewsCard'
 import PortfolioChart from './PortfolioChart'
 
 const PortfolioContent = ({ cashBalance, holdings, news, refreshCount, setRefreshCount, prices }) => {
-    const bolt = require('../../front-assets/bolt.png')
-    const upArrow = require('../../front-assets/up.png')
-    const downArrow = require('../../front-assets/down.png')
-    const [holdingValue, setHoldingValue] = useState(0)
+    const bolt = require('../../front-assets/bolt.png') // news bolt icon
+    const upArrow = require('../../front-assets/up.png') // green up arrow
+    const downArrow = require('../../front-assets/down.png') // red down arrow
+
+    // state variables 
     const [portValue, setPortValue] = useState(0)
+    const [holdingValue, setHoldingValue] = useState(0)
     const [capInvested, setCapInvested] = useState(0)
     const [totalReturn, setTotalReturn] = useState(0)
     const [equityValues, setEquityValues] = useState([])
-    const [newsButtonText, setNewsButtonText] = useState('Show newer articles')
-    const [latestArticle, setLatestArticle] = useState(null)
+
     const [articles, setArticles] = useState(null)
+    const [latestArticle, setLatestArticle] = useState(null)
+    const [newsButtonText, setNewsButtonText] = useState('Show newer articles')
 
     const getPortfolioValue = (holdValue) => holdValue + cashBalance;    
     const currencyFormatter = (num) => Number(num).toFixed(2)
 
-    let equityObj = {};
+    let equityObj = {}; // store data necessary to populate
     const getHoldingValue = () => {
         let total = 0
         for (let key in equityObj){
@@ -39,9 +42,9 @@ const PortfolioContent = ({ cashBalance, holdings, news, refreshCount, setRefres
     }
 
     let capitalInvested, fCapInvested, myReturn;
-    if(holdings) capitalInvested = holdings.reduce((sum, holding) => sum += (holding.cost*holding.volume), 0)
-    if(capitalInvested) fCapInvested = currencyFormatter(capitalInvested)
-    if(fCapInvested && capInvested === 0) setCapInvested(fCapInvested)
+    if(holdings) capitalInvested = holdings.reduce((sum, holding) => sum += (holding.cost*holding.volume), 0) // calc total initial costs for holdings
+    if(capitalInvested) fCapInvested = currencyFormatter(capitalInvested) // format as currency
+    if(fCapInvested && capInvested === 0) setCapInvested(fCapInvested) // set cap invested once on load
     
     useEffect(() => {
         let holdValue = getHoldingValue()

@@ -4,6 +4,7 @@ const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, 
     //raw data
     let total_cost =shares * purchasePrice;
     let equity_value =shares * currentPrice
+    equityObj[`${symbol}`] = equity_value
 
     // formatted 
     let fPrice = currencyFormatter(currentPrice);
@@ -12,7 +13,6 @@ const AssetHolding = ({ symbol, shares, purchasePrice, currentPrice, equityObj, 
     let fTotalReturn = currencyFormatter(equity_value - total_cost)
     let fShares = Number(shares).toFixed(2)
     
-    equityObj[`${symbol}`] = equity_value
    
     return (
             <tr className='holding-row'>
